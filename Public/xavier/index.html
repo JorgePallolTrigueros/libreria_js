@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Herramientas Xavier</title>
+  <script src="/assets/tailwind.js"></script>
+  <link href="/assets/fonts.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0f172a;
+      color: white;
+    }
+    .card {
+      background-color: #1e293b;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+    textarea {
+      resize: vertical;
+    }
+  </style>
+</head>
+<body class="p-6">
+
+<nav class="bg-gradient-to-r from-indigo-800 to-blue-800 p-4 text-center text-sm md:text-base font-semibold uppercase tracking-wider">
+  <a href="../../index.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+</nav>
+
+<section class="max-w-6xl mx-auto px-6 mb-10">
+  <div class="flex justify-between items-center mt-6 mb-4">
+    <h1 class="text-3xl text-yellow-400 font-bold">🔍 Herramientas Xavier Mitjana</h1>
+    <button onclick="abrirModal()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">➕ Nueva Herramienta</button>
+  </div>
+
+  <div id="contenedor" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3"></div>
+</section>
+
+<!-- Modal -->
+<div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+  <div class="bg-gray-900 p-6 rounded-lg w-full max-w-xl shadow-2xl">
+    <h3 class="text-yellow-400 text-lg font-bold mb-4" id="modal-titulo">📝 Nueva Herramienta</h3>
+    <input type="hidden" id="x-id">
+    <input type="text" id="x-nombre" placeholder="Nombre" class="w-full mb-2 px-4 py-2 rounded bg-gray-800 text-white">
+    <input type="text" id="x-tipo" placeholder="Tipo (texto, imagen, etc.)" class="w-full mb-2 px-4 py-2 rounded bg-gray-800 text-white">
+    <input type="text" id="x-link" placeholder="Enlace" class="w-full mb-2 px-4 py-2 rounded bg-gray-800 text-white">
+    <textarea id="x-descripcion" rows="2" placeholder="Descripción corta" class="w-full mb-2 px-4 py-2 rounded bg-gray-800 text-white"></textarea>
+    <textarea id="x-comentarios" rows="5" placeholder="Comentarios de Xavier" class="w-full mb-4 px-4 py-2 rounded bg-gray-800 text-white"></textarea>
+    <div class="flex justify-end space-x-4">
+      <button onclick="cerrarModal()" class="px-4 py-2 bg-gray-700 rounded hover:bg-gray-600 text-white">Cancelar</button>
+      <button onclick="guardarXavier()" class="px-4 py-2 bg-green-500 rounded hover:bg-green-600 text-white">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let herramientas = [];
+
+  fetch("/api/xavier")
+    .then(res => res.json())
+    .then(data => {
+      herramientas = data;
+      renderXavier();
+    });
+
+  function renderXavier() {
+    const contenedor = document.getElementById("contenedor");
+    contenedor.innerHTML = "";
+    herramientas.forEach(item => {
+      const div = document.createElement("div");
+      div.className = "card";
+      div.innerHTML = `
+        <h3 class="text-yellow-400 text-xl font-bold mb-1">${item.nombre}</h3>
+        <p class="text-sm text-blue-300 mb-1">🔧 Tipo: ${item.tipo}</p>
+        <p class="text-sm text-gray-300 mb-1">🌐 <a href="${item.link}" target="_blank" class="underline hover:text-yellow-400">${item.link}</a></p>
+        <p class="text-sm text-gray-400 mb-2">${item.descripcion}</p>
+        <details class="text-sm text-white">
+          <summary class="cursor-pointer mb-2">🗒 Comentarios</summary>
+          <pre class="whitespace-pre-wrap mt-2 text-xs text-gray-300">${item.comentarios}</pre>
+        </details>
+        <div class="flex justify-center gap-2 mt-2">
+          <button onclick="editar(${item.id})" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs">Editar</button>
+          <button onclick="borrar(${item.id})" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs">Eliminar</button>
+        </div>`;
+      contenedor.appendChild(div);
+    });
+  }
+
+  function abrirModal() {
+    document.getElementById("modal").classList.remove("hidden");
+    document.getElementById("modal-titulo").textContent = "📝 Nueva Herramienta";
+    document.getElementById("x-id").value = "";
+    document.getElementById("x-nombre").value = "";
+    document.getElementById("x-tipo").value = "";
+    document.getElementById("x-descripcion").value = "";
+    document.getElementById("x-link").value = "";
+    document.getElementById("x-comentarios").value = "";
+  }
+
+  function cerrarModal() {
+    document.getElementById("modal").classList.add("hidden");
+  }
+
+  function guardarXavier() {
+    const id = document.getElementById("x-id").value;
+    const nombre = document.getElementById("x-nombre").value;
+    const tipo = document.getElementById("x-tipo").value;
+    const descripcion = document.getElementById("x-descripcion").value;
+    const link = document.getElementById("x-link").value;
+    const comentarios = document.getElementById("x-comentarios").value;
+
+    const datos = { nombre, tipo, descripcion, link, comentarios };
+
+    const url = id ? `/api/xavier/${id}` : "/api/xavier";
+    const metodo = id ? "PUT" : "POST";
+
+    fetch(url, {
+      method: metodo,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(datos)
+    }).then(() => location.reload());
+  }
+
+  function editar(id) {
+    const x = herramientas.find(h => h.id === id);
+    if (!x) return;
+    document.getElementById("x-id").value = x.id;
+    document.getElementById("x-nombre").value = x.nombre;
+    document.getElementById("x-tipo").value = x.tipo;
+    document.getElementById("x-descripcion").value = x.descripcion;
+    document.getElementById("x-link").value = x.link;
+    document.getElementById("x-comentarios").value = x.comentarios;
+    document.getElementById("modal-titulo").textContent = "✏️ Editar Herramienta";
+    document.getElementById("modal").classList.remove("hidden");
+  }
+
+  function borrar(id) {
+    if (!confirm("¿Eliminar esta herramienta?")) return;
+    fetch(`/api/xavier/${id}`, { method: "DELETE" })
+      .then(() => location.reload());
+  }
+</script>
+</body>
+</html>

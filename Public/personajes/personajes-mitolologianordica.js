@@ -1,0 +1,1465 @@
+var PERSONAJES = [
+  {
+    "id_Personaje": 1,
+    "Nombre": "Alcestis",
+    "url_imagen": "/ima/Olimpo1/hero_001.png",
+    "texto": "Alcestis es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      "Familiares de héroes (padres, esposas, hijos)"
+    ],
+    "momentos_estelares": "N/A",
+    "relaciones": [],
+    "notas": []
+  },
+  {
+    "id_Personaje": 2,
+    "Nombre": "Ulises",
+    "url_imagen": "/ima/Olimpo1/hero_002.png",
+    "texto": "Ulises es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 3,
+    "Nombre": "Quirón",
+    "url_imagen": "/ima/Olimpo1/hero_003.png",
+    "texto": "Quirón es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 4,
+    "Nombre": "Icles",
+    "url_imagen": "/ima/Olimpo1/hero_004.png",
+    "texto": "Icles es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 5,
+    "Nombre": "Teseo",
+    "url_imagen": "/ima/Olimpo1/hero_005.png",
+    "texto": "Teseo es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 6,
+    "Nombre": "Antígona",
+    "url_imagen": "/ima/Olimpo1/hero_006.png",
+    "texto": "Antígona es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 7,
+    "Nombre": "Hipólita",
+    "url_imagen": "/ima/Olimpo1/hero_007.png",
+    "texto": "Hipólita es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 8,
+    "Nombre": "Atlanta",
+    "url_imagen": "/ima/Olimpo1/hero_008.png",
+    "texto": "Atlanta es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 9,
+    "Nombre": "Apolonia",
+    "url_imagen": "/ima/Olimpo1/hero_009.png",
+    "texto": "Apolonia es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 10,
+    "Nombre": "Aquiles",
+    "url_imagen": "/ima/Olimpo1/hero_010.png",
+    "texto": "Aquiles es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 11,
+    "Nombre": "Patroclo",
+    "url_imagen": "/ima/Olimpo1/hero_011.png",
+    "texto": "Patroclo es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 12,
+    "Nombre": "Orestes",
+    "url_imagen": "/ima/Olimpo1/hero_012.png",
+    "texto": "Orestes es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 13,
+    "Nombre": "Jasón",
+    "url_imagen": "/ima/Olimpo1/hero_013.png",
+    "texto": "Jasón es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 14,
+    "Nombre": "Castor",
+    "url_imagen": "/ima/Olimpo1/hero_014.png",
+    "texto": "Castor es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 15,
+    "Nombre": "Pólux",
+    "url_imagen": "/ima/Olimpo1/hero_015.png",
+    "texto": "Pólux es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 16,
+    "Nombre": "Meleagro",
+    "url_imagen": "/ima/Olimpo1/hero_016.png",
+    "texto": "Meleagro es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 17,
+    "Nombre": "Belarofonte",
+    "url_imagen": "/ima/Olimpo1/hero_017.png",
+    "texto": "Belarofonte es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 18,
+    "Nombre": "Linceo",
+    "url_imagen": "/ima/Olimpo1/hero_018.png",
+    "texto": "Linceo es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 19,
+    "Nombre": "Amfiarao",
+    "url_imagen": "/ima/Olimpo1/hero_019.png",
+    "texto": "Amfiarao es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 20,
+    "Nombre": "Néstor",
+    "url_imagen": "/ima/Olimpo1/hero_020.png",
+    "texto": "Néstor es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 21,
+    "Nombre": "Peleo",
+    "url_imagen": "/ima/Olimpo1/hero_021.png",
+    "texto": "Peleo es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 22,
+    "Nombre": "Eneas",
+    "url_imagen": "/ima/Olimpo1/hero_022.png",
+    "texto": "Eneas es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 23,
+    "Nombre": "Idomeneo",
+    "url_imagen": "/ima/Olimpo1/hero_023.png",
+    "texto": "Idomeneo es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 24,
+    "Nombre": "Céfalo",
+    "url_imagen": "/ima/Olimpo1/hero_024.png",
+    "texto": "Céfalo es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 25,
+    "Nombre": "Protesilao",
+    "url_imagen": "/ima/Olimpo1/hero_025.png",
+    "texto": "Protesilao es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 26,
+    "Nombre": "Arcadio",
+    "url_imagen": "/ima/Olimpo1/hero_026.png",
+    "texto": "Arcadio es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 27,
+    "Nombre": "Diomedes",
+    "url_imagen": "/ima/Olimpo1/hero_027.png",
+    "texto": "Diomedes es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 28,
+    "Nombre": "Orión",
+    "url_imagen": "/ima/Olimpo1/hero_028.png",
+    "texto": "Orión es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 29,
+    "Nombre": "Filotetes",
+    "url_imagen": "/ima/Olimpo1/hero_029.png",
+    "texto": "Filotetes es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 30,
+    "Nombre": "Menelao",
+    "url_imagen": "/ima/Olimpo1/hero_030.png",
+    "texto": "Menelao es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 31,
+    "Nombre": "Perseo",
+    "url_imagen": "/ima/Olimpo1/hero_031.png",
+    "texto": "Perseo es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 32,
+    "Nombre": "Ayax padre",
+    "url_imagen": "/ima/Olimpo1/hero_032.png",
+    "texto": "Ayax padre es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 33,
+    "Nombre": "Ayax hijo",
+    "url_imagen": "/ima/Olimpo1/hero_033.png",
+    "texto": "Ayax hijo es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 34,
+    "Nombre": "Héctor",
+    "url_imagen": "/ima/Olimpo1/hero_034.png",
+    "texto": "Héctor es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 35,
+    "Nombre": "Abero",
+    "url_imagen": "/ima/Olimpo1/hero_035.png",
+    "texto": "Abero es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 36,
+    "Nombre": "Admeto",
+    "url_imagen": "/ima/Olimpo1/hero_036.png",
+    "texto": "Admeto es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 37,
+    "Nombre": "Yolao",
+    "url_imagen": "/ima/Olimpo1/hero_037.png",
+    "texto": "Yolao es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 38,
+    "Nombre": "Icto",
+    "url_imagen": "/ima/Olimpo1/hero_038.png",
+    "texto": "Icto es un personaje heroico del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 39,
+    "Nombre": "Zeus",
+    "url_imagen": "/ima/Olimpo1/dios_001.png",
+    "texto": "Zeus es una deidad del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 40,
+    "Nombre": "Hera",
+    "url_imagen": "/ima/Olimpo1/dios_002.png",
+    "texto": "Hera es una deidad del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 41,
+    "Nombre": "Atenea",
+    "url_imagen": "/ima/Olimpo1/dios_003.png",
+    "texto": "Atenea es una deidad del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 42,
+    "Nombre": "Apolo",
+    "url_imagen": "/ima/Olimpo1/dios_004.png",
+    "texto": "Apolo es una deidad del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 43,
+    "Nombre": "Artemisa",
+    "url_imagen": "/ima/Olimpo1/dios_005.png",
+    "texto": "Artemisa es una deidad del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 44,
+    "Nombre": "Afrodita",
+    "url_imagen": "/ima/Olimpo1/dios_006.png",
+    "texto": "Afrodita es una deidad del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 45,
+    "Nombre": "Hermes",
+    "url_imagen": "/ima/Olimpo1/dios_007.png",
+    "texto": "Hermes es una deidad del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 46,
+    "Nombre": "Hades",
+    "url_imagen": "/ima/Olimpo1/dios_008.png",
+    "texto": "Hades es una deidad del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 47,
+    "Nombre": "Poseidón",
+    "url_imagen": "/ima/Olimpo1/dios_009.png",
+    "texto": "Poseidón es una deidad del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 48,
+    "Nombre": "Deméter",
+    "url_imagen": "/ima/Olimpo1/dios_010.png",
+    "texto": "Deméter es una deidad del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 49,
+    "Nombre": "Hestia",
+    "url_imagen": "/ima/Olimpo1/dios_011.png",
+    "texto": "Hestia es una deidad del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 50,
+    "Nombre": "Hefesto",
+    "url_imagen": "/ima/Olimpo1/dios_012.png",
+    "texto": "Hefesto es una deidad del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 51,
+    "Nombre": "Dionisio",
+    "url_imagen": "/ima/Olimpo1/dios_013.png",
+    "texto": "Dionisio es una deidad del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 52,
+    "Nombre": "Perséfone",
+    "url_imagen": "/ima/Olimpo1/dios_014.png",
+    "texto": "Perséfone es una deidad del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 53,
+    "Nombre": "Hebe",
+    "url_imagen": "/ima/Olimpo1/dios_015.png",
+    "texto": "Hebe es una deidad del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 54,
+    "Nombre": "Elitia",
+    "url_imagen": "/ima/Olimpo1/dios_016.png",
+    "texto": "Elitia es una deidad del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 55,
+    "Nombre": "Eros",
+    "url_imagen": "/ima/Olimpo1/otros_001.png",
+    "texto": "Eros es una figura mítica del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 56,
+    "Nombre": "Anteros",
+    "url_imagen": "/ima/Olimpo1/otros_002.png",
+    "texto": "Anteros es una figura mítica del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 57,
+    "Nombre": "Hímero",
+    "url_imagen": "/ima/Olimpo1/otros_003.png",
+    "texto": "Hímero es una figura mítica del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 58,
+    "Nombre": "Himeneo",
+    "url_imagen": "/ima/Olimpo1/otros_004.png",
+    "texto": "Himeneo es una figura mítica del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 59,
+    "Nombre": "Psique",
+    "url_imagen": "/ima/Olimpo1/otros_005.png",
+    "texto": "Psique es una figura mítica del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 60,
+    "Nombre": "Cronos",
+    "url_imagen": "/ima/Olimpo1/otros_006.png",
+    "texto": "Cronos es una figura mítica del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 61,
+    "Nombre": "Gea",
+    "url_imagen": "/ima/Olimpo1/otros_007.png",
+    "texto": "Gea es una figura mítica del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 62,
+    "Nombre": "Urano",
+    "url_imagen": "/ima/Olimpo1/otros_008.png",
+    "texto": "Urano es una figura mítica del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 63,
+    "Nombre": "Océano",
+    "url_imagen": "/ima/Olimpo1/otros_009.png",
+    "texto": "Océano es una figura mítica del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 64,
+    "Nombre": "Hiperión",
+    "url_imagen": "/ima/Olimpo1/otros_010.png",
+    "texto": "Hiperión es una figura mítica del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 65,
+    "Nombre": "Japeto",
+    "url_imagen": "/ima/Olimpo1/otros_011.png",
+    "texto": "Japeto es una figura mítica del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 66,
+    "Nombre": "Crío",
+    "url_imagen": "/ima/Olimpo1/otros_012.png",
+    "texto": "Crío es una figura mítica del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 67,
+    "Nombre": "Tea",
+    "url_imagen": "/ima/Olimpo1/otros_013.png",
+    "texto": "Tea es una figura mítica del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 68,
+    "Nombre": "Febe",
+    "url_imagen": "/ima/Olimpo1/otros_014.png",
+    "texto": "Febe es una figura mítica del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 69,
+    "Nombre": "Menecio",
+    "url_imagen": "/ima/Olimpo1/otros_015.png",
+    "texto": "Menecio es una figura mítica del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 70,
+    "Nombre": "Epimeteo",
+    "url_imagen": "/ima/Olimpo1/otros_016.png",
+    "texto": "Epimeteo es una figura mítica del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 71,
+    "Nombre": "Prometeo",
+    "url_imagen": "/ima/Olimpo1/otros_017.png",
+    "texto": "Prometeo es una figura mítica del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 72,
+    "Nombre": "Tártaro",
+    "url_imagen": "/ima/Olimpo1/otros_018.png",
+    "texto": "Tártaro es una figura mítica del Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 73,
+    "Nombre": "Briareo",
+    "url_imagen": "/ima/Olimpo1/gigante_001.png",
+    "texto": "Briareo es un gigante o enemigo mítico en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 74,
+    "Nombre": "Encélado",
+    "url_imagen": "/ima/Olimpo1/gigante_002.png",
+    "texto": "Encélado es un gigante o enemigo mítico en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 75,
+    "Nombre": "Pallas",
+    "url_imagen": "/ima/Olimpo1/gigante_003.png",
+    "texto": "Pallas es un gigante o enemigo mítico en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 76,
+    "Nombre": "Hipólito",
+    "url_imagen": "/ima/Olimpo1/gigante_004.png",
+    "texto": "Hipólito es un gigante o enemigo mítico en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 77,
+    "Nombre": "Clitio",
+    "url_imagen": "/ima/Olimpo1/gigante_005.png",
+    "texto": "Clitio es un gigante o enemigo mítico en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 78,
+    "Nombre": "Mimas",
+    "url_imagen": "/ima/Olimpo1/gigante_006.png",
+    "texto": "Mimas es un gigante o enemigo mítico en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 79,
+    "Nombre": "Efialtes",
+    "url_imagen": "/ima/Olimpo1/gigante_007.png",
+    "texto": "Efialtes es un gigante o enemigo mítico en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 80,
+    "Nombre": "Otos",
+    "url_imagen": "/ima/Olimpo1/gigante_008.png",
+    "texto": "Otos es un gigante o enemigo mítico en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 81,
+    "Nombre": "Damisio",
+    "url_imagen": "/ima/Olimpo1/gigante_009.png",
+    "texto": "Damisio es un gigante o enemigo mítico en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 82,
+    "Nombre": "Cromio",
+    "url_imagen": "/ima/Olimpo1/gigante_010.png",
+    "texto": "Cromio es un gigante o enemigo mítico en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 83,
+    "Nombre": "Ortigia",
+    "url_imagen": "/ima/Olimpo1/gigante_011.png",
+    "texto": "Ortigia es un gigante o enemigo mítico en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 84,
+    "Nombre": "Ticio",
+    "url_imagen": "/ima/Olimpo1/gigante_012.png",
+    "texto": "Ticio es un gigante o enemigo mítico en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 85,
+    "Nombre": "Anteo",
+    "url_imagen": "/ima/Olimpo1/gigante_013.png",
+    "texto": "Anteo es un gigante o enemigo mítico en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 86,
+    "Nombre": "Caco",
+    "url_imagen": "/ima/Olimpo1/gigante_014.png",
+    "texto": "Caco es un gigante o enemigo mítico en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 87,
+    "Nombre": "Polifemo",
+    "url_imagen": "/ima/Olimpo1/gigante_015.png",
+    "texto": "Polifemo es un gigante o enemigo mítico en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 88,
+    "Nombre": "Alcioneo",
+    "url_imagen": "/ima/Olimpo1/gigante_016.png",
+    "texto": "Alcioneo es un gigante o enemigo mítico en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 89,
+    "Nombre": "Talo",
+    "url_imagen": "/ima/Olimpo1/gigante_017.png",
+    "texto": "Talo es un gigante o enemigo mítico en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 90,
+    "Nombre": "Argo",
+    "url_imagen": "/ima/Olimpo1/gigante_018.png",
+    "texto": "Argo es un gigante o enemigo mítico en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 91,
+    "Nombre": "Gerión",
+    "url_imagen": "/ima/Olimpo1/gigante_019.png",
+    "texto": "Gerión es un gigante o enemigo mítico en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 92,
+    "Nombre": "Calíope",
+    "url_imagen": "/ima/Olimpo1/musas_001.png",
+    "texto": "Calíope es una musa o una Cárite en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 93,
+    "Nombre": "Clío",
+    "url_imagen": "/ima/Olimpo1/musas_002.png",
+    "texto": "Clío es una musa o una Cárite en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 94,
+    "Nombre": "Erato",
+    "url_imagen": "/ima/Olimpo1/musas_003.png",
+    "texto": "Erato es una musa o una Cárite en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 95,
+    "Nombre": "Euterpe",
+    "url_imagen": "/ima/Olimpo1/musas_004.png",
+    "texto": "Euterpe es una musa o una Cárite en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 96,
+    "Nombre": "Melpómene",
+    "url_imagen": "/ima/Olimpo1/musas_005.png",
+    "texto": "Melpómene es una musa o una Cárite en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 97,
+    "Nombre": "Talía",
+    "url_imagen": "/ima/Olimpo1/musas_006.png",
+    "texto": "Talía es una musa o una Cárite en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 98,
+    "Nombre": "Urania",
+    "url_imagen": "/ima/Olimpo1/musas_007.png",
+    "texto": "Urania es una musa o una Cárite en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 99,
+    "Nombre": "Polimnia",
+    "url_imagen": "/ima/Olimpo1/musas_008.png",
+    "texto": "Polimnia es una musa o una Cárite en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 100,
+    "Nombre": "Terpsícore",
+    "url_imagen": "/ima/Olimpo1/musas_009.png",
+    "texto": "Terpsícore es una musa o una Cárite en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 101,
+    "Nombre": "Aglaya",
+    "url_imagen": "/ima/Olimpo1/musas_010.png",
+    "texto": "Aglaya es una musa o una Cárite en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 102,
+    "Nombre": "Eufeme",
+    "url_imagen": "/ima/Olimpo1/musas_011.png",
+    "texto": "Eufeme es una musa o una Cárite en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 103,
+    "Nombre": "Euclea",
+    "url_imagen": "/ima/Olimpo1/musas_012.png",
+    "texto": "Euclea es una musa o una Cárite en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 104,
+    "Nombre": "Eutenea",
+    "url_imagen": "/ima/Olimpo1/musas_013.png",
+    "texto": "Eutenea es una musa o una Cárite en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 105,
+    "Nombre": "Filofrósine",
+    "url_imagen": "/ima/Olimpo1/musas_014.png",
+    "texto": "Filofrósine es una musa o una Cárite en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 106,
+    "Nombre": "Thaleia",
+    "url_imagen": "/ima/Olimpo1/musas_015.png",
+    "texto": "Thaleia es una musa o una Cárite en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 107,
+    "Nombre": "Hermafrodito",
+    "url_imagen": "/ima/Olimpo1/otros_menores_001.png",
+    "texto": "Hermafrodito es un personaje menor o una personificación en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 108,
+    "Nombre": "Hedílogos",
+    "url_imagen": "/ima/Olimpo1/otros_menores_002.png",
+    "texto": "Hedílogos es un personaje menor o una personificación en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 109,
+    "Nombre": "Peito",
+    "url_imagen": "/ima/Olimpo1/otros_menores_003.png",
+    "texto": "Peito es un personaje menor o una personificación en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 110,
+    "Nombre": "Potos",
+    "url_imagen": "/ima/Olimpo1/otros_menores_004.png",
+    "texto": "Potos es un personaje menor o una personificación en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 111,
+    "Nombre": "Ampelo",
+    "url_imagen": "/ima/Olimpo1/otros_menores_005.png",
+    "texto": "Ampelo es un personaje menor o una personificación en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 112,
+    "Nombre": "Filotes",
+    "url_imagen": "/ima/Olimpo1/otros_menores_006.png",
+    "texto": "Filotes es un personaje menor o una personificación en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 113,
+    "Nombre": "Moros",
+    "url_imagen": "/ima/Olimpo1/otros_menores_007.png",
+    "texto": "Moros es un personaje menor o una personificación en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 114,
+    "Nombre": "Hipnos",
+    "url_imagen": "/ima/Olimpo1/otros_menores_008.png",
+    "texto": "Hipnos es un personaje menor o una personificación en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 115,
+    "Nombre": "Apate",
+    "url_imagen": "/ima/Olimpo1/otros_menores_009.png",
+    "texto": "Apate es un personaje menor o una personificación en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 116,
+    "Nombre": "Oneiros",
+    "url_imagen": "/ima/Olimpo1/otros_menores_010.png",
+    "texto": "Oneiros es un personaje menor o una personificación en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 117,
+    "Nombre": "Macaria",
+    "url_imagen": "/ima/Olimpo1/otros_menores_011.png",
+    "texto": "Macaria es un personaje menor o una personificación en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 118,
+    "Nombre": "Melone",
+    "url_imagen": "/ima/Olimpo1/otros_menores_012.png",
+    "texto": "Melone es un personaje menor o una personificación en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 119,
+    "Nombre": "Dolos",
+    "url_imagen": "/ima/Olimpo1/otros_menores_013.png",
+    "texto": "Dolos es un personaje menor o una personificación en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 120,
+    "Nombre": "Oizys",
+    "url_imagen": "/ima/Olimpo1/otros_menores_014.png",
+    "texto": "Oizys es un personaje menor o una personificación en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 121,
+    "Nombre": "Hemera",
+    "url_imagen": "/ima/Olimpo1/otros_menores_015.png",
+    "texto": "Hemera es un personaje menor o una personificación en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  },
+  {
+    "id_Personaje": 122,
+    "Nombre": "Pandora",
+    "url_imagen": "/ima/Olimpo1/otros_menores_016.png",
+    "texto": "Pandora es un personaje menor o una personificación en el Olimpo Moderno",
+    "etiqueta": [
+      ""
+    ],
+    "momentos_estelares": "N/A"
+  }
+];
+
+var scenes = [
+  {
+    "id_scene": 1,
+    "nombre": "Los sub trabajos de Hewrcules",
+    "imagen": "/ima/novela/1746427206739.jpg",
+    "Texto_descriptivo": "ebhnwe",
+    "imagen_url_pais": ""
+  },
+  {
+    "id_scene": 1746466060135,
+    "nombre": "Viene la familia dopada",
+    "imagen": "/ima/novela/1746466305607.png",
+    "Texto_descriptivo": "saga",
+    "imagen_url_pais": "/ima/novela/1746466060088.png"
+  },
+  {
+    "id_scene": 1746466380312,
+    "nombre": "Los 12 olimpicos o algunos mas",
+    "imagen": "/ima/novela/1746466380221.png",
+    "Texto_descriptivo": "",
+    "imagen_url_pais": ""
+  }
+];
+
+var dia_escena = [
+  {
+    "id_dia_scene": 1,
+    "id_dia": 1,
+    "id_scene": 1
+  },
+  {
+    "id_dia_scene": 1745771948686,
+    "id_dia": 4,
+    "id_scene": 1
+  },
+  {
+    "id_dia_scene": 1745772193357,
+    "id_dia": 6,
+    "id_scene": 1
+  },
+  {
+    "id_dia_scene": 1745772594093,
+    "id_dia": 45,
+    "id_scene": 1
+  },
+  {
+    "id_dia_scene": 1745915419592,
+    "id_dia": 22,
+    "id_scene": 1
+  },
+  {
+    "id_dia_scene": 1746863567433,
+    "id_dia": 2,
+    "id_scene": 1
+  },
+  {
+    "id_dia_scene": 1746946750531,
+    "id_dia": 2,
+    "id_scene": 1746946715436
+  },
+  {
+    "id_dia_scene": 1746947230737,
+    "id_dia": 2,
+    "id_scene": 1
+  }
+];
+
+var dia = [
+  {
+    "id_dia": 1,
+    "Dia": 1,
+    "id_mes": 1,
+    "id_scene": 1,
+    "texto_Lo_que_pasa": "ZZZ Yo, Eros, salgo de mi habitación y me detengo por un mo-\nmento a observar, hay que ver como ha cambiado todo\nestos milenios las reformas que ha sufrido como toda esta\ndimension. El hermoso dormitorio es inmenso y de lo\nmas blanquecinos, inundado por la luz del sol que se filtra\na través de las grandes ventanas arqueadas, con detalle a\nla arquitectura helénica, nos ofrece una vista espectacular\ndel mar y los acantilados en la distancia. Las paredes, de\nun blanco impoluto comunas de estilo corintio. De gran\naltura, creando un ambiente sereno y majestuoso, todo es\npoco para mi Psique. Una planta trepadora desciende por\nuna de las columnas, añadiendo un toque de naturaleza al\nespacio. Regalo de mi tia Perséfone.\nEn el centro de nuestro dormitorio. Las sábanas blancas\nestán revueltas Psique se ha debido levantar ya, es un\ntestimonio silencioso de la intimidad compartida. Psique\nha bajado ya, el olor de sus tortitas ya sube por la ventana.\nsu presencia llena el aire con un sentimiento de paz y\nestabilidad. Lamento que halla tenido que preparar el\ndesayuno. Pero era necesario dejar libre al servicio hoy.\nQuiero tenerla hoy para mi, por nuestro aniversario.\nHecho un vistazo a la terraza , Ya no están los restos de\ncomida de nuestra cena romántica de anoche. Los ha\ndebido recoger ella. Eros eres tonto. Que poco detallado\nBajo las escaleras, Me dirijo hacia el inmenso salón. En\nmedio de la estancia blanquecina, en un cómodo sofá,\nestán mis hermanos Potos y Anteros, no en una posición\nmuy edificante , que digamos. Han pasado la noche en mi\ncasa tras una de las muchas y dolorosa rupturas de An-\nteros, ya no se con cuantas van ya; su ultima pareja lo ha\ndejado. No me ha dado más detalles, En serio hermano\neres el dios del amor reciproco. Cuando vino anoche me-\ndio borracho a joderme la noche romántica con Psique,\nestuve tentado ha no dejarle entrar, Nuestro hermano\nPotos lo llevaba en volandas. Anteros estaba llorando y\nmaldiciendo, Me apiade. aunque maldita sea la gracia. En\nmal dia había elegido. Mas que porque era mi hermano o\nporque sabia que no iba a dar pie con bola en el trabajo y\nporque sabia que en su estado es capaz de hacer locuras,\nasí que prefiero que se quede aquí conmigo. y si Potos\nesta con el mejor. Les deje dormir en el salón. El bueno\nde Potos me dio las gracias ya que Anteros no estaba\nprecisamente bien.\nTras bajar las escaleras vi a Anteros y a Potos en el sofá,\nLas mariposas que siempre rodeaba anteros eran moradas\ny oscuras. A su lado duerme Potos abrazándole y con su\nmanto negro, con el que rodeaba a todos los que tenia\nnecesidad de de superar una perdida. Soy su hermano\nmayor y líder de los Erotes. Los contemplo y pienso que\nno habíamos cambiado tanto en la parte emocional desde\nla Hélade.\nNo me gusta que estén en ese estado en el apartamento\nque comparto con mi familia, pero debo cuidar de mis\nhermanos, Desde que formamos este grupo de Pop-Idols\n“Los Erotes”. Debemos conservar un cierto nivel por\nnuestros fans. Somo s populares en esta dimensión somos\nmuy conocidos y nuestras fiestas son de órdago.\nNuestras mejores fiestas son las relacionadas con el colec-\ntivo LGTBIQ (Como lo llamáis vosotros) En la ultima de\npride por ejemplo, y sí, celebramos el Pride, aunque para\nnosotros las relaciones sexuales son bastante distintas\na la que tenéis. Resulta raro a mi entender que queráis\nver el pasado desde los ojos de vuestro presente. Somos\nmuy consientes al menos nosotros que eso es injusto ya\nque no analizáis la culturas de aquellos siglos , las juzgáis\ncon sesgos de vuestra época, a través de conceptos que\nen aquellas época no existía. Por ejemplo la homosexua-\nlidad y la heterosexualidad o algo así, decís que se llama\nverdad. Bien esos conceptos los inventasteis muchos\nsiglos después. Por lo que ya os digo que las relaciones en\neste lugar disertan en varias motivos. Para nosotros, que\nalguien amara a otro ser con el que tenía una similitud\nen su género o/y sexo, no dejaba de ser otra caracterís-\ntica más de ese ser. Lo que hacía diferente, si acaso, era\nel rol dentro de la pareja. El pasivo, decís. Para nosotros\nera el humillado y no solo en nuestra sociedad. Según la\negipcia, mesopotámica e incluso la vikinga, entre otras.\nTeníamos eso en común. Estaba muy mal visto y ahora es\nsentido de burla, Ahora nos importa un cuerno. De echo\nfue atreves de un incidente de un imbécil que importuno\na Aquiles , al burlarse de su hermoso Patroclo y de ser el\n“dominado”, que cuando holló esto Aquiles, digamos que\naquel imbécil no acabo muy bien.\nEstas fiestas las celebramos en palacios y son de lo mas\nanimadas, siempre en espacios amplios y luminosos, con\ngrandes ventanas arqueadas que permiten la entrada de\nuna luz cálida y dorada. Le encargamos muchas veces a\nIris, la diosa del arco iris que las ilumine.\nEn la ultima fiesta mis tías, Atenea y Artemisa estuvie-\nron con sus parejas. Atenea con Mirmex y Artemisa con\nCalisto. Estaba invitado la crem de la crem del olimpo.\nEstaba Hermafrodito, Caenis-Caeneus, Hercules, Aquiles.\nEtc\nPero nada tan importante como lo que ocurrió al\nmomento, ya que esa noche en medio de toda la gente\napareció un chico, este con su presencia dejo desarmados,\na la seguridad que había contratado. En dos segundos la\ndejo en el suelo y eso que eran gigantes, No gigantes de\nhijos de Gea sino que median mas de 2 metros. Era una\nfiesta exclusiva. Nos quedamos impresionados. Heracles\ny Orión intentaron frenarle . Pero lo reconocieron al\ninstante. Se quedaron quietos, se miraron y les dejaron\nBULLING\nMito Griego\npasar. Al principio me asuste hasta que me di cuenta por-\nque se habían quedado tan quietos. Quien podía haberlos\nparado en seco. Yo le deje pasar al reconocer quien era\nrealmente. Reconocí que era un chico guapísimo, albino,\nmelena blanca y revoltosa, con bonitos ojos azules claros\ny brillantes. Llevaba una camisa de cuero marrón con\nflecos, con un águila en la espalda y el forro hecho de\nplumas, visible porque la llevaba desabrochada. Su estilo\nera impresionante y muy reconocible\n. Cuando llego al centro de la pista, donde Gamibedes\nestaba con una bandeja con nuestros cocteles exclusivos\nque habíamos los erotes sacado al mercado recientemente\n. Este chico le cogió de la mano, tiro la bandeja. Me sentó\nfatal que los tirara. cogió a Ganímedes como una muñeca\ny le plantó un beso en toda la boca. Si sin pedir permiso,\nlo que confirmo quien era, Gamibedes respondió cerran-\ndo los ojos y devolviéndoselo. Por cierto, el beso en la\nboca lo inventamos para comprobar si una mujer bebía o\nno. Si el machismo ha sido el mismo siempre\nPoseidón, que estaba con sus amantes Nerites y Pélope,\nuno a cada brazo, observó la escena con sorpresa.\n“—Oye, bro, mira a ver si ha bebido y a qué sabe.”\nNos quedamos en silencio. Todos dejamos de bailar, la\nmúsica se detuvo y guardamos silencio. Al momento, de\nsu boca salió una voz muy reconocible y temible a partes\niguales.\n“—Sabe a nectar divino” —dijo cuando dejó de besarlo.\nLa música volvió a resonar. Apolo, con su melena dorada\ny ojos que brillaban como el sol mismo, volvió a coger su\nguitarra y dio la orden a su grupo de seguir tocando. No\ncreo que haga falta deciros quién formaba su grupo, solo\nos daré una pista: ninguno de ellos es una musa.\nNo me preocupaba la reacción de Hera. Después de más\nde 1500 años de terapia, había asumido que su marido\nno iba a cambiar. Ganímedes me dijo que el beso le había\nrecordado a la Helade.\nEn medio del salón, el ambiente había cambiado. La\ntensión inicial se disipó rápidamente, reemplazada por\nuna energía renovada. Las luces de colores comenzaron a\nparpadear de nuevo, reflejándose en las paredes blancas\ny los elegantes muebles. La multitud volvió a moverse al\nritmo de la música, y el aire se llenó de risas y conversa-\nciones animadas.\nApolo, con su guitarra en mano, dirigía a su grupo con\nmaestría. Los acordes vibraban a través del espacio,\ncreando una atmósfera mágica. Psique, con su sonrisa\nserena y sus gestos calmados, se acercó a Hera, quien\nobservaba la escena con una mezcla de resignación y\naceptación. Le dijo siempre su consejo para ella “Libera-\nte”. Ella no dijo nada.\nEn un rincón del salón, Poseidón se reía junto a Nerites\ny Pélope, disfrutando de la velada. El chico albino, ahora\nel centro de atención, se unió a la fiesta como si siempre\nhubiera pertenecido allí. Ganímedes, con una expresión\nde sorpresa aún en su rostro, se recuperó rápidamente y\nvolvió a integrarse en la celebración con nosotros. Estos\ndos se despidieron como un par de tortolitos. Se fue\ndonde estaba Hera. la puerta de salida y le hizo una ca-\nrantoña. Hera se derritio por el como lo llevaba haciendo\nhace millones de años. Pero aparte del Pride, este salón\ntambién ha visto fiestas de dolor. Por ejemplo, hubo una\nola de tristeza a raíz de que Hera fuera menos implacable\ncon su marido. Hera, como diosa del matrimonio, influía\nen los casamientos con sus cambios de estado de ánimo,\nlo que provocó nueva ola de divorcios, lo que deprimió a\nHimeneo, el dios de las ceremonias nupciales. La con-\nclusión final fue una fiesta organizada por Apolo para\nnuestro compañero. Ya que a pesar de sus rolletes , se\nsegian queriendo.\nEsa noche, Himeneo no soltaba la botella. “¿Por qué?”\n—decía con desesperación—. “¿No se dan cuenta de lo\nduro que es este trabajo?” Potos, como no, estuvo al quite\ny no lo dejó solo. Él es el Erote de la pérdida o el anhelo.\nPsique también estuvo a su lado, ayudándolo a reincorpo-\nrarse. Ella es la que comprende no solo la mente humana,\nsino también la nuestra. Le decia que el que se creara una\nley de divorcio. No llevaria a que la gente se divorciara\nmas. Sino que se daria oportunidad a romper, lo que\nnunca debio unir.\nEl salón, normalmente iluminado y lleno de vida, esa no-\nche tenía un aire melancólico. Las luces eran más tenues,\nreflejando el estado de ánimo sombrío de los presentes.\nHimeneo, con su toga desaliñada y sus ojos vidriosos,\nse tambaleaba ligeramente mientras sostenía la botella.\nPotos, con su semblante sereno pero atento, lo mantenía\nen pie, rodeándolo con su manto. El traje de Himeneo\nque era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon. el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon. el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon. el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon. el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon. el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon. el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafwa",
+    "Lo_que_quiuero_hablar": "ZZZ ERTJREYJYo, Eros, salgo de mi haYo, Eros, salgo de mi habitación y me detengo por un mo-\nmento a observar, hay que ver como ha cambiado todo\nestos milenios las reformas que ha sufrido como toda esta\ndimension. El hermoso dormitorio es inmenso y de lo\nmas blanquecinos, inundado por la luz del sol que se filtra\na través de las grandes ventanas arqueadas, con detalle a\nla arquitectura helénica, nos ofrece una vista espectacular\ndel mar y los acantilados en la distancia. Las paredes, de\nun blanco impoluto comunas de estilo corintio. De gran\naltura, creando un ambiente sereno y majestuoso, todo es\npoco para mi Psique. Una planta trepadora desciende por\nuna de las columnas, añadiendo un toque de naturaleza al\nespacio. Regalo de mi tia Perséfone.\nEn el centro de nuestro dormitorio. Las sábanas blancas\nestán revueltas Psique se ha debido levantar ya, es un\ntestimonio silencioso de la intimidad compartida. Psique\nha bajado ya, el olor de sus tortitas ya sube por la ventana.\nsu presencia llena el aire con un sentimiento de paz y\nestabilidad. Lamento que halla tenido que preparar el\ndesayuno. Pero era necesario dejar libre al servicio hoy.\nQuiero tenerla hoy para mi, por nuestro aniversario.\nHecho un vistazo a la terraza , Ya no están los restos de\ncomida de nuestra cena romántica de anoche. Los ha\ndebido recoger ella. Eros eres tonto. Que poco detallado\nBajo las escaleras, Me dirijo hacia el inmenso salón. En\nmedio de la estancia blanquecina, en un cómodo sofá,\nestán mis hermanos Potos y Anteros, no en una posición\nmuy edificante , que digamos. Han pasado la noche en mi\ncasa tras una de las muchas y dolorosa rupturas de An-\nteros, ya no se con cuantas van ya; su ultima pareja lo ha\ndejado. No me ha dado más detalles, En serio hermano\neres el dios del amor reciproco. Cuando vino anoche me-\ndio borracho a joderme la noche romántica con Psique,\nestuve tentado ha no dejarle entrar, Nuestro hermano\nPotos lo llevaba en volandas. Anteros estaba llorando y\nmaldiciendo, Me apiade. aunque maldita sea la gracia. En\nmal dia había elegido. Mas que porque era mi hermano o\nporque sabia que no iba a dar pie con bola en el trabajo y\nporque sabia que en su estado es capaz de hacer locuras,\nasí que prefiero que se quede aquí conmigo. y si Potos\nesta con el mejor. Les deje dormir en el salón. El bueno\nde Potos me dio las gracias ya que Anteros no estaba\nprecisamente bien.\nTras bajar las escaleras vi a Anteros y a Potos en el sofá,\nLas mariposas que siempre rodeaba anteros eran moradas\ny oscuras. A su lado duerme Potos abrazándole y con su\nmanto negro, con el que rodeaba a todos los que tenia\nnecesidad de de superar una perdida. Soy su hermano\nmayor y líder de los Erotes. Los contemplo y pienso que\nno habíamos cambiado tanto en la parte emocional desde\nla Hélade.\nNo me gusta que estén en ese estado en el apartamento\nque comparto con mi familia, pero debo cuidar de mis\nhermanos, Desde que formamos este grupo de Pop-Idols\n“Los Erotes”. Debemos conservar un cierto nivel por\nnuestros fans. Somo s populares en esta dimensión somos\nmuy conocidos y nuestras fiestas son de órdago.\nNuestras mejores fiestas son las relacionadas con el colec-\ntivo LGTBIQ (Como lo llamáis vosotros) En la ultima de\npride por ejemplo, y sí, celebramos el Pride, aunque para\nnosotros las relaciones sexuales son bastante distintas\na la que tenéis. Resulta raro a mi entender que queráis\nver el pasado desde los ojos de vuestro presente. Somos\nmuy consientes al menos nosotros que eso es injusto ya\nque no analizáis la culturas de aquellos siglos , las juzgáis\ncon sesgos de vuestra época, a través de conceptos que\nen aquellas época no existía. Por ejemplo la homosexua-\nlidad y la heterosexualidad o algo así, decís que se llama\nverdad. Bien esos conceptos los inventasteis muchos\nsiglos después. Por lo que ya os digo que las relaciones en\neste lugar disertan en varias motivos. Para nosotros, que\nalguien amara a otro ser con el que tenía una similitud\nen su género o/y sexo, no dejaba de ser otra caracterís-\ntica más de ese ser. Lo que hacía diferente, si acaso, era\nel rol dentro de la pareja. El pasivo, decís. Para nosotros\nera el humillado y no solo en nuestra sociedad. Según la\negipcia, mesopotámica e incluso la vikinga, entre otras.\nTeníamos eso en común. Estaba muy mal visto y ahora es\nsentido de burla, Ahora nos importa un cuerno. De echo\nfue atreves de un incidente de un imbécil que importuno\na Aquiles , al burlarse de su hermoso Patroclo y de ser el\n“dominado”, que cuando holló esto Aquiles, digamos que\naquel imbécil no acabo muy bien.\nEstas fiestas las celebramos en palacios y son de lo mas\nanimadas, siempre en espacios amplios y luminosos, con\ngrandes ventanas arqueadas que permiten la entrada de\nuna luz cálida y dorada. Le encargamos muchas veces a\nIris, la diosa del arco iris que las ilumine.\nEn la ultima fiesta mis tías, Atenea y Artemisa estuvie-\nron con sus parejas. Atenea con Mirmex y Artemisa con\nCalisto. Estaba invitado la crem de la crem del olimpo.\nEstaba Hermafrodito, Caenis-Caeneus, Hercules, Aquiles.\nEtc\nPero nada tan importante como lo que ocurrió al\nmomento, ya que esa noche en medio de toda la gente\napareció un chico, este con su presencia dejo desarmados,\na la seguridad que había contratado. En dos segundos la\ndejo en el suelo y eso que eran gigantes, No gigantes de\nhijos de Gea sino que median mas de 2 metros. Era una\nfiesta exclusiva. Nos quedamos impresionados. Heracles\ny Orión intentaron frenarle . Pero lo reconocieron al\ninstante. Se quedaron quietos, se miraron y les dejaron\nBULLING\nMito Griego\npasar. Al principio me asuste hasta que me di cuenta por-\nque se habían quedado tan quietos. Quien podía haberlos\nparado en seco. Yo le deje pasar al reconocer quien era\nrealmente. Reconocí que era un chico guapísimo, albino,\nmelena blanca y revoltosa, con bonitos ojos azules claros\ny brillantes. Llevaba una camisa de cuero marrón con\nflecos, con un águila en la espalda y el forro hecho de\nplumas, visible porque la llevaba desabrochada. Su estilo\nera impresionante y muy reconocible\n. Cuando llego al centro de la pista, donde Gamibedes\nestaba con una bandeja con nuestros cocteles exclusivos\nque habíamos los erotes sacado al mercado recientemente\n. Este chico le cogió de la mano, tiro la bandeja. Me sentó\nfatal que los tirara. cogió a Ganímedes como una muñeca\ny le plantó un beso en toda la boca. Si sin pedir permiso,\nlo que confirmo quien era, Gamibedes respondió cerran-\ndo los ojos y devolviéndoselo. Por cierto, el beso en la\nboca lo inventamos para comprobar si una mujer bebía o\nno. Si el machismo ha sido el mismo siempre\nPoseidón, que estaba con sus amantes Nerites y Pélope,\nuno a cada brazo, observó la escena con sorpresa.\n“—Oye, bro, mira a ver si ha bebido y a qué sabe.”\nNos quedamos en silencio. Todos dejamos de bailar, la\nmúsica se detuvo y guardamos silencio. Al momento, de\nsu boca salió una voz muy reconocible y temible a partes\niguales.\n“—Sabe a nectar divino” —dijo cuando dejó de besarlo.\nLa música volvió a resonar. Apolo, con su melena dorada\ny ojos que brillaban como el sol mismo, volvió a coger su\nguitarra y dio la orden a su grupo de seguir tocando. No\ncreo que haga falta deciros quién formaba su grupo, solo\nos daré una pista: ninguno de ellos es una musa.\nNo me preocupaba la reacción de Hera. Después de más\nde 1500 años de terapia, había asumido que su marido\nno iba a cambiar. Ganímedes me dijo que el beso le había\nrecordado a la Helade.\nEn medio del salón, el ambiente había cambiado. La\ntensión inicial se disipó rápidamente, reemplazada por\nuna energía renovada. Las luces de colores comenzaron a\nparpadear de nuevo, reflejándose en las paredes blancas\ny los elegantes muebles. La multitud volvió a moverse al\nritmo de la música, y el aire se llenó de risas y conversa-\nciones animadas.\nApolo, con su guitarra en mano, dirigía a su grupo con\nmaestría. Los acordes vibraban a través del espacio,\ncreando una atmósfera mágica. Psique, con su sonrisa\nserena y sus gestos calmados, se acercó a Hera, quien\nobservaba la escena con una mezcla de resignación y\naceptación. Le dijo siempre su consejo para ella “Libera-\nte”. Ella no dijo nada.\nEn un rincón del salón, Poseidón se reía junto a Nerites\ny Pélope, disfrutando de la velada. El chico albino, ahora\nel centro de atención, se unió a la fiesta como si siempre\nhubiera pertenecido allí. Ganímedes, con una expresión\nde sorpresa aún en su rostro, se recuperó rápidamente y\nvolvió a integrarse en la celebración con nosotros. Estos\ndos se despidieron como un par de tortolitos. Se fue\ndonde estaba Hera. la puerta de salida y le hizo una ca-\nrantoña. Hera se derritio por el como lo llevaba haciendo\nhace millones de años. Pero aparte del Pride, este salón\ntambién ha visto fiestas de dolor. Por ejemplo, hubo una\nola de tristeza a raíz de que Hera fuera menos implacable\ncon su marido. Hera, como diosa del matrimonio, influía\nen los casamientos con sus cambios de estado de ánimo,\nlo que provocó nueva ola de divorcios, lo que deprimió a\nHimeneo, el dios de las ceremonias nupciales. La con-\nclusión final fue una fiesta organizada por Apolo para\nnuestro compañero. Ya que a pesar de sus rolletes , se\nsegian queriendo.\nEsa noche, Himeneo no soltaba la botella. “¿Por qué?”\n—decía con desesperación—. “¿No se dan cuenta de lo\nduro que es este trabajo?” Potos, como no, estuvo al quite\ny no lo dejó solo. Él es el Erote de la pérdida o el anhelo.\nPsique también estuvo a su lado, ayudándolo a reincorpo-\nrarse. Ella es la que comprende no solo la mente humana,\nsino también la nuestra. Le decia que el que se creara una\nley de divorcio. No llevaria a que la gente se divorciara\nmas. Sino que se daria oportunidad a romper, lo que\nnunca debio unir.\nEl salón, normalmente iluminado y lleno de vida, esa no-\nche tenía un aire melancólico. Las luces eran más tenues,\nreflejando el estado de ánimo sombrío de los presentes.\nHimeneo, con su toga desaliñada y sus ojos vidriosos,\nse tambaleaba ligeramente mientras sostenía la botella.\nPotos, con su semblante sereno pero atento, lo maue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafntenía\nen pie, rodeándolo con su manto. El traje de Himeneo\nque era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\nbitación y me detengo por un mo-\nmento a observar, hay que ver como ha cambiado todo\nestos milenios las reformas que ha sufrido como toda esta\ndimension. El hermoso dormitorio es inmenso y de lo\nmas blanquecinos, inundado por la luz del sol que se filtra\na través de las grandes ventanas arqueadas, con detalle a\nla arquitectura helénica, nos ofrece una vista espectacular\ndel mar y los acantilados en la distancia. Las paredes, detengo por un mo-\nmento a observar, hay que ver como ha cambiado todo\nestos milenios las reformas que ha sufrido como toda esta\ndimension. El hermoso dormitorio es inmenso y de lo\nmas blanquecinos, inundado por la luz del sol que se filtra\na través de las grandes ventanas arqueadas, con detalle a\nla arquitectura helénica, nos ofrece una vista espectacular\ndel mar y los acantilados en la distancia. Las paredes, detengo por un mo-\nmento a observar, hay que ver como ha cambiado todo\nestos milenios las reformas que ha sufrido como toda esta\ndimension. El hermoso dormitorio es inmenso y de lo\nmas blanquecinos, inundado por la luz del sol que se filtra\na través de las grandes ventanas arqueadas, con detalle a\nla arquitectura helénica, nos ofrece una vista espectacular\ndel mar y los acantilados en la distancia. Las paredes, detengo por un mo-\nmento a observar, hay que ver como ha cambiado todo\nestos milenios las reformas que ha sufrido como toda esta\ndimension. El hermoso dormitorio es inmenso y de lo\nmas blanquecinos, inundado por la luz del sol que se filtra\na través de las grandes ventanas arqueadas, con detalle a\nla arquitectura helénica, nos ofrece una vista espectacular\ndel mar y los acantilados en la distancia. Las paredes, detengo por un mo-\nmento a observar, hay que ver como ha cambiado todo\nestos milenios las reformas que ha sufrido como toda esta\ndimension. El hermoso dormitorio es inmenso y de lo\nmas blanquecinos, inundado por la luz del sol que se filtra\na través de las grandes ventanas arqueadas, con detalle a\nla arquitectura helénica, nos ofrece una vista espectacular\ndel mar y los acantilados en la distancia. Las paredes, detengo por un mo-\nmento a observar, hay que ver como ha cambiado todo\nestos milenios las reformas que ha sufrido como toda esta\ndimension. El hermoso dormitorio es inmenso y de lo\nmas blanquecinos, inundado por la luz del sol que se filtra\na través de las grandes ventanas arqueadas, con detalle a\nla arquitectura helénica, nos ofrece una vista espectacular\ndel mar y los acantilados en la distancia. Las paredes, detengo por un mo-\nmento a observar, hay que ver como ha cambiado todo\nestos milenios las reformas que ha sufrido como toda esta\ndimension. El hermoso dormitorio es inmenso y de lo\nmas blanquecinos, inundado por la luz del sol que se filtra\na través de las grandes ventanas arqueadas, con detalle a\nla arquitectura helénica, nos ofrece una vista espectacular\ndel mar y los acantilados en la distancia. Las paredes, detengo por un mo-\nmento a observar, hay que ver como ha cambiado todo\nestos milenios las reformas que ha sufrido como toda esta\ndimension. El hermoso dormitorio es inmenso y de lo\nmas blanquecinos, inundado por la luz del sol que se filtra\na través de las grandes ventanas arqueadas, con detalle a\nla arquitectura helénica, nos ofrece una vista espectacular\ndel mar y los acantilados en la distancia. Las paredes, detengo por un mo-\nmento a observar, hay que ver como ha cambiado todo\nestos milenios las reformas que ha sufrido como toda esta\ndimension. El hermoso dormitorio es inmenso y de lo\nmas blanquecinos, inundado por la luz del sol que se filtra\na través de las grandes ventanas arqueadas, con detalle a\nla arquitectura helénica, nos ofrece una vista espectacular\ndel mar y los acantilados en la distancia. Las paredes, detengo por un mo-\nmento a observar, hay que ver como ha cambiado todo\nestos milenios las reformas que ha sufrido como toda esta\ndimension. El hermoso dormitorio es inmenso y de lo\nmas blanquecinos, inundado por la luz del sol que se filtra\na través de las grandes ventanas arqueadas, con detalle a\nla arquitectura helénica, nos ofrece una vista espectacular\ndel mar y los acantilados en la distancia. Las paredes, detengo por un mo-\nmento a observar, hay que ver como ha cambiado todo\nestos milenios las reformas que ha sufrido como toda esta\ndimension. El hermoso dormitorio es inmenso y de lo\nmas blanquecinos, inundado por la luz del sol que se filtra\na través de las grandes ventanas arqueadas, con detalle a\nla arquitectura helénica, nos ofrece una vista espectacular\ndel mar y los acantilados en la distancia. Las paredes, detengo por un mo-\nmento a observar, hay que ver como ha cambiado todo\nestos milenios las reformas que ha sufrido como toda esta\ndimension. El hermoso dormitorio es inmenso y de lo\nmas blanquecinos, inundado por la luz del sol que se filtra\na través de las grandes ventanas arqueadas, con detalle el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon. a\nla arquitectura helénica, nos ofrece una vista espectacular\ndel mar y los acantilados en la distancia. Las paredes, de\nun blanco impoluto comunas de estilo corintio. De gran\naltura, creando un ambiente sereno y majestuoso, todo es\npoco para mi Psique. Una planta trepadora desciende por\nuna de las columnas, añadiendo un toque de naturaleza al\nespacio. Regalo de mi tia Perséfone.\nEn el centro de nuestro dormitorio. Las sábanas blancas\nestán revueltas Psique se ha debido levantar ya, es un\ntestimonio silencioso de la intimidad compartida. Psique\nha bajado ya, el olor de sus tortitas ya sube por la ventana.\nsu presencia llena el aire con un sentimiento de paz y\nestabilidad. Lamento que halla tenido que preparar el\ndesayuno. Pero era necesario dejar libre al servicio hoy.\nQuiero tenerla hoy para mi, por nuestro aniversario.\nHecho un vistazo a la terraza , Ya no están los restos de\ncomida de nuestra cena romántica de anoche. Los ha\ndebido recoger ella. Eros eres tonto. Que poco detallado\nBajo las escaleras, Me dirijo hacia el inmenso salón. En\nmedio de la estancia blanquecina, en un cómodo sofá,\nestán mis hermanos Potos y Anteros, no en una posición\nmuy edificante , que digamos. Han pasado la noche en mi\ncasa tras una de las muchas y dolorosa rupturas de An-\nteros, ya no se con cuantas van ya; su ultima pareja lo ha\ndejado. No me ha dado más detalles, En serio hermano\neres el dios del amor reciproco. Cuando vino anoche me-\ndio borracho a joderme la noche romántica con Psique,\nestuve tentado ha no dejarle entrar, Nuestro hermano\nPotos lo llevaba en volandas. Anteros estaba llorando y\nmaldiciendo, Me apiade. aunque maldita sea la gracia. En\nmal dia había elegido. Mas que porque era mi hermano o\nporque sabia que no iba a dar pie con bola en el trabajo y\nporque sabia que en su estado es capaz de hacer locuras,\nasí que prefiero que se quede aquí conmigo. y si Potos\nesta con el mejor. Les deje dormir en el salón. El bueno\nde Potos me dio las gracias ya que Anteros no estaba\nprecisamente bien.\nTras bajar las escaleras vi a Anteros y a Potos en el sofá,\nLas mariposas que siempre rodeaba anteros eran moradas\ny oscuras. A su lado duerme Potos abrazándole y con su\nmanto negro, con el que rodeaba a todos los que tenia\nnecesidad de de superar una perdida. Soy su hermano\nmayor y líder de los Erotes. Los contemplo y pienso que\nno habíamos cambiado tanto en la parte emocional desde\nla Hélade.\nNo me gusta que estén en ese estado en el apartamento\nque comparto con mi familia, pero debo cuidar de mis\nhermanos, Desde que formamos este grupo de Pop-Idols\n“Los Erotes”. Debemos conservar un cierto nivel por\nnuestros fans. Somo s populares en esta dimensión somos\nmuy conocidos y nuestras fiestas son de órdago.\nNuestras mejores fiestas son las relacionadas con el colec-\ntivo LGTBIQ (Como lo llamáis vosotros) En la ultima de\npride por ejemplo, y sí, celebramos el Pride, aunque para\nnosotros las relaciones sexuales son bastante distintas\na la que tenéis. Resulta raro a mi entender que queráis\nver el pasado desde los ojos de vuestro presente. Somos\nmuy consientes al menos nosotros que eso es injusto ya\nque no analizáis la culturas de aquellos siglos , las juzgáis\ncon sesgos de vuestra época, a través de conceptos que\nen aquellas época no existía. Por ejemplo la homosexua-\nlidad y la heterosexualidad o algo así, decís que se llama\nverdad. Bien esos conceptos los inventasteis muchos\nsiglos después. Por lo que ya os digo que las relaciones en\neste lugar disertan en varias motivos. Para nosotros, que\nalguien amara a otro ser con el que tenía una similitud\nen su género o/y sexo, no dejaba de ser otra caracterís-\ntica más de ese ser. Lo que hacía diferente, si acaso, era\nel rol dentro de la pareja. El pasivo, decís. Para nosotros\nera el humillado y no solo en nuestra sociedad. Según la\negipcia, mesopotámica e incluso la vikinga, entre otras.\nTeníamos eso en común. Estaba muy mal visto y ahora es\nsentido de burla, Ahora nos importa un cuerno. De echo\nfue atreves de un incidente de un imbécil que importuno\na Aquiles , al burlarse de su hermoso Patroclo y de ser el\n“dominado”, que cuando holló esto Aquiles, digamos que\naquel imbécil no acabo muy bien.\nEstas fiestas las celebramos en palacios y son de lo mas\nanimadas, siempre en espacios amplios y luminosos, con\ngrandes ventanas arqueadas que permiten la entrada de\nuna luz cálida y dorada. Le encargamos muchas veces a\nIris, la diosa del arco iris que las ilumine.\nEn la ultima fiesta mis tías, Atenea y Artemisa estuvie-\nron con sus parejas. Atenea con Mirmex y Artemisa con\nCalisto. Estaba invitado la crem de la crem del olimpo.\nEstaba Hermafrodito, Caenis-Caeneus, Hercules, Aquiles.\nEtc\nPero nada tan importante como lo que ocurrió al\nmomento, ya que esa noche en medio de toda la gente\napareció un chico, este con su presencia dejo desarmados,\na la seguridad que había contratado. En dos segundos la\ndejo en el suelo y eso que eran gigantes, No gigantes de\nhijos de Gea sino que median mas de 2 metros. Era una\nfiesta exclusiva. Nos quedamos impresionados. Heracles\ny Orión intentaron frenarle . Pero lo reconocieron al\ninstante. Se quedaron quietos, se miraron y les dejaron",
+    "desarrollo": "ZZZ SRYJREYJEYo, Eros, salgo de mi habitación y me detengo por un mo-\nmento a observar, hay que ver como ha cambiado todo\nestos milenios las reformas que ha sufrido como toda esta\ndimension. El hermoso dormitorio es inmenso y de lo\nmas blanquecinos, inundado por la luz del sol que se filtra\na través de las grandes ventanas arqueadas, con detalle a\nla arquitectura helénica, nos ofrece una vista espectacular\ndel mar y los acantilados en la distancia. Las paredes, de\nun blanco impoluto comunas de estilo corintio. De gran\naltura, creando un ambiente sereno y majestuoso, todo es\npoco para mi Psique. Una planta trepadora desciende por\nuna de las columnas, añadiendo un toque de naturaleza al\nespacio. Regalo de mi tia Perséfone.\nEn el centro de nuestro dormitorio. Las sábanas blancas\nestán revueltas Psique se ha debido levantar ya, es un\ntestimonio silencioso de la intimidad compartida. Psique\nha bajado ya, el olor de sus tortitas ya sube por la ventana.\nsu presencia llena el aire con un sentimiento de paz y\nestabilidad. Lamento que halla tenido que preparar el\ndesayuno. Pero era necesario dejar libre al servicio hoy.\nQuiero tenerla hoy para mi, por nuestro aniversario.\nHecho un vistazo a la terraza , Ya no están los restos de\ncomida de nuestra cena romántica de anoche. Los ha\ndebido recoger ella. Eros eres tonto. Que poco detallado\nBajo las escaleras, Me dirijYo, Eros, salgo de mi habitación y me detengo por un mo-\nmento a observar, hay que ver como ha cambiado todo\nestos milenios las reformas que ha sufrido como toda esta\ndimension. El hermoso dormitorio es inmenso y de lo\nmas blanquecinos, inundado por la luz del sol que se filtra\na través de las grandes ventanas arqueadas, con detalle a\nla arquitectura helénica, nos ofrece una vista espectacular\ndel mar y los acantilados en la distancia. Las paredes, de\nun blanco impoluto comunas de estilo corintio. De gran\naltura, creando un ambiente sereno y majestuoso, todo es\npoco para mi Psique. Una planta trepadora desciende por\nuna de las columnas, añadiendo un toque de naturaleza al\nespacio. Regalo de mi tia Perséfone.\nEn el centro de nuestro dormitorio. Las sábanas blancas\nestán revueltas Psique se ha debido levantar ya, es un\ntestimonio silencioso de la intimidad compartida. Psique\nha bajado ya, el olor de sus tortitas ya sube por la ventana.\nsu presencia llena el aire con un sentimiento de paz y\nestabilidad. Lamento que halla tenido que preparar el\ndesayuno. Pero era necesario dejar libre al servicio hoy.\nQuiero tenerla hoy para mi, por nuestro aniversario.\nHecho un vistazo a la terraza , Ya no están los restos de\ncomida de nuestra cena romántica de anoche. Los ha\ndebido recoger ella. Eros eres tonto. Que poco detallado\nBajo las escaleras, Me dirijo hacia el inmenso salón. En\nmedio de la estancia blanquecina, en un cómodo sofá,\nestán mis hermanos Potos y Anteros, no en una posición\nmuy edificante , que digamos. Han pasado la noche en mi\ncasa tras una de las muchas y dolorosa rupturas de An-\nteros, ya no se con cuantas van ya; su ultima pareja lo ha\ndejado. No me ha dado más detalles, En serio hermano\neres el dios del amor reciproco. Cuando vino anoche me-\ndio borracho a joderme la noche romántica con Psique,\nestuve tentado ha no dejarle entrar, Nuestro hermano\nPotos lo llevaba en volandas. Anteros estaba llorando y\nmaldiciendo, Me apiade. aunque maldita sea la gracia. En\nmal dia había elegido. Mas que porque era mi hermano o\nporque sabia que no iba a dar pie con bola en el trabajo y\nporque sabia que en su estado es capaz de hacer locuras,\nasí que prefiero que se quede aquí conmigo. y si Potos\nesta con el mejor. Les deje dormir en el salón. El bueno\nde Potos me dio las gracias ya que Anteros no estaba\nprecisamente bien.\nTras bajar las escaleras vi a Anteros y a Potos en el sofá,\nLas mariposas que siempre rodeaba anteros eran moradas\ny oscuras. A su lado duerme Potos abrazándole y con su\nmanto negro, con el que rodeaba a todos los que tenia\nnecesidad de de superar una perdida. Soy su hermano\nmayor y líder de los Erotes. Los contemplo y pienso que\nno habíamos cambiado tanto en la parte emocional desde\nla Hélade.\nNo me gusta que estén en ese estado en el apartamento\nque comparto con mi familia, pero debo cuidar de mis\nhermanos, Desde que formamos este grupo de Pop-Idols\n“Los Erotes”. Debemos conservar un cierto nivel por\nnuestros fans. Somo s populares en esta dimensión somos\nmuy conocidos y nuestras fiestas son de órdago.\nNuestras mejores fiestas son las relacionadas con el colec-\ntivo LGTBIQ (Como lo llamáis vosotros) En la ultima de\npride por ejemplo, y sí, celebramos el Pride, aunque para\nnosotros las relaciones sexuales son bastante distintas\na la que tenéis. Resulta raro a mi entender que queráis\nver el pasado desde los ojos de vuestro presente. Somos\nmuy consientes al menos nosotros que eso es injusto ya\nque no analizáis la culturas de aquellos siglos , las juzgáis\ncon sesgos de vuestra época, a través de conceptos que\nen aquellas época no existía. Por ejemplo la homosexua-\nlidad y la heterosexualidad o algo así, decís que se llama\nverdad. Bien esos conceptos los inventasteis muchos\nsiglos después. Por lo que ya os digo que las relaciones en\neste lugar disertan en varias motivos. Para nosotros, que\nalguien amara a otro ser con el que tenía una similitud\nen su género o/y sexo, no dejaba de ser otra caracterís-\ntica más de ese ser. Lo que hacía diferente, si acaso, era\nel rol dentro de la pareja. El pasivo, decís. Para nosotros\nera el humillado y no solo en nuestra sociedad. Según la\negipcia, mesopotámica e incluso la vikinga, entre otras.\nTeníamos eso en común. Estaba muy mal visto y ahora es\nsentido de burla, Ahora nos importa un cuerno. De echo\nfue atreves de un incidente de un imbécil que importuno\na Aquiles , al burlarse de su hermoso Patroclo y de ser el\n“dominado”, que cuando holló esto Aquiles, digamos que\naquel imbécil no acabo muy bien.\nEstas fiestas las celebramos en palacios y son de lo mas\nanimadas, siempre en espacios amplios y luminosos, con\ngrandes ventanas arqueadas que permiten la entrada de\nuna luz cálida y dorada. Le encargamos muchas veces a\nIris, la diosa del arco iris que las ilumine.\nEn la ultima fiesta mis tías, Atenea y Artemisa estuvie-\nron con sus parejas. Atenea con Mirmex y Artemisa con\nCalisto. Estaba invitado la crem de la crem del olimpo.\nEstaba Hermafrodito, Caenis-Caeneus, Hercules, Aquiles.\nEtc\nPero nada tan importante como lo que ocurrió al\nmomento, ya que esa noche en medio de toda la gente\napareció un chico, este con su presencia dejo desarmados,\na la seguridad que había contratado. En dos segundos la\ndejo en el suelo y eso que eran gigantes, No gigantes de\nhijos de Gea sino que median mas de 2 metros. Era una\nfiesta exclusiva. Nos quedamos impresionados. Heracles\ny Orión intentaron frenarle . Pero lo reconocieron al\ninstante. Se quedaron quietos, se miraron y les dejaron\nBULLING\nMito Griego\npasar. Al principio me asuste hasta que me di cuenta por-\nque se habían quedado tan quietos. Quien podía haberlos\nparado en seco. Yo le deje pasar al reconocer quien era\nrealmente. Reconocí que era un chico guapísimo, albino,\nmelena blanca y revoltosa, con bonitos ojos azules claros\ny brillantes. Llevaba una camisa de cuero marrón con\nflecos, con un águila en la espalda y el forro hecho de\nplumas, visible porque la llevaba desabrochada. Su estilo\nera impresionante y muy reconocible\n. Cuando llego al centro de la pista, donde Gamibedes\nestaba con una bandeja con nuestros cocteles exclusivos\nque habíamos los erotes sacado al mercado recientemente\n. Este chico le cogió de la mano, tiro la bandeja. Me sentó\nfatal que los tirara. cogió a Ganímedes como una muñeca\ny le plantó un beso en toda la boca. Si sin pedir permiso,\nlo que confirmo quien era, Gamibedes respondió cerran-\ndo los ojos y devolviéndoselo. Por cierto, el beso en la\nboca lo inventamos para comprobar si una mujer bebía o\nno. Si el machismo ha sido el mismo siempre\nPoseidón, que estaba con sus amantes Nerites y Pélope,\nuno a cada brazo, observó la escena con sorpresa.\n“—Oye, bro, mira a ver si ha bebido y a qué sabe.”\nNos quedamos en silencio. Todos dejamos de bailar, la\nmúsica se detuvo y guardamos silencio. Al momento, de\nsu boca salió una voz muy reconocible y temible a partes\niguales.\n“—Sabe a nectar divino” —dijo cuando dejó de besarlo.\nLa música volvió a resonar. Apolo, con su melena dorada\ny ojos que brillaban como el sol mismo, volvió a coger su\nguitarra y dio la orden a su grupo de seguir tocando. No\ncreo que haga falta deciros quién formaba su grupo, solo\nos daré una pista: ninguno de ellos es una musa.\nNo me preocupaba la reacción de Hera. Después de más\nde 1500 años de terapia, había asumido que su marido\nno iba a cambiar. Ganímedes me dijo que el beso le había\nrecordado a la Helade.\nEn medio del salón, el ambiente había cambiado. La\ntensión inicial se disipó rápidamente, reemplazada por\nuna energía renovada. Las luces de colores comenzaron a\nparpadear de nuevo, reflejándose en las paredes blancas\ny los elegantes muebles. La multitud volvió a moverse al\nritmo de la música, y el aire se llenó de risas y conversa-\nciones animadas.\nApolo, con su guitarra en mano, dirigía a su grupo con\nmaestría. Los acordes vibraban a través del espacio,\ncreando una atmósfera mágica. Psique, con su sonrisa\nserena y sus gestos calmados, se acercó a Hera, quien\nobservaba la escena con una mezcla de resignación y\naceptación. Le dijo siempre su consejo para ella “Libera-\nte”. Ella no dijo nada.\nEn un rincón del salón, Poseidón se reía junto a Nerites\ny Pélope, disfrutando de la velada. El chico albino, ahora\nel centro de atención, se unió a la fiesta como si siempre\nhubiera pertenecido allí. Ganímedes, con una expresión\nde sorpresa aún en su rostro, se recuperó rápidamente y\nvolvió a integrarse en la celebración con nosotros. Estos\ndos se despidieron como un par de tortolitos. Se fue\ndonde estaba Hera. la puerta de salida y le hizo una ca-\nrantoña. Hera se derritio por el como lo llevaba haciendo\nhace millones de años. Pero aparte del Pride, este salón\ntambién ha visto fiestas de dolor. Por ejemplo, hubo una\nola de tristeza a raíz de que Hera fuera menos implacable\ncon su marido. Hera, como diosa del matrimonio, influía\nen los casamientos con sus cambios de estado de ánimo,\nlo que provocó nueva ola de divorcios, lo que deprimió a\nHimeneo, el dios de las ceremonias nupciales. La con-\nclusión final fue una fiesta organizada por Apolo para\nnuestro compañero. Ya que a pesar de sus rolletes , se\nsegian queriendo.\nEsa noche, Himeneo no soltaba la botella. “¿Por qué?”\n—decía con desesperación—. “¿No se dan cuenta de lo\nduro que es este trabajo?” Potos, como no, estuvo al quite\ny no lo dejó solo. Él es el Erote de la pérdida o el anhelo.\nPsique también estuvo a su lado, ayudándolo a reincorpo-\nrarse. Ella es la que comprende no solo la mente humana,\nsino también la nuestra. Le decia que el que se creara una\nley de divorcio. No llevaria a que la gente se divorciara\nmas. Sino que se daria oportunidad a romper, lo que\nnunca debio unir.\nEl salón, normalmente iluminado y lleno de vida, esa no-\nche tenía un aire melancólico. Las luces eran más tenues,\nreflejando el estado de ánimo sombrío de los presentes.\nHimeneo, con su toga desaliñada y sus ojos vidriosos,\nse tambaleaba ligeramente mientras sostenía la botella.\nPotos, con su semblante sereno pero atento, lo mantenía\nen pie, rodeándolo con su manto. El traje de Himeneo\nque era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\no hacia el inmenso salón. En\nmedio de la estancia blanquecina, en un cómodo sofá,\nestán mis hermanos Potos y Anteros, nue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafo en una posición\nmuy edificante , que digamos. Han pasado la noche en mi\ncasa tras una de las muchas y dolorosa rupturas de An-\nteros, ya no se con cuantas van ya; su ultima pareja lo ha\ndejado. No me ha dado más detalles, En serio hermano\neres el dios del amor reciproco. Cuando vino anoche me-\ndio borracho a joderme la noche romántica con Psique,\nestuve tentado ha no dejarle entrar, Nuestro hermano\nPotos lo llevaba en volandas. Anteros estaba llorando y\nmaldiciendo, Me apiade. aunque maldita sea la gracia. En\nmal dia había elegido. Mas que porque era mi hermano o\nporque sabia que no iba a dar pie con bola en el trabajo y\nporque sabia que en su estado es capaz de hacer locuras,\nasí que prefiero que se quede aquí conmigo. y si Potos\nesta con el mejor. Les deje dormir en el salón. El bueno\nde Potos me dio las gracias ya que Anteros no esce una vista espectacular\ndel mar y los acantilados en la distancia. Las paredes, dece una vista espectacular\ndel mar y los acantilados en la distancia. Las paredes, dece una vista espectacular\ndel mar y los acantilados en la distancia. Las paredes, detaba\nprecisamente bien.\nTras bajar las escaleras vi a Anteros y a Potos en el sofá,\nLas mariposas que siempre rodeaba anteros eran moradas\ny oscuras. A su lado duerme Potos abrazándole y con su\nmanto negro, con el que rodeaba a todos los que tenia\nnecesidad de de superar una perdida. Soy su hermano\nmayor y líder de los Erotes. Los contemplo y pienso que\nno habíamos cambiado tanto en la parte emocional desde\nla Hélade.\nNo me gusta que estén en ese estado en el apartamento\nque comparto con mi familia, pero debo cuidar de mis\nhermanos, Desde que formamos este grupo de Pop-Idols\n“Los Erotes”. Debemos conservar un cierto nivel por\nnuestros fans. Somo s populares en esta dimensión somos\nmuy conocidos y nuestras fiestas son de órdago.\nNuestras mejores fiestas son las relacionadas con el colec-\ntivo LGTBIQ (Como lo llamáis vosotros) En la ultima de\npride por ejemplo, y sí, celebramos el Pride, aunque para\nnosotros las relaciones sexuales son bastante distintas\na la que tenéis. Resulta raro a mi entender que queráis\nver el pasado desde los ojos de vuestro presente. Somos\nmuy consientes al menos nosotros que eso es injusto ya\nque no analizáis la culturas de aquellos siglos , las juzgáis\ncon sesgos de vuestra época, a través de conceptos que\nen aquellas época no existía. Por ejemplo la homosexua-\nlidad y la heterosexualidad o algo así, decís que se llama\nverdad. Bien esos conceptos los inventasteis muchos\nsiglos después. Por lo que ya os digo que las relaciones en\neste lugar disertan en varias motivos. Para nosotros, que\nalguien amara a otro ser con el que tenía una similitud\nen su género o/y sexo, no dejaba de ser otra caracterís-\ntica más de ese ser. Lo que hacía diferente, si acaso, era\nel rol dentro de la pareja. El pasivo, decís. Para nosotros\nera el humillado y no solo en nuestra sociedad. Según la\negipcia, mesopotámica e incluso la vikinga, entre otras.\nTeníamos eso en común. Estaba muy mal visto y ahora es\nsentido de burla, Ahora nos importa un cuerno. De echo\nfue atreves de un incidente de un imbécil que importuno\na Aquiles , al burlarse de su hermoso Patroclo y de ser el\n“dominado”, que cuando holló esto Aquiles, digamos que\naquel imbécil no acabo muy bien.\nEstas fiestas las celebramos en palacios y son de lo mas\nanimadas, siempre en espacios amplios y luminosos, con\ngrandes ventanas arqueadas que permiten la entrada de\nuna luz cálida y dorada. Le encargamos muchas veces a\nIris, la diosa del arco iris que las ilumine.\nEn la ultima fiesta mis tías, Atenea y Artemisa estuvie-\nron con sus parejas. Atenea con Mirmex y Artemisa con\nCalisto. Estaba invitado la crem de la crem del olimpo.\nEstaba Hermafrodito, Caenis-Caeneus, Hercules, Aquiles.\nEtc\nPero nada tan importante como lo que ocurrió al\nmomento, ya que esa noche en medio de toda la gente\napareció un chico, este con su presencia dejo desarmados,\na la seguridad que había contratado. En dos segundos la\ndejo en el suelo y eso que eran gigantes, No gigantes de\nhijos de Gea sino que median mas de 2 metros. Era una\nfiesta exclusiva. Nos quedamos impresionados. Heracles\ny Orión intentaron frenarle . Pero lo reconocieron al\ninstante. Se quedaron quietos, se miraron y les dejaronta exclusiva. Nos quedamos impresionados. Heracles\ny Orión intentaron frenarle . Pero lo reconocieron al\ninstante. Se quedaron quietos, se miraron y les dejaronta exclusiva. Nos quedamos impresionados. Heracles\ny Orión intentaron frenarle . Pero lo reconocieron al\ninstante. Se quedaron quietos, se miraron y les dejaronta exclusiva. Nos quedamos impresionados. Heracles\ny Orión intentaron frenarle . Pero lo reconocieron al\ninstante. Se quedaron quietos, se miraron y les dejaronta exclusiva. Nos quedamos impresionados. Heracles\ny Orión intentaron frenarle . Pero lo reconocieron al\ninstante. Se quedaron quietos, se miraron y les dejaronta exclusiva. Nos quedamos impresionados. Heracles\ny Orión intentaron frenarle . Pero lo reconocieron al\ninstante. Se quedaron quietos, se miraron y les dejaronta exclusiva. Nos quedamos impresionados. Heracles\ny Orión intentaron frenarle . Pero lo reconocieron al\ninstante. Se quedaron quietos, se miraron y les dejaronta exclusiva. Nos quedamos impresionados. Heracles\ny Orión intentaron frenarle . Pero lo reconocieron al\ninstante. Se quedaron quietos, se miraron y les dejaronta exclusiva. Nos quedamos impresionados. Heracles\ny Orión intentaron frenarle . Pero lo reconocieron al\ninstante. Se quedaron quietos, se miraron y les dejaronta exclusiva. Nos quedamos impresionados. Heracles\ny Orión intentaron frenarle . Pero lo reconocieron al\ninstante. Se quedaron quietos, se miraron y les dejaronta exclusiva. Nos quedamos impresionados. Heracles\ny Orión intentaron frenarle . Pero lo reconocieron al\ninstante. Se quedaron quietos, se miraron y les dejaronta exclusiva. Nos quedamos impresionados. Heracles\ny Orión intentaron frenarle . Pero lo reconocieron al\ninstante. Se quedaron quietos, se miraron y les dejaronta exclusiva. Nos quedamos impresionados. Heracles\ny Orión intentaron frenarle . Pero lo reconocieron al el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\n dejaronaafasfafawfwafue era el mismo que todos. Solo se nos distiguia el color.\nEl sullo era naranja amarillento ilumino mi salon.\ninstante. Se quedaron quietos, se miraron y les dejaronta exclusiva. Nos quedamos impresionados. Heracles\ny Orión intentaron frenarle . Pero lo reconocieron al\ninstante. Se quedaron quietos, se miraron y les dejaron"
+  },
+  {
+    "texto_Lo_que_pasa": "4rrr",
+    "Lo_que_quiuero_hablar": "4rr",
+    "desarrollo": "4rr",
+    "Dia": 4,
+    "id_mes": 4,
+    "id_dia": 4,
+    "id_scene": 1
+  },
+  {
+    "texto_Lo_que_pasa": "6",
+    "Lo_que_quiuero_hablar": "6",
+    "desarrollo": "6",
+    "Dia": 6,
+    "id_mes": 6,
+    "id_dia": 6,
+    "id_scene": 1
+  },
+  {
+    "texto_Lo_que_pasa": "45",
+    "Lo_que_quiuero_hablar": "45",
+    "desarrollo": "45",
+    "Dia": 45,
+    "id_mes": 45,
+    "id_dia": 45,
+    "id_scene": 1
+  },
+  {
+    "texto_Lo_que_pasa": "22",
+    "Lo_que_quiuero_hablar": "22",
+    "desarrollo": "33",
+    "Dia": 3,
+    "id_mes": 2,
+    "id_dia": 22,
+    "id_scene": 1
+  },
+  {
+    "texto_Lo_que_pasa": "SX VBFBV",
+    "Lo_que_quiuero_hablar": "SDNSRNSRGN",
+    "desarrollo": "ADFBSAEB",
+    "Dia": 2,
+    "id_mes": 2,
+    "id_dia": 2,
+    "id_scene": 1
+  },
+  {
+    "texto_Lo_que_pasa": "22",
+    "Lo_que_quiuero_hablar": "22",
+    "desarrollo": "222",
+    "Dia": 2,
+    "id_mes": 2,
+    "id_dia": 2,
+    "id_scene": 1746946715436
+  },
+  {
+    "texto_Lo_que_pasa": "Yo, Eros, salgo de mi habitación y me detengo por un mo-\nmento a observar, hay que ver como ha cambiado todo\nestos milenios las reformas que ha sufrido como toda esta\ndimension. El hermoso dormitorio es inmenso y de lo\nmas blanquecinos, inundado por la luz del sol que se filtra\na través de las grandes ventanas arqueadas, con detalle a\nla arquitectura helénica, nos ofrece una vista espectacular\ndel mar y los acantilados en la distancia. Las paredes, de\nun blanco impoluto comunas de estilo corintio. De gran\naltura, creando un ambiente sereno y majestuoso, todo es\npoco para mi Psique. Una planta trepadora desciende por\nuna de las columnas, añadiendo un toque de naturaleza al\nespacio. Regalo de mi tia Perséfone.\nEn el centro de nuestro dormitorio. Las sábanas blancas\nestán revueltas Psique se ha debido levantar ya, es un\ntestimonio silencioso de la intimidad compartida. Psique\nha bajado ya, el olor de sus tortitas ya sube por la ventana.\nsu presencia llena el aire con un sentimiento de paz y\nestabilidad. Lamento que halla tenido que preparar el\ndesayuno. Pero era necesario dejar libre al servicio hoy.\nQuiero tenerla hoy para mi, por nuestro aniversario.\nHecho un vistazo a la terraza , Ya no están los restos de\ncomida de nuestra cena romántica de anoche. Los ha\ndebido recoger ella. Eros eres tonto. Que poco detallado\nBajo las escaleras, Me dirijo hacia el inmenso salón. En\nmedio de la estancia blanquecina, en un cómodo sofá,\nestán mis hermanos Potos y Anteros, no en una posición\nmuy edificante , que digamos. Han pasado la noche en mi\ncasa tras una de las muchas y dolorosa rupturas de An-\nteros, ya no se con cuantas van ya; su ultima pareja lo ha\ndejado. No me ha dado más detalles, En serio hermano\neres el dios del amor reciproco. Cuando vino anoche me-\ndio borracho a joderme la noche romántica con Psique,\nestuve tentado ha no dejarle entrar, Nuestro hermano\nPotos lo llevaba en volandas. Anteros estaba llorando y\nmaldiciendo, Me apiade. aunque maldita sea la gracia. En\nmal dia había elegido. Mas que porque era mi hermano o\nporque sabia que no iba a dar pie con bola en el trabajo y\nporque sabia que en su estado es capaz de hacer locuras,\nasí que prefiero que se quede aquí conmigo. y si Potos\nesta con el mejor. Les deje dormir en el salón. El bueno\nde Potos me dio las gracias ya que Anteros no estaba\nprecisamente bien.\nTras bajar las escaleras vi a Anteros y a Potos en el sofá,\nLas mariposas que siempre rodeaba anteros eran moradas\ny oscuras. A su lado duerme Potos abrazándole y con su\nmanto negro, con el que rodeaba a todos los que tenia\nnecesidad de de superar una perdida. Soy su hermano\nmayor y líder de los Erotes. Los contemplo y pienso que\nno habíamos cambiado tanto en la parte emocional desde\nla Hélade.\nNo me gusta que estén en ese estado en el apartamento\nque comparto con mi familia, pero debo cuidar de mis\nhermanos, Desde que formamos este grupo de Pop-Idols\n“Los Erotes”. Debemos conservar un cierto nivel por\nnuestros fans. Somo s populares en esta dimensión somos\nmuy conocidos y nuestras fiestas son de órdago.\nNuestras mejores fiestas son las relacionadas con el colec-\ntivo LGTBIQ (Como lo llamáis vosotros) En la ultima de\npride por ejemplo, y sí, celebramos el Pride, aunque para\nnosotros las relaciones sexuales son bastante distintas\na la que tenéis. Resulta raro a mi entender que queráis\nver el pasado desde los ojos de vuestro presente. Somos\nmuy consientes al menos nosotros que eso es injusto ya\nque no analizáis la culturas de aquellos siglos , las juzgáis\ncon sesgos de vuestra época, a través de conceptos que\nen aquellas época no existía. Por ejemplo la homosexua-\nlidad y la heterosexualidad o algo así, decís que se llama\nverdad. Bien esos conceptos los inventasteis muchos\nsiglos después. Por lo que ya os digo que las relaciones en\neste lugar disertan en varias motivos. Para nosotros, que\nalguien amara a otro ser con el que tenía una similitud\nen su género o/y sexo, no dejaba de ser otra caracterís-\ntica más de ese ser. Lo que hacía diferente, si acaso, era\nel rol dentro de la pareja. El pasivo, decís. Para nosotros\nera el humillado y no solo en nuestra sociedad. Según la\negipcia, mesopotámica e incluso la vikinga, entre otras.\nTeníamos eso en común. Estaba muy mal visto y ahora es\nsentido de burla, Ahora nos importa un cuerno. De echo\nfue atreves de un incidente de un imbécil que importuno\na Aquiles , al burlarse de su hermoso Patroclo y de ser el\n“dominado”, que cuando holló esto Aquiles, digamos que\naquel imbécil no acabo muy bien.\nEstas fiestas las celebramos en palacios y son de lo mas\nanimadas, siempre en espacios amplios y luminosos, con\ngrandes ventanas arqueadas que permiten la entrada de\nuna luz cálida y dorada. Le encargamos muchas veces a\nIris, la diosa del arco iris que las ilumine.\nEn la ultima fiesta mis tías, Atenea y Artemisa estuvie-\nron con sus parejas. Atenea con Mirmex y Artemisa con\nCalisto. Estaba invitado la crem de la crem del olimpo.\nEstaba Hermafrodito, Caenis-Caeneus, Hercules, Aquiles.\nEtc\nPero nada tan importante como lo que ocurrió al\nmomento, ya que esa noche en medio de toda la gente\napareció un chico, este con su presencia dejo desarmados,\na la seguridad que había contratado. En dos segundos la\ndejo en el suelo y eso que eran gigantes, No gigantes de\nhijos de Gea sino que median mas de 2 metros. Era una\nfiesta exclusiva. Nos quedamos impresionados. Heracles\ny Orión intentaron frenarle . Pero lo reconocieron al\ninstante. Se quedaron quietos, se miraron y les dejaron",
+    "Lo_que_quiuero_hablar": "Yo, Eros, salgo de mi habitación y me detengo por un mo-\nmento a observar, hay que ver como ha cambiado todo\nestos milenios las reformas que ha sufrido como toda esta\ndimension. El hermoso dormitorio es inmenso y de lo\nmas blanquecinos, inundado por la luz del sol que se filtra\na través de las grandes ventanas arqueadas, con detalle a\nla arquitectura helénica, nos ofrece una vista espectacular\ndel mar y los acantilados en la distancia. Las paredes, de\nun blanco impoluto comunas de estilo corintio. De gran\naltura, creando un ambiente sereno y majestuoso, todo es\npoco para mi Psique. Una planta trepadora desciende por\nuna de las columnas, añadiendo un toque de naturaleza al\nespacio. Regalo de mi tia Perséfone.\nEn el centro de nuestro dormitorio. Las sábanas blancas\nestán revueltas Psique se ha debido levantar ya, es un\ntestimonio silencioso de la intimidad compartida. Psique\nha bajado ya, el olor de sus tortitas ya sube por la ventana.\nsu presencia llena el aire con un sentimiento de paz y\nestabilidad. Lamento que halla tenido que preparar el\ndesayuno. Pero era necesario dejar libre al servicio hoy.\nQuiero tenerla hoy para mi, por nuestro aniversario.\nHecho un vistazo a la terraza , Ya no están los restos de\ncomida de nuestra cena romántica de anoche. Los ha\ndebido recoger ella. Eros eres tonto. Que poco detallado\nBajo las escaleras, Me dirijo hacia el inmenso salón. En\nmedio de la estancia blanquecina, en un cómodo sofá,\nestán mis hermanos Potos y Anteros, no en una posición\nmuy edificante , que digamos. Han pasado la noche en mi\ncasa tras una de las muchas y dolorosa rupturas de An-\nteros, ya no se con cuantas van ya; su ultima pareja lo ha\ndejado. No me ha dado más detalles, En serio hermano\neres el dios del amor reciproco. Cuando vino anoche me-\ndio borracho a joderme la noche romántica con Psique,\nestuve tentado ha no dejarle entrar, Nuestro hermano\nPotos lo llevaba en volandas. Anteros estaba llorando y\nmaldiciendo, Me apiade. aunque maldita sea la gracia. En\nmal dia había elegido. Mas que porque era mi hermano o\nporque sabia que no iba a dar pie con bola en el trabajo y\nporque sabia que en su estado es capaz de hacer locuras,\nasí que prefiero que se quede aquí conmigo. y si Potos\nesta con el mejor. Les deje dormir en el salón. El bueno\nde Potos me dio las gracias ya que Anteros no estaba\nprecisamente bien.\nTras bajar las escaleras vi a Anteros y a Potos en el sofá,\nLas mariposas que siempre rodeaba anteros eran moradas\ny oscuras. A su lado duerme Potos abrazándole y con su\nmanto negro, con el que rodeaba a todos los que tenia\nnecesidad de de superar una perdida. Soy su hermano\nmayor y líder de los Erotes. Los contemplo y pienso que\nno habíamos cambiado tanto en la parte emocional desde\nla Hélade.\nNo me gusta que estén en ese estado en el apartamento\nque comparto con mi familia, pero debo cuidar de mis\nhermanos, Desde que formamos este grupo de Pop-Idols\n“Los Erotes”. Debemos conservar un cierto nivel por\nnuestros fans. Somo s populares en esta dimensión somos\nmuy conocidos y nuestras fiestas son de órdago.\nNuestras mejores fiestas son las relacionadas con el colec-\ntivo LGTBIQ (Como lo llamáis vosotros) En la ultima de\npride por ejemplo, y sí, celebramos el Pride, aunque para\nnosotros las relaciones sexuales son bastante distintas\na la que tenéis. Resulta raro a mi entender que queráis\nver el pasado desde los ojos de vuestro presente. Somos\nmuy consientes al menos nosotros que eso es injusto ya\nque no analizáis la culturas de aquellos siglos , las juzgáis\ncon sesgos de vuestra época, a través de conceptos que\nen aquellas época no existía. Por ejemplo la homosexua-\nlidad y la heterosexualidad o algo así, decís que se llama\nverdad. Bien esos conceptos los inventasteis muchos\nsiglos después. Por lo que ya os digo que las relaciones en\neste lugar disertan en varias motivos. Para nosotros, que\nalguien amara a otro ser con el que tenía una similitud\nen su género o/y sexo, no dejaba de ser otra caracterís-\ntica más de ese ser. Lo que hacía diferente, si acaso, era\nel rol dentro de la pareja. El pasivo, decís. Para nosotros\nera el humillado y no solo en nuestra sociedad. Según la\negipcia, mesopotámica e incluso la vikinga, entre otras.\nTeníamos eso en común. Estaba muy mal visto y ahora es\nsentido de burla, Ahora nos importa un cuerno. De echo\nfue atreves de un incidente de un imbécil que importuno\na Aquiles , al burlarse de su hermoso Patroclo y de ser el\n“dominado”, que cuando holló esto Aquiles, digamos que\naquel imbécil no acabo muy bien.\nEstas fiestas las celebramos en palacios y son de lo mas\nanimadas, siempre en espacios amplios y luminosos, con\ngrandes ventanas arqueadas que permiten la entrada de\nuna luz cálida y dorada. Le encargamos muchas veces a\nIris, la diosa del arco iris que las ilumine.\nEn la ultima fiesta mis tías, Atenea y Artemisa estuvie-\nron con sus parejas. Atenea con Mirmex y Artemisa con\nCalisto. Estaba invitado la crem de la crem del olimpo.\nEstaba Hermafrodito, Caenis-Caeneus, Hercules, Aquiles.\nEtc\nPero nada tan importante como lo que ocurrió al\nmomento, ya que esa noche en medio de toda la gente\napareció un chico, este con su presencia dejo desarmados,\na la seguridad que había contratado. En dos segundos la\ndejo en el suelo y eso que eran gigantes, No gigantes de\nhijos de Gea sino que median mas de 2 metros. Era una\nfiesta exclusiva. Nos quedamos impresionados. Heracles\ny Orión intentaron frenarle . Pero lo reconocieron al\ninstante. Se quedaron quietos, se miraron y les dejaron",
+    "desarrollo": "Yo, Eros, salgo de mi habitación y me detengo por un mo-\nmento a observar, hay que ver como ha cambiado todo\nestos milenios las reformas que ha sufrido como toda esta\ndimension. El hermoso dormitorio es inmenso y de lo\nmas blanquecinos, inundado por la luz del sol que se filtra\na través de las grandes ventanas arqueadas, con detalle a\nla arquitectura helénica, nos ofrece una vista espectacular\ndel mar y los acantilados en la distancia. Las paredes, de\nun blanco impoluto comunas de estilo corintio. De gran\naltura, creando un ambiente sereno y majestuoso, todo es\npoco para mi Psique. Una planta trepadora desciende por\nuna de las columnas, añadiendo un toque de naturaleza al\nespacio. Regalo de mi tia Perséfone.\nEn el centro de nuestro dormitorio. Las sábanas blancas\nestán revueltas Psique se ha debido levantar ya, es un\ntestimonio silencioso de la intimidad compartida. Psique\nha bajado ya, el olor de sus tortitas ya sube por la ventana.\nsu presencia llena el aire con un sentimiento de paz y\nestabilidad. Lamento que halla tenido que preparar el\ndesayuno. Pero era necesario dejar libre al servicio hoy.\nQuiero tenerla hoy para mi, por nuestro aniversario.\nHecho un vistazo a la terraza , Ya no están los restos de\ncomida de nuestra cena romántica de anoche. Los ha\ndebido recoger ella. Eros eres tonto. Que poco detallado\nBajo las escaleras, Me dirijo hacia el inmenso salón. En\nmedio de la estancia blanquecina, en un cómodo sofá,\nestán mis hermanos Potos y Anteros, no en una posición\nmuy edificante , que digamos. Han pasado la noche en mi\ncasa tras una de las muchas y dolorosa rupturas de An-\nteros, ya no se con cuantas van ya; su ultima pareja lo ha\ndejado. No me ha dado más detalles, En serio hermano\neres el dios del amor reciproco. Cuando vino anoche me-\ndio borracho a joderme la noche romántica con Psique,\nestuve tentado ha no dejarle entrar, Nuestro hermano\nPotos lo llevaba en volandas. Anteros estaba llorando y\nmaldiciendo, Me apiade. aunque maldita sea la gracia. En\nmal dia había elegido. Mas que porque era mi hermano o\nporque sabia que no iba a dar pie con bola en el trabajo y\nporque sabia que en su estado es capaz de hacer locuras,\nasí que prefiero que se quede aquí conmigo. y si Potos\nesta con el mejor. Les deje dormir en el salón. El bueno\nde Potos me dio las gracias ya que Anteros no estaba\nprecisamente bien.\nTras bajar las escaleras vi a Anteros y a Potos en el sofá,\nLas mariposas que siempre rodeaba anteros eran moradas\ny oscuras. A su lado duerme Potos abrazándole y con su\nmanto negro, con el que rodeaba a todos los que tenia\nnecesidad de de superar una perdida. Soy su hermano\nmayor y líder de los Erotes. Los contemplo y pienso que\nno habíamos cambiado tanto en la parte emocional desde\nla Hélade.\nNo me gusta que estén en ese estado en el apartamento\nque comparto con mi familia, pero debo cuidar de mis\nhermanos, Desde que formamos este grupo de Pop-Idols\n“Los Erotes”. Debemos conservar un cierto nivel por\nnuestros fans. Somo s populares en esta dimensión somos\nmuy conocidos y nuestras fiestas son de órdago.\nNuestras mejores fiestas son las relacionadas con el colec-\ntivo LGTBIQ (Como lo llamáis vosotros) En la ultima de\npride por ejemplo, y sí, celebramos el Pride, aunque para\nnosotros las relaciones sexuales son bastante distintas\na la que tenéis. Resulta raro a mi entender que queráis\nver el pasado desde los ojos de vuestro presente. Somos\nmuy consientes al menos nosotros que eso es injusto ya\nque no analizáis la culturas de aquellos siglos , las juzgáis\ncon sesgos de vuestra época, a través de conceptos que\nen aquellas época no existía. Por ejemplo la homosexua-\nlidad y la heterosexualidad o algo así, decís que se llama\nverdad. Bien esos conceptos los inventasteis muchos\nsiglos después. Por lo que ya os digo que las relaciones en\neste lugar disertan en varias motivos. Para nosotros, que\nalguien amara a otro ser con el que tenía una similitud\nen su género o/y sexo, no dejaba de ser otra caracterís-\ntica más de ese ser. Lo que hacía diferente, si acaso, era\nel rol dentro de la pareja. El pasivo, decís. Para nosotros\nera el humillado y no solo en nuestra sociedad. Según la\negipcia, mesopotámica e incluso la vikinga, entre otras.\nTeníamos eso en común. Estaba muy mal visto y ahora es\nsentido de burla, Ahora nos importa un cuerno. De echo\nfue atreves de un incidente de un imbécil que importuno\na Aquiles , al burlarse de su hermoso Patroclo y de ser el\n“dominado”, que cuando holló esto Aquiles, digamos que\naquel imbécil no acabo muy bien.\nEstas fiestas las celebramos en palacios y son de lo mas\nanimadas, siempre en espacios amplios y luminosos, con\ngrandes ventanas arqueadas que permiten la entrada de\nuna luz cálida y dorada. Le encargamos muchas veces a\nIris, la diosa del arco iris que las ilumine.\nEn la ultima fiesta mis tías, Atenea y Artemisa estuvie-\nron con sus parejas. Atenea con Mirmex y Artemisa con\nCalisto. Estaba invitado la crem de la crem del olimpo.\nEstaba Hermafrodito, Caenis-Caeneus, Hercules, Aquiles.\nEtc\nPero nada tan importante como lo que ocurrió al\nmomento, ya que esa noche en medio de toda la gente\napareció un chico, este con su presencia dejo desarmados,\na la seguridad que había contratado. En dos segundos la\ndejo en el suelo y eso que eran gigantes, No gigantes de\nhijos de Gea sino que median mas de 2 metros. Era una\nfiesta exclusiva. Nos quedamos impresionados. Heracles\ny Orión intentaron frenarle . Pero lo reconocieron al\ninstante. Se quedaron quietos, se miraron y les dejaron",
+    "Dia": 12,
+    "id_mes": 2,
+    "id_dia": 2,
+    "id_scene": 1
+  }
+];
+
+var mes = [
+  {
+    "id_mes": 1,
+    "nombre": "Enero"
+  },
+  {
+    "id_mes": 2,
+    "nombre": "Febrero"
+  },
+  {
+    "id_mes": 3,
+    "nombre": "Marzo"
+  },
+  {
+    "id_mes": 4,
+    "nombre": "Abril"
+  },
+  {
+    "id_mes": 5,
+    "nombre": "Mayo"
+  },
+  {
+    "id_mes": 6,
+    "nombre": "Junio"
+  },
+  {
+    "id_mes": 7,
+    "nombre": "Julio"
+  },
+  {
+    "id_mes": 8,
+    "nombre": "Agosto"
+  },
+  {
+    "id_mes": 9,
+    "nombre": "Septiembre"
+  },
+  {
+    "id_mes": 10,
+    "nombre": "Octubre"
+  },
+  {
+    "id_mes": 11,
+    "nombre": "Noviembre"
+  },
+  {
+    "id_mes": 12,
+    "nombre": "Diciembre"
+  }
+];
+
+var scenes_Personajes = [
+  {
+    "id_asociacion": 1,
+    "id_scene": 1,
+    "id_personaje": 1
+  },
+  {
+    "id_asociacion": 2,
+    "id_scene": 1,
+    "id_personaje": 2
+  },
+  {
+    "id_asociacion": 3,
+    "id_scene": 1,
+    "id_personaje": 3
+  },
+  {
+    "id_asociacion": 4,
+    "id_scene": 1,
+    "id_personaje": 4
+  },
+  {
+    "id_asociacion": 5,
+    "id_scene": 1,
+    "id_personaje": 5
+  },
+  {
+    "id_asociacion": 6,
+    "id_scene": 1,
+    "id_personaje": 6
+  },
+  {
+    "id_asociacion": 7,
+    "id_scene": 1746946715436,
+    "id_personaje": 1
+  },
+  {
+    "id_asociacion": 8,
+    "id_scene": 1746946715436,
+    "id_personaje": 2
+  },
+  {
+    "id_asociacion": 9,
+    "id_scene": 1746946715436,
+    "id_personaje": 3
+  }
+];

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Detalle del Artículo</title>
+  <script src="/assets/tailwind.js"></script>
+  <link href="/assets/fonts.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0f172a;
+      color: white;
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+  <nav class="bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 text-center font-semibold uppercase tracking-wider">
+    <a href="index.html" class="hover:text-yellow-400">← Volver</a>
+  </nav>
+
+  <div id="contenido" class="max-w-4xl mx-auto p-6 mt-8 bg-gray-900 rounded-lg shadow-lg"></div>
+
+  <script>
+    let articulos = [];
+
+    async function cargarArticuloPorID() {
+      try {
+        const res = await fetch("/api/articulos");
+        const data = await res.json();
+        articulos = data;
+
+        const params = new URLSearchParams(window.location.search);
+        const id = parseInt(params.get("id"));
+        const articulo = articulos.find(a => a.id_articulo === id);
+
+        if (!articulo) {
+          document.getElementById("contenido").innerHTML = "<p class='text-red-400'>Artículo no encontrado.</p>";
+          return;
+        }
+
+        mostrarDetalle(articulo);
+      } catch (err) {
+        console.error("Error cargando artículo:", err);
+      }
+    }
+
+    function mostrarDetalle(a) {
+      const contenedor = document.getElementById("contenido");
+      contenedor.innerHTML = `
+        <h1 class="text-3xl font-bold text-yellow-400 mb-4 text-center">${a.titulo}</h1>
+        <img src="${a.imagen_url}" alt="${a.titulo}" class="w-full max-h-96 object-cover rounded mb-6 shadow-md">
+        <p><span class="text-yellow-300">Etiqueta:</span> ${a.etiquetas}</p>
+        <p><span class="text-yellow-300">Tipo:</span> ${a.tipo}</p>
+        <div class="mt-4">
+          <h2 class="text-xl text-indigo-400 font-semibold mb-2">Texto</h2>
+          <p class="text-gray-300 whitespace-pre-line">${a.texto}</p>
+        </div>
+        <div class="mt-4">
+          <h2 class="text-xl text-indigo-400 font-semibold mb-2">Texto 2</h2>
+          <p class="text-gray-300 whitespace-pre-line">${a.texto2}</p>
+        </div>
+      `;
+
+      mostrarGaleria(a.id_articulo);
+    }
+
+    async function mostrarGaleria(id_articulo) {
+      try {
+        const res = await fetch("/api/galeria");
+        const data = await res.json();
+
+        const imagenes = data.filter(img => img.id_articulo === id_articulo);
+
+        const contenedor = document.getElementById("contenido");
+
+        if (imagenes.length === 0) {
+          contenedor.innerHTML += `
+            <div class="mt-8">
+              <h2 class="text-xl text-indigo-400 font-semibold mb-2">Galería</h2>
+              <p class="text-gray-400">No hay imágenes en la galería para este artículo.</p>
+            </div>
+          `;
+          return;
+        }
+
+        let galeriaHTML = `
+          <div class="mt-8">
+            <h2 class="text-xl text-indigo-400 font-semibold mb-2">Galería</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        `;
+
+        imagenes.forEach(img => {
+          galeriaHTML += `
+            <img src="${img.imagen_url}" alt="Imagen galería" class="w-full h-40 object-cover rounded shadow">
+          `;
+        });
+
+        galeriaHTML += `</div></div>`;
+        contenedor.innerHTML += galeriaHTML;
+      } catch (err) {
+        console.error("Error cargando galería:", err);
+      }
+    }
+
+    window.onload = cargarArticuloPorID;
+  </script>
+</body>
+</html>

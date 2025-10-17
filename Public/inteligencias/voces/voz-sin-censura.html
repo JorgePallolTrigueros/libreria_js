@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Galería IA con Filtros</title>
+  <script src="/assets/tailwind.js"></script>
+  <link href="/assets/fonts.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0f172a;
+      color: white;
+    }
+    .mini-button {
+      width: 1.5em;
+      height: 1.5em;
+      border-radius: 3px;
+      border: 1px solid #000;
+      cursor: pointer;
+      transition: transform 0.2s ease-in-out;
+    }
+    .mini-button:hover {
+      transform: scale(1.2);
+    }
+
+    .mini-buttons-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 8px;
+  padding-top: 10px;
+  margin-top: 10px;
+}
+</style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 text-center text-sm md:text-base font-semibold uppercase tracking-wider">
+    <a href="../../a.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+  </nav>
+
+  <!-- Encabezado con imagen y franja -->
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div class="relative flex items-center justify-between">
+      <!-- Imagen circular -->
+      <div class="absolute -left-4 md:-left-10 z-20">
+  <video autoplay muted loop
+         class="w-40 h-40 md:w-52 md:h-52 object-cover rounded-full border-4 border-yellow-400 shadow-2xl">
+    <source src="/ruta/ia_voces.mp4" type="video/mp4">
+  </video>
+      </div>
+
+      <!-- Franja con título -->
+      <div class="w-full bg-purple-800 h-28 md:h-32 rounded-xl flex items-center pl-48 pr-6 z-10 shadow-lg">
+        <h2 class="text-2xl md:text-4xl text-yellow-400 font-bold ml-auto">IA Voces</h2>
+      </div>
+    </div>
+
+    <!-- Nueva barra de navegación específica de IA -->
+    <nav class="flex justify-end mt-4 space-x-6 text-white text-sm md:text-base">
+        <a href="origenes-voz.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Orígenes IA Voz</a>
+        <a href="como-funciona-voz.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Cómo funciona</a>
+        <a href="control-voz.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Control creativo</a>
+        <a href="voz-sin-censura.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">IA sin censura</a>
+        <a href="tutorial-voz.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Tutorial Voz IA</a>
+        <a href="top10-voz.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Top 10 IA Voz</a>
+        <a href="galeria-voz.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Galería</a>
+      </nav>
+  </section>
+
+
+  <!-- Contenido -->
+<main class="max-w-4xl mx-auto px-6 leading-relaxed text-justify">
+  <h3 class="text-yellow-400 text-xl font-bold mb-4">¿Se puede generar cualquier tipo de voz con IA?</h3>
+
+  <p class="mb-4">
+    Muchas plataformas públicas de voz por IA aplican algún tipo de censura. Estas limitaciones pueden ir desde evitar lenguaje ofensivo o político, hasta impedir que se usen voces parecidas a personajes reales o famosos.
+  </p>
+
+  <h4 class="text-yellow-300 text-lg font-bold mb-2">Tipos de censura comunes en IAs de voz</h4>
+  <ul class="list-disc list-inside mb-4">
+    <li>Bloqueo de palabras ofensivas, sexuales o violentas.</li>
+    <li>Prohibición del uso de voces similares a celebridades o políticos.</li>
+    <li>Revisión manual del contenido antes de permitir su descarga.</li>
+    <li>Limitación del idioma o el uso regional de ciertas frases.</li>
+  </ul>
+
+  <h4 class="text-yellow-300 text-lg font-bold mb-2">Plataformas con mayor censura</h4>
+  <ul class="list-disc list-inside mb-4">
+    <li><strong>ElevenLabs</strong>: voz realista pero con fuertes filtros automáticos.</li>
+    <li><strong>PlayHT</strong>: no permite clonar sin validación de derechos de voz.</li>
+    <li><strong>Resemble.ai</strong>: impide cualquier imitación sin permiso legal.</li>
+  </ul>
+
+  <h4 class="text-yellow-300 text-lg font-bold mb-2">IAs más libres o sin censura</h4>
+  <ul class="list-disc list-inside mb-4">
+    <li><strong>XTTS</strong> (local): puedes generar cualquier voz desde texto sin filtros si usas el modelo offline.</li>
+    <li><strong>DiffSinger</strong>: ideal para canto sin restricciones estilísticas ni temáticas.</li>
+    <li><strong>SoftVC + RVC</strong>: permiten modificar voces en tiempo real y offline.</li>
+    <li><strong>Bark (local)</strong>: aunque experimental, permite generar voces creativas sin censura.</li>
+  </ul>
+
+  <h4 class="text-yellow-300 text-lg font-bold mb-2">¿Cómo usar estas herramientas sin restricciones?</h4>
+  <ol class="list-decimal list-inside mb-4">
+    <li>Descarga el modelo desde GitHub u otra fuente confiable.</li>
+    <li>Instálalo localmente (necesitarás Python, y preferentemente GPU).</li>
+    <li>Utiliza muestras propias o voces sintéticas preentrenadas.</li>
+    <li>Genera contenido bajo tu control, respetando los usos éticos y legales.</li>
+  </ol>
+
+  <p class="mb-4">
+    Aunque la libertad técnica es posible, recuerda que imitar una voz real sin consentimiento puede violar derechos de imagen o de autor. Usa estas herramientas con responsabilidad creativa.
+  </p>
+
+  <div class="mt-8 text-sm text-center text-gray-400 italic">
+    La censura no siempre es técnica… muchas veces es legal. Saber cuándo y cómo usar la libertad creativa también es parte del arte.
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="text-center text-xs text-gray-400 mt-10 mb-4">
+  &copy; 2025 Proyecto IA de Voz - Todos los derechos reservados.
+</footer>

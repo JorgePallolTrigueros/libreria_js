@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cómo Funciona la IA de Video</title>
+  <script src="/assets/tailwind.js"></script>
+  <link href="/assets/fonts.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+</head>
+<body class="bg-slate-900 text-white">
+
+  <!-- Navbar -->
+  <nav class="bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 text-center text-sm md:text-base font-semibold uppercase tracking-wider">
+    <a href="../../a.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+  </nav>
+
+  <!-- Encabezado -->
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div class="relative flex items-center justify-between">
+      <div class="absolute -left-4 md:-left-10 z-20">
+  <video autoplay muted loop
+         class="w-40 h-40 md:w-52 md:h-52 object-cover rounded-full border-4 border-yellow-400 shadow-2xl">
+    <source src="/ruta/ia_video.mp4" type="video/mp4">
+  </video>
+      </div>
+      <div class="w-full bg-purple-800 h-28 md:h-32 rounded-xl flex items-center pl-48 pr-6 z-10 shadow-lg">
+        <h2 class="text-2xl md:text-4xl text-yellow-400 font-bold ml-auto">IA video</h2>
+      </div>
+    </div>
+
+    <nav class="flex justify-end mt-4 space-x-6 text-white text-xs md:text-sm">
+      <a href="origenes-video.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Orígenes IA Video</a>
+      <a href="como-funciona-video.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Cómo funciona</a>
+      <a href="respeto-video.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Respeto creativo</a>
+      <a href="ia-sin-censura-video.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">IA sin censura</a>
+      <a href="tutorial-video.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Tutorial Video IA</a>
+      <a href="top10-video.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Top 10 IA Video</a>
+      <a href="galeria-video.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Galería</a>
+      <a href="Video_Locales.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Locales</a>
+    </nav>
+  </section>
+
+  <!-- Galería -->
+  <main class="max-w-6xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="pruebasContainer"></main>
+
+  <!-- Controles de paginación -->
+  <div class="text-center mt-8 mb-6">
+    <button id="prev-btn" class="px-4 py-2 bg-indigo-700 hover:bg-indigo-500 text-white rounded">Anterior</button>
+    <span id="page-indicator" class="mx-4 text-yellow-300 font-bold"></span>
+    <button id="next-btn" class="px-4 py-2 bg-indigo-700 hover:bg-indigo-500 text-white rounded">Siguiente</button>
+  </div>
+
+  <!-- Modal de Edición -->
+  <div id="modalEdicion" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-lg text-black">
+      <h2 class="text-xl font-bold mb-4 text-purple-800">Editar Entrada</h2>
+      <form id="formEditar">
+        <input type="hidden" id="editIndex" />
+        <div class="mb-4">
+          <label class="block text-sm font-semibold text-gray-700">Título</label>
+          <input type="text" id="editTitulo" class="w-full p-2 border rounded" required />
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-semibold text-gray-700">Texto</label>
+          <textarea id="editTexto" class="w-full p-2 border rounded" required></textarea>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-semibold text-gray-700">Etiqueta</label>
+          <input type="text" id="editEtiqueta" class="w-full p-2 border rounded" required />
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-semibold text-gray-700">Archivo MP4 (opcional)</label>
+          <input type="file" id="editMp4" accept="video/mp4" />
+        </div>
+        <div class="flex justify-end">
+          <button type="button" onclick="cerrarModal()" class="mr-4 px-4 py-2 bg-gray-500 text-white rounded">Cancelar</button>
+          <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Script principal -->
+  <script>
+    let Inteligencia = [];
+    let resultadosFiltrados = [];
+    let paginaActual = 1;
+    const itemsPorPagina = 3;
+
+    const contenedor = document.getElementById("pruebasContainer");
+    const indicadorPagina = document.getElementById("page-indicator");
+
+    function cargarDatos() {
+      fetch("/api/ia-videos")
+        .then(res => res.json())
+        .then(data => {
+          Inteligencia = data;
+          resultadosFiltrados = [...Inteligencia];
+          renderGaleria();
+        })
+        .catch(err => {
+          console.error("Error al cargar Inteligencia:", err);
+        });
+    }
+
+    function renderGaleria() {
+      contenedor.innerHTML = "";
+      const inicio = (paginaActual - 1) * itemsPorPagina;
+      const fin = inicio + itemsPorPagina;
+      const items = resultadosFiltrados.slice(inicio, fin);
+
+      items.forEach((elemento, index) => {
+        const html = `
+          <div class="bg-slate-800 rounded-xl overflow-hidden shadow-xl flex flex-col relative">
+            ${elemento.mp4 ? `<video controls class='w-full h-64 object-cover'><source src="http://localhost:3001/inteligencias/video/ima/${elemento.mp4}" type="video/mp4"></video>` : ""}
+            <div class="p-4 flex-1 flex flex-col">
+              <h5 class="text-yellow-400 text-lg font-semibold mb-2">${elemento.titulo}</h5>
+              <div class="text-sm text-white flex-1 mb-2">${elemento.texto}</div>
+              <button data-index="${index}" class="abrirModal mt-auto bg-yellow-400 hover:bg-yellow-300 text-black text-sm px-3 py-1 rounded self-end">Editar</button>
+            </div>
+          </div>`;
+        contenedor.insertAdjacentHTML("beforeend", html);
+      });
+
+      document.querySelectorAll(".abrirModal").forEach((btn, i) => {
+        btn.addEventListener("click", () => {
+          const indexReal = (paginaActual - 1) * itemsPorPagina + i;
+          abrirModal(indexReal);
+        });
+      });
+
+      const totalPaginas = Math.ceil(resultadosFiltrados.length / itemsPorPagina);
+      indicadorPagina.textContent = `Página ${paginaActual} de ${totalPaginas}`;
+    }
+
+    function abrirModal(index) {
+      const item = Inteligencia[index];
+      if (!item) return;
+
+      document.getElementById("editIndex").value = index;
+      document.getElementById("editTitulo").value = item.titulo || "";
+
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = item.texto || "";
+      document.getElementById("editTexto").value = tempDiv.textContent.trim();
+
+      document.getElementById("editEtiqueta").value = item.etiqueta || "";
+
+      const modal = document.getElementById("modalEdicion");
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function cerrarModal() {
+      document.getElementById("modalEdicion").classList.add("hidden");
+      document.getElementById("formEditar").reset();
+    }
+
+    document.getElementById("formEditar").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const index = document.getElementById("editIndex").value;
+      const titulo = document.getElementById("editTitulo").value;
+      const texto = document.getElementById("editTexto").value;
+      const etiqueta = document.getElementById("editEtiqueta").value;
+      const mp4File = document.getElementById("editMp4").files[0];
+
+      const formData = new FormData();
+      formData.append("titulo", titulo);
+      formData.append("texto", texto);
+      formData.append("etiqueta", etiqueta);
+      if (mp4File) formData.append("mp4", mp4File);
+
+      const res = await fetch(`/api/ia-videos/${index}`, {
+        method: "PUT",
+        body: formData
+      });
+
+      if (res.ok) {
+        cerrarModal();
+        cargarDatos();
+      } else {
+        alert("Error al guardar");
+      }
+    });
+
+    document.getElementById("prev-btn").addEventListener("click", () => {
+      if (paginaActual > 1) {
+        paginaActual--;
+        renderGaleria();
+      }
+    });
+
+    document.getElementById("next-btn").addEventListener("click", () => {
+      const totalPaginas = Math.ceil(resultadosFiltrados.length / itemsPorPagina);
+      if (paginaActual < totalPaginas) {
+        paginaActual++;
+        renderGaleria();
+      }
+    });
+
+    cargarDatos();
+  </script>
+
+</body>
+</html>

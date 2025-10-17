@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Galería IA Música</title>
+  <script src="/assets/tailwind.js"></script>
+  <link href="/assets/fonts.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+  <style>
+body {
+  background-color: #0f172a;
+  font-family: 'Orbitron', sans-serif;
+  color: white;
+}
+
+.card {
+  background-color: #1e293b;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.alfa {
+  font-size: 0.85rem;
+  color: #d1d5db;
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 text-center text-sm md:text-base font-semibold uppercase tracking-wider">
+    <a href="../../a.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+  </nav>
+
+  <!-- Encabezado con música y franja -->
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div class="relative flex items-center justify-between">
+      <div class="absolute -left-4 md:-left-10 z-20">
+        <video autoplay muted loop class="w-40 h-40 md:w-52 md:h-52 object-cover rounded-full border-4 border-yellow-400 shadow-2xl">
+          <source src="/ruta/ia_music.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="w-full bg-purple-800 h-28 md:h-32 rounded-xl flex items-center pl-48 pr-6 z-10 shadow-lg">
+        <h2 class="text-2xl md:text-4xl text-yellow-400 font-bold ml-auto">IA Música</h2>
+      </div>
+    </div>
+    <nav class="flex justify-end mt-4 space-x-6 text-white text-sm md:text-base">
+      <a href="origenes-musica.html" class="hover:text-yellow-400" style="font-size: 10px;">Orígenes IA Música</a>
+      <a href="como-funciona-musica.html" class="hover:text-yellow-400" style="font-size: 10px;">Cómo funciona</a>
+      <a href="respeto-musica.html" class="hover:text-yellow-400" style="font-size: 10px;">Respeto creativo</a>
+      <a href="ia-sin-censura-musica.html" class="hover:text-yellow-400" style="font-size: 10px;">IA sin censura</a>
+      <a href="tutorial-musica.html" class="hover:text-yellow-400" style="font-size: 10px;">Tutorial IA Música</a>
+      <a href="top10-musica.html" class="hover:text-yellow-400" style="font-size: 10px;">Top 10 IA Música</a>
+      <a href="galeria-musica.html" class="hover:text-yellow-400" style="font-size: 10px;">Galería</a>
+    </nav>
+  </section>
+
+  <!-- Contenido -->
+  <section class="max-w-6xl mx-auto mt-6">
+    <div class="flex justify-between items-center mb-4">
+      <h1 class="text-3xl font-bold text-yellow-400">Galería IA Música</h1>
+      <button onclick="abrirModal()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">➕ Añadir</button>
+    </div>
+    <div id="contenedor" class="grid md:grid-cols-3 gap-6"></div>
+  </section>
+
+  <!-- Modal centrado -->
+  <div id="modal" class="flex fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-50">
+    <div class="bg-gray-800 p-6 rounded-lg max-w-lg w-full shadow-2xl text-left">
+      <h3 class="text-yellow-400 text-lg font-bold mb-4">🎧 Añadir / Editar Entrada</h3>
+      <input type="hidden" id="modal-id">
+      <input type="text" id="modal-titulo" placeholder="Título" class="w-full mb-2 px-4 py-2 rounded bg-gray-700 text-white">
+      <input type="text" id="modal-etiqueta" placeholder="Etiqueta" class="w-full mb-2 px-4 py-2 rounded bg-gray-700 text-white">
+      <textarea id="modal-texto" placeholder="Texto HTML" rows="4" class="w-full mb-2 px-4 py-2 rounded bg-gray-700 text-white"></textarea>
+
+      <label class="text-sm block mt-2 mb-1">Imagen:</label>
+      <input type="file" id="modal-img" accept="image/*" class="mb-2 text-white">
+
+      <label class="text-sm block mb-1">Archivo MP3:</label>
+      <input type="file" id="modal-mp4" accept="audio/mp3" class="mb-4 text-white">
+
+      <div class="flex justify-end gap-3">
+        <button onclick="cerrarModal()" class="bg-gray-600 hover:bg-gray-500 px-4 py-2 rounded text-white">Cancelar</button>
+        <button onclick="guardarEntrada()" class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded text-white">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  let datos = [];
+
+  function cargarDatos() {
+    fetch("/api/galeria-musica")
+      .then(r => r.json())
+      .then(res => {
+        datos = res;
+        renderGaleria();
+      });
+  }
+
+  function renderGaleria() {
+    const cont = document.getElementById("contenedor");
+    cont.innerHTML = "";
+    datos.forEach(d => {
+      const div = document.createElement("div");
+      div.className = "card";
+      div.innerHTML = `
+        <img src="/${d.img}" alt="Imagen" class="w-full h-40 object-cover mb-2 rounded">
+        <h3 class="text-yellow-400 font-bold">${d.titulo}</h3>
+        <p class="text-sm text-gray-400 mb-1">${d.etiqueta}</p>
+        <audio controls class="w-full my-2">
+          <source src="/${d.mp4}" type="audio/mpeg">
+        </audio>
+        <div class="alfa mb-2">${d.texto}</div>
+        <div class="flex justify-center gap-2">
+          <button onclick="editar(${d.id})" class="bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded text-xs">Editar</button>
+          <button onclick="borrar(${d.id})" class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-xs">Eliminar</button>
+        </div>`;
+      cont.appendChild(div);
+    });
+  }
+
+  function abrirModal() {
+    document.getElementById("modal").classList.remove("hidden");
+    document.getElementById("modal-id").value = "";
+    document.getElementById("modal-titulo").value = "";
+    document.getElementById("modal-etiqueta").value = "";
+    document.getElementById("modal-texto").value = "";
+    document.getElementById("modal-img").value = "";
+    document.getElementById("modal-mp4").value = "";
+  }
+
+  function cerrarModal() {
+    document.getElementById("modal").classList.add("hidden");
+  }
+
+  function editar(id) {
+    const item = datos.find(x => x.id === id);
+    if (!item) return;
+    document.getElementById("modal-id").value = item.id;
+    document.getElementById("modal-titulo").value = item.titulo;
+    document.getElementById("modal-etiqueta").value = item.etiqueta;
+    document.getElementById("modal-texto").value = item.texto;
+    document.getElementById("modal").classList.remove("hidden");
+  }
+
+  function guardarEntrada() {
+    const form = new FormData();
+    const id = document.getElementById("modal-id").value;
+    form.append("titulo", document.getElementById("modal-titulo").value);
+    form.append("etiqueta", document.getElementById("modal-etiqueta").value);
+    form.append("texto", document.getElementById("modal-texto").value);
+    const imgFile = document.getElementById("modal-img").files[0];
+    const mp4File = document.getElementById("modal-mp4").files[0];
+    if (imgFile) form.append("img", imgFile);
+    if (mp4File) form.append("mp4", mp4File);
+
+    const method = id ? "PUT" : "POST";
+    const url = id ? `/api/galeria-musica/${id}` : "/api/galeria-musica";
+
+    fetch(url, { method, body: form })
+      .then(() => {
+        cerrarModal();
+        cargarDatos();
+      });
+  }
+
+  function borrar(id) {
+    if (!confirm("¿Eliminar esta entrada?")) return;
+    fetch(`/api/galeria-musica/${id}`, { method: "DELETE" })
+      .then(() => cargarDatos());
+  }
+
+  window.onload = cargarDatos;
+</script>
+</body>
+</html>

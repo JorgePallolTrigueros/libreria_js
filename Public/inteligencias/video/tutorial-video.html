@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Orígenes de la IA para Video</title>
+  <script src="/assets/tailwind.js"></script>
+  <link href="/assets/fonts.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0f172a;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 text-center text-sm md:text-base font-semibold uppercase tracking-wider">
+    <a href="../../a.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+  </nav>
+
+  <!-- Encabezado -->
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div class="relative flex items-center justify-between">
+      <div class="absolute -left-4 md:-left-10 z-20">
+   <video autoplay muted loop
+         class="w-40 h-40 md:w-52 md:h-52 object-cover rounded-full border-4 border-yellow-400 shadow-2xl">
+    <source src="/ruta/ia_video.mp4" type="video/mp4">
+  </video>   </div>
+      <div class="w-full bg-purple-800 h-28 md:h-32 rounded-xl flex items-center pl-48 pr-6 z-10 shadow-lg">
+        <h2 class="text-2xl md:text-4xl text-yellow-400 font-bold ml-auto"> IA Video</h2>
+      </div>
+    </div> 
+
+    <!-- Nueva barra de navegación específica de IA -->
+    <nav class="flex justify-end mt-4 space-x-6 text-white text-sm md:text-base">
+      <a href="origenes-video.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Orígenes IA Video</a>
+      <a href="como-funciona-video.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Cómo funciona</a>
+      <a href="respeto-video.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Respeto creativo</a>
+      <a href="ia-sin-censura-video.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">IA sin censura</a>
+      <a href="tutorial-video.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Tutorial Video IA</a>
+      <a href="top10-video.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Top 10 IA Video</a>
+      <a href="galeria-video.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Galería</a>
+      <a href="Video_Locales.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Locales</a>
+  
+    </nav>
+  </section>
+
+
+<!-- Contenido -->
+<main class="max-w-4xl mx-auto px-6 leading-relaxed text-justify">
+  <h3 class="text-yellow-400 text-xl font-bold mb-4">Tutorial: Cómo generar videos con IA</h3>
+  <p class="mb-4">
+    Aquí te explicamos dos formas de trabajar con inteligencia artificial para crear videos: una usando plataformas en línea (fáciles y rápidas) y otra instalando herramientas en tu ordenador (con más control y libertad).
+  </p>
+
+  <!-- Selector -->
+  <div class="mb-6 text-center">
+    <button onclick="mostrarTutorial('online')" class="px-4 py-2 bg-indigo-700 hover:bg-indigo-500 rounded text-white text-sm mx-2">Método Online</button>
+    <button onclick="mostrarTutorial('local')" class="px-4 py-2 bg-purple-700 hover:bg-purple-500 rounded text-white text-sm mx-2">Método Offline / Local</button>
+  </div>
+
+  <!-- Contenido Online -->
+  <div id="tutorial-online" class="tutorial-section">
+    <h4 class="text-yellow-300 text-lg font-bold mb-2">🟢 Método 1: Online (con Pika Labs o Runway)</h4>
+    <ol class="list-decimal list-inside mb-4">
+      <li>Entra en <a href="https://app.pika.art" class="text-yellow-400 underline" target="_blank">Pika Labs</a> o <a href="https://runwayml.com" class="text-yellow-400 underline" target="_blank">Runway ML</a>.</li>
+      <li>Regístrate (con email o cuenta de Google).</li>
+      <li>Escribe un prompt (ej: “una nave volando sobre un planeta alienígena al atardecer”).</li>
+      <li>Opcional: sube una imagen de referencia si tu IA lo permite.</li>
+      <li>Selecciona duración (2–4s en Pika, hasta 16s en Runway).</li>
+      <li>Haz clic en "Generate" y espera unos segundos.</li>
+      <li>Visualiza y descarga tu video.</li>
+    </ol>
+    <p class="text-sm text-gray-400 italic mb-4">💡 Ideal para empezar, hacer pruebas rápidas y explorar ideas visuales.</p>
+  </div>
+
+  <!-- Contenido Offline -->
+  <div id="tutorial-local" class="tutorial-section hidden">
+    <h4 class="text-yellow-300 text-lg font-bold mb-2">🟣 Método 2: Offline / Local (con ComfyUI + AnimateDiff)</h4>
+    <ol class="list-decimal list-inside mb-4">
+      <li>Instala <a href="https://github.com/comfyanonymous/ComfyUI" class="text-yellow-400 underline" target="_blank">ComfyUI</a> en tu ordenador (recomendado: GPU NVIDIA).</li>
+      <li>Descarga el modelo <strong>AnimateDiff</strong> desde HuggingFace.</li>
+      <li>En ComfyUI, carga un flujo básico con nodos: prompt → AnimateDiff → Save video.</li>
+      <li>Escribe tu prompt y ajusta la resolución y cantidad de frames.</li>
+      <li>Puedes usar ControlNet para dar pose, profundidad o silueta.</li>
+      <li>Ejecuta el flujo y guarda el resultado en .mp4 o .webm.</li>
+      <li>Edita con un editor externo (DaVinci Resolve, CapCut, etc.) si deseas unir escenas.</li>
+    </ol>
+    <p class="text-sm text-gray-400 italic mb-4">🔧 Más complejo, pero te da libertad total y sin censura.</p>
+  </div>
+
+  <div class="mt-8 text-sm text-center text-gray-400 italic">
+    Elige el método según tu nivel, tus necesidades creativas y tu equipo. ¡Ambos pueden dar resultados increíbles!
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="text-center text-xs text-gray-400 mt-10 mb-4">
+  &copy; 2025 Proyecto IA Visual - Todos los derechos reservados.
+</footer>
+
+<!-- Script para cambiar de modo -->
+<script>
+  function mostrarTutorial(tipo) {
+    document.getElementById("tutorial-online").classList.add("hidden");
+    document.getElementById("tutorial-local").classList.add("hidden");
+    document.getElementById("tutorial-" + tipo).classList.remove("hidden");
+  }
+</script>
+
+<style>
+  .hidden { display: none; }
+</style>

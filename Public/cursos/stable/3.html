@@ -1,0 +1,137 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Orígenes de la IA de Imágenes</title>
+  <script src="/assets/tailwind.js"></script>
+  <link href="/assets/fonts.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0f172a;
+      color: white;
+    }
+    #search-input, #filter-select {
+      background-color: rgb(31 41 55 / var(--tw-bg-opacity, 1));
+      width: auto;
+      height: 48px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 text-center text-sm md:text-base font-semibold uppercase tracking-wider">
+    <a href="../../d.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+  </nav>
+
+  <!-- Encabezado con imagen y franja -->
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div class="relative flex items-center justify-between">
+      <!-- Imagen circular -->
+      <div class="absolute -left-4 md:-left-10 z-20">
+  <video autoplay muted loop
+         class="w-40 h-40 md:w-52 md:h-52 object-cover rounded-full border-4 border-yellow-400 shadow-2xl">
+    <source src="/ruta/stable.mp4" type="video/mp4">
+  </video>
+      </div>
+
+      <!-- Franja con título -->
+      <div class="w-full bg-purple-800 h-28 md:h-32 rounded-xl flex items-center pl-48 pr-6 z-10 shadow-lg">
+        <h2 class="text-2xl md:text-4xl text-yellow-400 font-bold ml-auto">Sstable Diffusion</h2>
+      </div>
+    </div>
+
+    <!-- Nueva barra de navegación específica de IA -->
+    <nav class="flex justify-end mt-4 space-x-6 text-white text-sm md:text-base">
+        <a href="ComfyUI.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Sttable Diffusion Curso</a>
+        <a href="1.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Primera Parte </a>
+        <a href="2.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Segunda Parte </a>
+        <a href="3.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Tercera Parte </a>
+        <a href="4.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Cuarta Parte </a>
+        </nav>
+      </nav>
+  </section>
+
+  <!-- Parte 3: Tiled Diffusion -->
+<section id="tiled-diffusion" class="max-w-6xl mx-auto mt-20 px-6">
+    <h2 class="text-yellow-400 text-2xl md:text-3xl font-bold border-b border-yellow-400 pb-2 mb-6">🧱 Parte 3: ¿Qué es y cómo usar Tiled Diffusion?</h2>
+  
+    <p class="text-sm md:text-base leading-relaxed mb-6">
+      <strong>Tiled Diffusion</strong> permite crear imágenes de gran tamaño dividiendo la generación en secciones más pequeñas ("tiles") que se unen de forma invisible. Ideal para escenas como <em>Maldito Viaje</em> con muchos personajes o fondos extendidos.
+    </p>
+  
+    <!-- Explicación visual -->
+    <div class="grid md:grid-cols-2 gap-6 mb-6">
+      <img src="img/tiled-preview.jpg" alt="Vista previa de Tiled Diffusion" class="rounded shadow">
+      <ul class="list-disc text-sm md:text-base pl-6 space-y-2">
+        <li>Evita desenfoque en imágenes grandes (ej. 4096x2048 px)</li>
+        <li>Permite trabajar con escenas múltiples en una sola imagen</li>
+        <li>Funciona incluso en tarjetas gráficas de gama media</li>
+        <li>Disponible en <strong>ComfyUI</strong> y <strong>A1111</strong> (con extensión)</li>
+      </ul>
+    </div>
+  
+    <!-- Cómo activarlo -->
+    <h3 class="text-yellow-300 font-semibold text-xl mb-4">🛠️ ¿Cómo usarlo en AUTOMATIC1111?</h3>
+    <ol class="list-decimal text-sm md:text-base pl-6 space-y-4 leading-relaxed">
+      <li>Instala la extensión <strong>sd-webui-tiled-diffusion</strong> desde el tab "Extensions → Available".</li>
+      <li>Reinicia la interfaz.</li>
+      <li>Ve al nuevo panel “Tiled Diffusion” al pie de la sección de generación.</li>
+      <li>Marca <code>Enable</code> y configura:
+        <ul class="list-disc pl-6 mt-2">
+          <li><strong>Tile size:</strong> 512 o 768 (según resolución)</li>
+          <li><strong>Tile overlap:</strong> 64 (para transiciones suaves)</li>
+          <li><strong>Upscaler:</strong> R-ESRGAN 4x+ o similar</li>
+        </ul>
+      </li>
+      <li>Genera la imagen normalmente. ¡Notarás la diferencia!</li>
+    </ol>
+  
+    <!-- Prompt de prueba -->
+    <div class="bg-gray-800 p-4 rounded mt-8 relative">
+      <h4 class="text-yellow-300 font-semibold mb-2">📋 Prompt recomendado para pruebas</h4>
+      <pre id="prompt-tiled" class="text-green-300 font-mono whitespace-pre-wrap">
+  an epic group of warriors sitting in airplane seats, ultra-detailed, cinematic light, masterpiece, high resolution, wide shot, 4k, symmetrical layout
+      </pre>
+      <button onclick="copiarPrompt('prompt-tiled')" class="absolute top-2 right-2 bg-yellow-400 text-black text-xs px-3 py-1 rounded hover:bg-yellow-500">Copiar</button>
+    </div>
+  
+    <!-- Bonus ComfyUI -->
+    <div class="mt-10">
+      <h4 class="text-yellow-300 font-semibold text-lg mb-2">⚡ ¿Y en ComfyUI?</h4>
+      <p class="text-sm md:text-base text-white">Usa nodos como <code>Tiled Diffusion Sampler</code> y <code>Tiled VAE Decoder</code>. Puedes definir el tamaño exacto, el overlap y hacer render de imágenes masivas (6000 px o más) sin errores de VRAM.</p>
+    </div>
+  </section>

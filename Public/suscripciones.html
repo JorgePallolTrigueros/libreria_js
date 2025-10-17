@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Suscripciones — control</title>
+  <style>
+    :root{
+      --bg:#0f172a; --panel:#111827; --muted:#94a3b8; --text:#e5e7eb; --accent:#22d3ee;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Noto Sans",sans-serif;background:linear-gradient(180deg,#0b1025,#0f172a 30%,#0b1025);color:var(--text)}
+    header{position:sticky;top:0;background:rgba(15,23,42,.8);backdrop-filter:blur(6px);border-bottom:1px solid #1f2937;z-index:10}
+    header .wrap{max-width:900px;margin:auto;display:flex;gap:16px;align-items:center;padding:12px 16px}
+    .badge{padding:6px 10px;border-radius:999px;background:#0b3b46;border:1px solid #164e63;color:#99f6e4;font-weight:600;font-size:12px}
+    main{max-width:900px;margin:24px auto;padding:0 16px;display:grid;gap:20px}
+    .panel{background:linear-gradient(180deg,#0b1228,#0b132a);border:1px solid #1f2937;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+    .panel h2{margin:0;padding:14px 16px;border-bottom:1px solid #1f2937;font-size:16px;color:#cbd5e1;display:flex;align-items:center;gap:10px}
+    .panel .content{padding:16px}
+    input,button{appearance:none}
+    input{width:100%;padding:10px 12px;border-radius:10px;border:1px solid #334155;background:#0b1228;color:var(--text)}
+    input[type=number]{text-align:right}
+    input:focus{outline:none;border-color:#155e75;box-shadow:0 0 0 3px rgba(45,212,191,.15)}
+    button{padding:10px 14px;border-radius:10px;border:1px solid #164e63;background:#083344;color:#a5f3fc;font-weight:600;cursor:pointer}
+    button:hover{filter:brightness(1.1)}
+    .btn-ghost{background:transparent;border-color:#334155;color:#cbd5e1}
+    .stack{display:flex;gap:8px;flex-wrap:wrap}
+    table{width:100%;border-collapse:separate;border-spacing:0 8px}
+    thead th{font-size:12px;letter-spacing:.02em;text-transform:uppercase;color:#94a3b8;font-weight:700;text-align:left;padding:0 8px}
+    tbody tr{background:#0a0f23;border:1px solid #1f2937}
+    tbody td{padding:8px}
+    tbody tr td:first-child{border-top-left-radius:12px;border-bottom-left-radius:12px}
+    tbody tr td:last-child{border-top-right-radius:12px;border-bottom-right-radius:12px}
+    .row{display:flex;gap:10px;align-items:center;margin-bottom:12px}
+    .row>*{flex:1 1 160px}
+    .num{font-variant-numeric:tabular-nums;text-align:right}
+    .kpi{display:flex;align-items:center;gap:10px;font-weight:800}
+    .kpi .value{font-size:22px}
+    .muted{color:var(--muted)}
+  </style>
+</head>
+<body>
+
+
+
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gastos</title>
+  <script src="/assets/tailwind.js"></script>
+  <link href="/assets/fonts.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0f172a;
+      color: white;
+    }
+    #contenedor-tarjetas img {
+      background-color: white;
+    }
+    .line-clamp-5 {
+      display: -webkit-box;
+      -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body class="min-h-screen p-6">
+
+  <!-- Navbar -->
+  <nav class="bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 text-center text-sm md:text-base font-semibold uppercase tracking-wider">
+    <a href="/../f.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+  </nav>
+
+  <!-- Encabezado -->
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div class="relative flex items-center justify-between">
+      <div class="absolute -left-4 md:-left-10 z-20">
+        <video autoplay muted loop
+               class="w-40 h-40 md:w-52 md:h-52 object-cover rounded-full border-4 border-yellow-400 shadow-2xl">
+          <source src="/ruta/compras.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="w-full bg-purple-800 h-28 md:h-32 rounded-xl flex items-center pl-48 pr-6 z-10 shadow-lg">
+        <h2 class="text-2xl md:text-4xl text-yellow-400 font-bold ml-auto">Gastos</h2>
+      </div>
+    </div>
+  <div style="height: 100px;">&nbsp;</div>
+    <div>
+      <a href="login.html" class="bg-yellow-400 text-black px-4 py-2 rounded font-bold hover:bg-yellow-300 transition">
+        Iniciar sesión
+      </a>
+    </div>
+
+
+
+
+
+
+
+  <header>
+    <div class="wrap">
+      <span class="badge">Suscripciones</span>
+      <div class="muted">Control mensual de costes</div>
+    </div>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Resumen</h2>
+      <div class="content">
+        <div class="kpi">Total mensual: <span class="value" id="kpiTotal">0,00 €</span></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Listado / edición</h2>
+      <div class="content">
+        <div class="row">
+          <input id="filtro" placeholder="Filtrar por nombre o razón…" />
+          <div class="stack">
+            <button id="btnAgregar">➕ Añadir suscripción</button>
+            <button id="btnLimpiar" class="btn-ghost">Limpiar filtro</button>
+          </div>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Razón del mantenimiento</th>
+              <th class="num">Coste (€/mes)</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // === Array en la propia página ===
+    const suscripciones = [
+      { nombre: "Storitail", razon: "Audiolibros clave para el proyecto", coste: 12.99 },
+      { nombre: "Netflix",   razon: "Series/documentales de referencia", coste: 15.99 },
+      { nombre: "Churilol",  razon: "Anime semanal que sigo",            coste: 6.99 }
+    ];
+
+    // Estado editable
+    let data = suscripciones.map(clone);
+
+    // Utilidades
+    const euro = n => (Number(n)||0).toLocaleString('es-ES',{style:'currency',currency:'EUR'});
+    const tbody = document.getElementById('tbody');
+    const filtro = document.getElementById('filtro');
+
+    function clone(o){ return { nombre: o.nombre||"", razon: o.razon||"", coste: Number(o.coste)||0 }; }
+
+    // Render
+    filtro.addEventListener('input', render);
+    document.getElementById('btnLimpiar').onclick = () => { filtro.value=""; render(); };
+    document.getElementById('btnAgregar').onclick = () => {
+      data.push({ nombre:"", razon:"", coste:0 });
+      render();
+    };
+
+    function inputCell(value, onChange, type='text', step){
+      const el = document.createElement('input');
+      el.value = value ?? '';
+      el.type = type;
+      if(type==='number'){ el.step = step ?? '0.01'; }
+      el.onchange = e => onChange(type==='number' ? Number(e.target.value) : e.target.value);
+      return el;
+    }
+
+    function btn(label, cls, click){
+      const b = document.createElement('button');
+      b.textContent = label; b.className = cls; b.onclick = click; return b;
+    }
+
+    function totalMensual(){ return data.reduce((a,b)=> a + (Number(b.coste)||0), 0); }
+
+    function render(){
+      const term = (filtro.value||"").toLowerCase();
+      tbody.innerHTML = "";
+      const rows = data
+        .map((r,idx)=> ({...r, _idx: idx}))
+        .filter(r => !term || (r.nombre+" "+r.razon).toLowerCase().includes(term));
+
+      for(const r of rows){
+        const tr = document.createElement('tr');
+
+        // Nombre
+        let td = document.createElement('td');
+        td.appendChild(inputCell(r.nombre, v => { data[r._idx].nombre = v; updateKPIs(); }));
+        tr.appendChild(td);
+
+        // Razón
+        td = document.createElement('td');
+        td.appendChild(inputCell(r.razon, v => { data[r._idx].razon = v; }));
+        tr.appendChild(td);
+
+        // Coste
+        td = document.createElement('td'); td.className = 'num';
+        td.appendChild(inputCell(r.coste, v => { data[r._idx].coste = v||0; updateKPIs(); }, 'number'));
+        tr.appendChild(td);
+
+        // Acciones
+        td = document.createElement('td');
+        const acciones = document.createElement('div'); acciones.className = 'stack';
+        acciones.append(
+          btn('🗑️ Borrar','btn-ghost', () => { if(confirm('¿Eliminar esta suscripción?')){ data.splice(r._idx,1); render(); } })
+        );
+        td.appendChild(acciones); tr.appendChild(td);
+
+        tbody.appendChild(tr);
+      }
+
+      updateKPIs();
+    }
+
+    function updateKPIs(){
+      document.getElementById('kpiTotal').textContent = euro(totalMensual());
+    }
+
+    // Inicio
+    render();
+  </script>
+</body>
+</html>

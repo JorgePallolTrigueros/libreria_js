@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lista de Animes</title>
+  <script src="/assets/tailwind.js"></script>
+  <link href="/assets/fonts.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0f172a;
+      color: white;
+    }
+    .fade-page { opacity: 0; transition: opacity 0.5s ease; }
+    body.loaded .fade-page { opacity: 1; }
+
+    /* Animación modal */
+    @keyframes zoomIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .modal-animado {
+      animation: zoomIn 0.3s ease-out;
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+
+
+
+
+
+  <nav class="bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 text-center text-sm md:text-base font-semibold uppercase tracking-wider">
+    <a href="/../e.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+  </nav>
+
+  <!-- Encabezado -->
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div class="relative flex items-center justify-between">
+      <div class="absolute -left-4 md:-left-10 z-20">
+  <video autoplay muted loop
+         class="w-40 h-40 md:w-52 md:h-52 object-cover rounded-full border-4 border-yellow-400 shadow-2xl">
+    <source src="/ruta/pose-pc.mp4" type="video/mp4">
+  </video>
+      </div>
+      <div class="w-full bg-purple-800 h-28 md:h-32 rounded-xl flex items-center pl-48 pr-6 z-10 shadow-lg">
+        <h2 class="text-2xl md:text-4xl text-yellow-400 font-bold ml-auto">Obras</h2>
+      </div>
+    </div>
+
+<a href="juegospc_index.html">Registros </a> | <a href="codigo_juegospc.html"> Webscraping</a>
+
+
+
+<section id="comandos">
+    <h3 class="text-yellow-400 text-2xl md:text-3xl font-bold border-b border-yellow-400 pb-2 mb-6">📋 Comandos Webscraping</h3>
+  
+    <div class="bg-gray-800 p-4 rounded-xl relative shadow-lg">
+      <pre id="codigo-iclone" class="whitespace-pre-wrap text-green-300 text-sm md:text-base font-mono">
+ 
+
+
+import requests
+from bs4 import BeautifulSoup
+import numpy as np
+import pandas as pd
+from time import sleep
+import pymysql
+
+
+Pagina_Generica = "https://www.3djuegos.com/juegos/__NOMBRE_PELI__/"
+
+
+Titulos_de_juegos = ['The Isle Tide Hotel','THE KING OF FIGHTERS XV'];
+                    #    "https://www.3djuegos.com/juegos/dead-space-remake/",
+#    "https://www.3djuegos.com/juegos/kirbys-return-to-dream-land-deluxe/"
+#]
+
+
+try:
+    connection = pymysql.connect(host='localhost',user='root',password='Kojinanjo1@',db='pelis')
+    print("Conectado correctamente")
+except pymysql.Error as e:
+    print("No puede conectar con MySQL %d: %s" %(e.args[0], e.args[1]))
+
+
+cursor = connection.cursor()
+
+   
+
+print("CONTINUE")
+
+titulolista = list()
+plataformaslista = list()
+generoslista = list()
+descripcionlista = list()
+imagenlista = list()
+
+peliculasExcluidas = list()
+
+df = pd.DataFrame()
+
+for nombrejuego in Titulos_de_juegos:
+    
+    urlBusqueda = Pagina_Generica.replace('__NOMBRE_PELI__', nombrejuego).replace(' ','-')
+    print(urlBusqueda)
+    
+    response = requests.get(urlBusqueda)
+    soup = BeautifulSoup(response.text, "html.parser")
+    
+    
+    
+    try:
+        pagNoEncontrada = soup.find("div", attrs = {"class" : "blob"})
+    
+        if (pagNoEncontrada is None):
+            print("Comprobando si el juego existe...")
+        else:
+            print("Juego NO encontrado... añadimos en excluidos y siguiente")
+            peliculasExcluidas.append(nombrejuego)
+            continue
+    except IndexError:
+        print("Comprobando si el juego existe...")
+    
+    try:
+        pagNoEncontrada = soup.find("div", attrs = {"class" : "upp"}).text.strip()
+        if (pagNoEncontrada == 'PÁGINA NO ENCONTRADA'):
+            print("Juego NO encontrado... añadimos en excluidos y siguiente")
+            peliculasExcluidas.append(nombrejuego)
+            continue
+        else:
+            print("Comprobando si el juego existe...")
+    except IndexError:
+        print("Comprobando si el juego existe...")
+
+    
+    titulo = soup.find("div", attrs = {"id" : "gs_resumen"}).find("h1").text.strip()
+    titulolista.append(titulo)
+    plataformasElementos = soup.find_all("span", {"class": "cab_plat_off"})
+    plataformas = []
+    for plataforma in plataformasElementos:
+        plataformas.append(plataforma.text.strip())
+    plataformasString = ','.join(plataformas)
+    plataformaslista.append(plataformasString)
+    
+    descripcion = soup.find("p", {"class": "s14 lh20 c2 mar_t15 mar_b10 fftit edit_desc"}).text.strip()
+    descripcionlista.append(descripcion)
+    
+    geberoElementos = soup.find("dt", {"class": "edit_tematicas"}).find_next_sibling("dd").find_all("a")
+    
+    generos = []
+    for gen in geberoElementos:
+        generos.append(gen.text.strip())
+    generosString = ','.join(generos)
+    generoslista.append(generosString)
+    
+    imagen = soup.find("img", {"class": "dib"})
+    imagenlista.append(imagen['data-src'])
+    
+    sleep(3)
+    
+    #--------------------------------------------------------------------------------------------------------------------
+
+print("Juegos Excluidos")
+print(peliculasExcluidas)
+    
+df["titulo"] = titulolista
+df["plataformas"] = plataformaslista
+df["generos"] = generoslista
+df["descripcion"] = descripcionlista
+df["imagen"] = imagenlista
+
+sql = """INSERT INTO `pelis`.`emulador` (`titulo`,`plataformas`,`generos`,`descripcion`,`imagen`) VALUES (%s, %s, %s, %s, %s)"""
+
+for ind in df.index:
+    cursor.execute(sql, (df['titulo'][ind], df['plataformas'][ind], df['generos'][ind], df['descripcion'][ind], df['imagen'][ind] ))
+    connection.commit()
+
+
+      </pre>
+  
+      <button onclick="copiarCodigo()" class="absolute top-2 right-2 bg-yellow-400 text-black font-bold px-3 py-1 rounded hover:bg-yellow-500 transition">
+        Copiar
+      </button>
+    </div>
+  </section>
+  ✅ 2. Añade este script justo antes de </body>:
+  html
+  Copiar
+  Editar
+  <script>
+    function copiarCodigo() {
+      const codigo = document.getElementById("codigo-iclone").innerText;
+      navigator.clipboard.writeText(codigo)
+        .then(() => {
+          alert("¡Comando copiado al portapapeles!");
+        })
+        .catch(err => {
+          console.error("Error al copiar", err);
+          alert("Error al copiar el texto");
+        });
+    }
+  </script>
+
+<div class="max-w-7xl mx-auto px-6 mt-8">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Lista 1 -->
+    <div class="bg-gray-800 rounded-xl p-4 shadow">
+      <h4 class="text-yellow-400 text-xl font-bold mb-3">Castellano</h4>
+      <pre class="whitespace-pre-wrap leading-6">
+
+
+
+
+
+Age of Mythology Retold (2024)
+Battle Chess
+Blacksad Under the Skin
+Castle of Illusion HD
+Chaos on Deponia
+Cuphead The Delicious Last Course
+Dead Cells (2018)
+Deponia
+Deponia Doomsday
+Diablo II Resurrected
+Funko.Fusion.v1.2.3.137492-RUNE
+Goodbye Deponia
+Gorogoa
+Granblue.Fantasy.Versus.Rising.Sandalphon-TENOKE
+Granblue.Fantasy.Versus.Rising.v1.62-P2P
+GUILTY.GEAR.STRIVE.DAREDEVIL.EDITION-TENOKE
+GUILTY.GEAR.STRIVE.v1.39-TENOKE
+GUILTY.GEAR.STRIVE.v1.43-P2P
+Heavy Rain
+Hollow.Knight.Silksong-InsaneRamZes
+It Takes Two (2021)
+LOLLIPOP CHAINSAW RePOP (2012-2024)
+Mandragora Whispers of the Witch Tree (2025)
+Mandragora Whispers of the Witch Tree v1.6.1.2461
+
+
+      </pre>
+    </div>
+
+    <!-- Lista 2 -->
+    <div class="bg-gray-800 rounded-xl p-4 shadow">
+      <h4 class="text-yellow-400 text-xl font-bold mb-3">Ingles</h4>
+      <pre class="whitespace-pre-wrap leading-6">
+Age of Mythology Retold 
+Battle Chess
+Blacksad Under the Skin
+Castle of Illusion
+Chaos on Deponia
+Cuphead The Delicious Last Course
+Dead Cells (2018)
+Deponia
+Deponia Doomsday
+Diablo II Resurrected
+Funko.Fusion.v1.2.3.137492-RUNE
+Goodbye Deponia
+Gorogoa
+Granblue.Fantasy.Versus.Rising.Sandalphon-
+GUILTY.GEAR.STRIVE.DAREDEVIL.EDITION-TENOKE
+Heavy Rain
+Hollow.Knight.Silksong
+It Takes Two (2021)
+LOLLIPOP CHAINSAW RePOP (2012-2024)
+Mandragora Whispers of the Witch Tree (2025)
+marvel vs capcom 4
+Murdered Soul Suspect
+Ni no Kuni Wrath of the White Witch Remastered
+Nikoderiko
+Nine Sols (2024)
+ninja 1
+Ninja Gaiden Ragebound
+Randal's Monday
+Saint Seiya Soldiers Soul
+Spirit of the North 2
+Street Fifther
+Streets_of_Rage_4_08g-r14424_(54518)_win_gog
+TEKKEN 8 (2024)
+The Plucky Squire (2024)
+The Rogue Prince of Persia
+THE.KING.OF.FIGHTERS.XV.v2.10-P2P
+trine 5
+Valiant Hearts - The Great War
+WWE 2K25 (2025)
+
+
+      </pre>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+

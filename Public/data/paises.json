@@ -1,0 +1,14 @@
+[
+  { "id": 1,  "nombre": "EEUU",      "imagen": "/ima/bandera (8).jpg" },
+  { "id": 2,  "nombre": "China",     "imagen": "/ima/bandera (7).jpg" },
+  { "id": 3,  "nombre": "Rusia",     "imagen": "/ima/bandera (3).jpg" },
+  { "id": 4,  "nombre": "Canada",    "imagen": "/ima/bandera (2).jpg" },
+  { "id": 5,  "nombre": "Europa",    "imagen": "/ima/bandera (1).svg" },
+  { "id": 6,  "nombre": "Argentina", "imagen": "/ima/bandera (3).jpg" },
+  { "id": 7,  "nombre": "Venezuela", "imagen": "/ima/bandera (4).jpg" },
+  { "id": 8,  "nombre": "India",     "imagen": "/ima/bandera (5).jpg" },
+  { "id": 9,  "nombre": "Israel",    "imagen": "/ima/bandera (1).webp" },
+  { "id": 10, "nombre": "Palestina", "imagen": "/ima/bandera (6).jpg" },
+  { "id": 11, "nombre": "Ucrania",   "imagen": "/ima/bandera (9).jpg" },
+  { "id": 12, "nombre": "Europa UE", "imagen": "/ima/bandera (1).svg" }
+]

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Galería IA con Filtros</title>
+  <script src="/assets/tailwind.js"></script>
+  <link href="/assets/fonts.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0f172a;
+      color: white;
+    }
+    .mini-button {
+      width: 1.5em;
+      height: 1.5em;
+      border-radius: 3px;
+      border: 1px solid #000;
+      cursor: pointer;
+      transition: transform 0.2s ease-in-out;
+    }
+    .mini-button:hover {
+      transform: scale(1.2);
+    }
+
+    .mini-buttons-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 8px;
+  padding-top: 10px;
+  margin-top: 10px;
+}
+</style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 text-center text-sm md:text-base font-semibold uppercase tracking-wider">
+    <a href="../../a.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+  </nav>
+
+  <!-- Encabezado con imagen y franja -->
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div class="relative flex items-center justify-between">
+      <!-- Imagen circular -->
+      <div class="absolute -left-4 md:-left-10 z-20">
+  <video autoplay muted loop
+         class="w-40 h-40 md:w-52 md:h-52 object-cover rounded-full border-4 border-yellow-400 shadow-2xl">
+    <source src="/ruta/ia_voces.mp4" type="video/mp4">
+  </video>
+      </div>
+
+      <!-- Franja con título -->
+      <div class="w-full bg-purple-800 h-28 md:h-32 rounded-xl flex items-center pl-48 pr-6 z-10 shadow-lg">
+        <h2 class="text-2xl md:text-4xl text-yellow-400 font-bold ml-auto">IA Voces</h2>
+      </div>
+    </div>
+
+    <!-- Nueva barra de navegación específica de IA -->
+    <nav class="flex justify-end mt-4 space-x-6 text-white text-sm md:text-base">
+        <a href="origenes-voz.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Orígenes IA Voz</a>
+        <a href="como-funciona-voz.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Cómo funciona</a>
+        <a href="control-voz.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Control creativo</a>
+        <a href="voz-sin-censura.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">IA sin censura</a>
+        <a href="tutorial-voz.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Tutorial Voz IA</a>
+        <a href="top10-voz.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Top 10 IA Voz</a>
+        <a href="galeria-voz.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Galería</a>
+      </nav>
+  </section>
+
+<!-- Contenido -->
+<main class="max-w-6xl mx-auto px-6 leading-relaxed">
+  <h3 class="text-yellow-400 text-xl font-bold mb-6 text-center">Top 10 IAs para Generación de Voz (2025)</h3>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<!-- 1. ElevenLabs -->
+<div class="bg-slate-800 p-4 rounded-xl shadow-lg border-l-4 border-green-400">
+  <h4 class="text-green-300 font-bold text-lg">1. ElevenLabs</h4>
+  <p>Voces ultra realistas, con emociones, acento e idioma. Ideal para audiolibros, doblaje y contenido profesional.</p>
+  <p class="text-sm mt-2">🔹 Online · 🎭 Emocional · ✅ Gratuita limitada</p>
+  <p class="text-sm text-gray-300">💳 Premium: <span class="text-yellow-300">1 mes: 5 USD • 1 año: 55 USD</span></p>
+  <a href="https://elevenlabs.io" target="_blank" class="text-yellow-400 text-sm underline">Probar</a>
+</div>
+
+<!-- 2. XTTS (Coqui) -->
+<div class="bg-slate-800 p-4 rounded-xl shadow-lg border-l-4 border-purple-400">
+  <h4 class="text-purple-300 font-bold text-lg">2. XTTS (Coqui)</h4>
+  <p>Text-to-speech multilingüe, personalizable y sin censura si se ejecuta localmente.</p>
+  <p class="text-sm mt-2">💻 Local · 🔓 Sin censura · 🎤 Clonación</p>
+  <p class="text-sm text-gray-300">💳 Premium: <span class="text-yellow-300">Gratis (open source)</span></p>
+  <a href="https://github.com/coqui-ai/TTS" target="_blank" class="text-yellow-400 text-sm underline">GitHub</a>
+</div>
+
+<!-- 3. PlayHT -->
+<div class="bg-slate-800 p-4 rounded-xl shadow-lg border-l-4 border-indigo-400">
+  <h4 class="text-indigo-300 font-bold text-lg">3. PlayHT</h4>
+  <p>Gran variedad de voces realistas en español, inglés y otros idiomas. Soporte para clonación verificada.</p>
+  <p class="text-sm mt-2">🔹 Online · 🎧 Narración · 🎙️ Voice cloning</p>
+  <p class="text-sm text-gray-300">💳 Premium: <span class="text-yellow-300">1 mes: 31 USD • 1 año: 300 USD</span></p>
+</div>
+
+<!-- 4. DiffSinger -->
+<div class="bg-slate-800 p-4 rounded-xl shadow-lg border-l-4 border-yellow-400">
+  <h4 class="text-yellow-300 font-bold text-lg">4. DiffSinger</h4>
+  <p>IA de canto profesional. Permite controlar vibrato, notas, velocidad y emociones en voces cantadas.</p>
+  <p class="text-sm mt-2">💻 Local · 🎵 Cantantes IA · 🔓 Sin censura</p>
+  <p class="text-sm text-gray-300">💳 Premium: <span class="text-yellow-300">Gratis (open source)</span></p>
+</div>
+
+<!-- 5. Resemble.ai -->
+<div class="bg-slate-800 p-4 rounded-xl shadow-lg border-l-4 border-blue-400">
+  <h4 class="text-blue-300 font-bold text-lg">5. Resemble.ai</h4>
+  <p>Clonación de voz realista con posibilidad de integrar APIs para videojuegos, películas o asistentes.</p>
+  <p class="text-sm mt-2">🔹 Online · 🎮 Integrable</p>
+  <p class="text-sm text-gray-300">💳 Premium: <span class="text-yellow-300">1 mes: 30 USD • 1 año: 300 USD</span></p>
+</div>
+
+<!-- 6. Voice.ai -->
+<div class="bg-slate-800 p-4 rounded-xl shadow-lg border-l-4 border-pink-400">
+  <h4 class="text-pink-300 font-bold text-lg">6. Voice.ai</h4>
+  <p>Transformador de voz en tiempo real. Cambia tu voz en llamadas, streaming o videojuegos.</p>
+  <p class="text-sm mt-2">🔹 Online / Local · 🎙️ En tiempo real</p>
+  <p class="text-sm text-gray-300">💳 Premium: <span class="text-yellow-300">1 mes: 15 USD • 1 año: 150 USD</span></p>
+</div>
+
+<!-- 7. Bark -->
+<div class="bg-slate-800 p-4 rounded-xl shadow-lg border-l-4 border-purple-500">
+  <h4 class="text-purple-300 font-bold text-lg">7. Bark</h4>
+  <p>Modelo de IA de voz por espectrogramas. Permite generar voz sin censura desde texto con tono natural.</p>
+  <p class="text-sm mt-2">💻 Local · 🎛️ Experimental</p>
+  <p class="text-sm text-gray-300">💳 Premium: <span class="text-yellow-300">Gratis (open source)</span></p>
+</div>
+
+<!-- 8. Descript Overdub -->
+<div class="bg-slate-800 p-4 rounded-xl shadow-lg border-l-4 border-indigo-500">
+  <h4 class="text-indigo-300 font-bold text-lg">8. Descript Overdub</h4>
+  <p>Crea una réplica segura de tu voz para editar audios como si fueran texto. Muy usado en podcasts.</p>
+  <p class="text-sm mt-2">🔹 Online · 🎙️ Podcast Friendly</p>
+  <p class="text-sm text-gray-300">💳 Premium: <span class="text-yellow-300">1 mes: 15 USD • 1 año: 144 USD</span></p>
+</div>
+
+<!-- 9. SoftVC + RVC -->
+<div class="bg-slate-800 p-4 rounded-xl shadow-lg border-l-4 border-yellow-500">
+  <h4 class="text-yellow-300 font-bold text-lg">9. SoftVC + RVC</h4>
+  <p>Voces realistas y modificables en tiempo real. Usadas en canto, doblaje y performance artística.</p>
+  <p class="text-sm mt-2">💻 Local · 🎤 Modulación en vivo</p>
+  <p class="text-sm text-gray-300">💳 Premium: <span class="text-yellow-300">Gratis (open source)</span></p>
+</div>
+
+<!-- 10. Narakeet -->
+<div class="bg-slate-800 p-4 rounded-xl shadow-lg border-l-4 border-green-500">
+  <h4 class="text-green-300 font-bold text-lg">10. Narakeet</h4>
+  <p>Conversión rápida de presentaciones PowerPoint o Markdown a video con voz narrada IA.</p>
+  <p class="text-sm mt-2">🔹 Online · 🎓 Educativo</p>
+  <p class="text-sm text-gray-300">💳 Premium: <span class="text-yellow-300">1 mes: 10 USD • 1 año: 96 USD</span></p>
+  <a href="https://www.narakeet.com" target="_blank" class="text-yellow-400 text-sm underline">Probar</a>
+</div>
+
+  </div>
+
+  <div class="mt-8 text-sm text-center text-gray-400 italic">
+    Voces IA para crear, emocionar, enseñar… o cantar. El futuro ya no es mudo.
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="text-center text-xs text-gray-400 mt-10 mb-4">
+  &copy; 2025 Proyecto IA de Voz - Todos los derechos reservados.
+</footer>
+
+  

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lista de Artistas</title>
+  <script src="/assets/tailwind.js"></script>
+  <link href="/assets/fonts.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0f172a;
+      color: white;
+    }
+    .fade-page { opacity: 0; transition: opacity 0.5s ease; }
+    body.loaded .fade-page { opacity: 1; }
+    .card-revisado { border: 3px solid #00ff00; }
+    .card-no-revisado { border: 3px solid #ff0000; }
+  </style>
+</head>
+<body class="min-h-screen">
+  <nav class="bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 text-center text-sm md:text-base font-semibold uppercase tracking-wider">
+    <a href="/../e.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+  </nav>
+
+  <!-- Encabezado -->
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div class="relative flex items-center justify-between">
+      <div class="absolute -left-4 md:-left-10 z-20">
+  <video autoplay muted loop
+         class="w-40 h-40 md:w-52 md:h-52 object-cover rounded-full border-4 border-yellow-400 shadow-2xl">
+    <source src="artistas.mp4" type="video/mp4">
+  </video>
+      </div>
+      <div class="w-full bg-purple-800 h-28 md:h-32 rounded-xl flex items-center pl-48 pr-6 z-10 shadow-lg">
+        <h2 class="text-2xl md:text-4xl text-yellow-400 font-bold ml-auto">Artistas y sus nuevos proyectos</h2>
+      </div>
+    </div>
+
+    <h2 class="text-2xl text-yellow-400 font-bold mb-4">Artistas</h2>
+    <div id="contenedor-artistas" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+
+
+  <div class="flex justify-between mt-6 items-center px-6">
+    <button onclick="mostrarFormularioInsertar()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+      Añadir Artista
+    </button>
+    <div id="paginacion"></div>
+  </div>
+  </section>
+  <!-- Modal de edición/inserción -->
+  <div id="modal-editar" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden">
+    <div class="bg-gray-900 p-6 rounded-lg w-full max-w-md">
+      <h3 class="text-yellow-400 text-xl font-bold mb-4" id="modal-titulo">Editar Artista</h3>
+      <form id="form-editar" class="space-y-4">
+        <input type="hidden" id="editar-id">
+
+        <div>
+          <label class="block text-sm text-white">Nombre</label>
+          <input type="text" id="editar-nombre" class="w-full rounded p-2 bg-gray-800 text-white" required>
+        </div>
+
+        <div>
+          <label class="block text-sm text-white">Futuros trabajos</label>
+          <input type="text" id="editar-futuros" class="w-full rounded p-2 bg-gray-800 text-white" required>
+        </div>
+
+        <div>
+          <label class="block text-sm text-white">Trabajos anteriores</label>
+          <select id="editar-anteriores" class="w-full rounded p-2 bg-gray-800 text-white">
+            <option value="Revisado">Revisado</option>
+            <option value="No revisado">No revisado</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm text-white">Imagen</label>
+          <input type="file" id="editar-imagen" class="w-full text-white" accept="image/*">
+          <img id="preview-imagen" class="mt-2 h-32 rounded" src="#" alt="Vista previa" style="display: none;">
+        </div>
+
+        <div class="flex justify-end gap-2">
+          <button type="button" onclick="cerrarModalEditar()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded">Cancelar</button>
+          <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let Artistas = [];
+    let editando = false;
+    let currentPage = 1;
+    const itemsPerPage = 8;
+
+    async function cargarArtistas() {
+      const res = await fetch("/api/artistas");
+      Artistas = await res.json();
+      renderizarArtistas();
+    }
+
+    function renderizarArtistas() {
+      const contenedor = document.getElementById("contenedor-artistas");
+      contenedor.innerHTML = "";
+
+      const start = (currentPage - 1) * itemsPerPage;
+      const paginatedArtistas = Artistas.slice(start, start + itemsPerPage);
+
+      paginatedArtistas.forEach(a => {
+        const bordeClass = a.trabajos_anteriores === "Revisado" ? "card-revisado" : "card-no-revisado";
+        const card = document.createElement("div");
+        card.className = `bg-gray-800 rounded-lg shadow-md p-4 flex flex-col ${bordeClass}`;
+        card.innerHTML = `
+          <img src="${a.url_imagen}" alt="${a.nombre}" class="w-full h-40 object-cover rounded mb-2 shadow" onerror="this.src='https://via.placeholder.com/150';">
+          <h3 class="text-yellow-400 font-bold text-lg text-center mb-2">${a.nombre}</h3>
+          <p class="text-sm text-gray-300 mb-1"><strong>Futuros trabajos:</strong> ${a.Futuros_trabajos}</p>
+          <p class="text-sm text-gray-300 mb-1"><strong>Trabajos anteriores:</strong> ${a.trabajos_anteriores}</p>
+          <div class="flex justify-between mt-2">
+            <button onclick="editarArtista(${a.id})" class="text-xs bg-yellow-500 text-black px-2 py-1 rounded">Editar</button>
+            <button onclick="borrarArtista(${a.id})" class="text-xs bg-red-600 text-white px-2 py-1 rounded">Borrar</button>
+          </div>
+        `;
+        contenedor.appendChild(card);
+      });
+
+      actualizarPaginacion();
+    }
+
+    function actualizarPaginacion() {
+      document.getElementById("paginacion").innerHTML = `
+        <button onclick="cambiarPagina(-1)" class="px-4 py-2 bg-gray-700 text-white rounded mr-2" ${currentPage === 1 ? 'disabled' : ''}>Anterior</button>
+        <button onclick="cambiarPagina(1)" class="px-4 py-2 bg-gray-700 text-white rounded" ${currentPage * itemsPerPage >= Artistas.length ? 'disabled' : ''}>Siguiente</button>
+      `;
+    }
+
+    function cambiarPagina(direccion) {
+      currentPage += direccion;
+      renderizarArtistas();
+    }
+
+    function mostrarFormularioInsertar() {
+      editando = false;
+      document.getElementById("modal-titulo").textContent = "Nuevo Artista";
+      document.getElementById("form-editar").reset();
+      document.getElementById("editar-id").value = "";
+      document.getElementById("preview-imagen").style.display = "none";
+      document.getElementById("modal-editar").classList.remove("hidden");
+    }
+
+    function editarArtista(id) {
+      const artista = Artistas.find(a => a.id === id);
+      if (!artista) return;
+      editando = true;
+
+      document.getElementById("modal-titulo").textContent = "Editar Artista";
+      document.getElementById("editar-id").value = artista.id;
+      document.getElementById("editar-nombre").value = artista.nombre;
+      document.getElementById("editar-futuros").value = artista.Futuros_trabajos;
+      document.getElementById("editar-anteriores").value = artista.trabajos_anteriores;
+      document.getElementById("preview-imagen").src = artista.url_imagen;
+      document.getElementById("preview-imagen").style.display = "block";
+      document.getElementById("modal-editar").classList.remove("hidden");
+    }
+
+    function cerrarModalEditar() {
+      document.getElementById("modal-editar").classList.add("hidden");
+    }
+
+    document.getElementById("editar-imagen").addEventListener("change", function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const preview = document.getElementById("preview-imagen");
+          preview.src = e.target.result;
+          preview.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    document.getElementById("form-editar").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const id = document.getElementById("editar-id").value;
+      const nombre = document.getElementById("editar-nombre").value;
+      const futuros = document.getElementById("editar-futuros").value;
+      const anteriores = document.getElementById("editar-anteriores").value;
+      const imagenInput = document.getElementById("editar-imagen");
+
+      const formData = new FormData();
+      formData.append("nombre", nombre);
+      formData.append("Futuros_trabajos", futuros);
+      formData.append("trabajos_anteriores", anteriores);
+      if (imagenInput.files.length > 0) {
+        formData.append("imagen", imagenInput.files[0]);
+      }
+
+      const url = editando ? `/api/artistas/${id}` : "/api/artistas";
+      const method = editando ? "PUT" : "POST";
+
+      const res = await fetch(url, {
+        method,
+        body: formData
+      });
+
+      if (res.ok) {
+        await cargarArtistas();
+        cerrarModalEditar();
+      } else {
+        alert("Error al guardar el artista");
+      }
+    });
+
+    async function borrarArtista(id) {
+      if (!confirm("¿Seguro que quieres borrar este artista?")) return;
+      const res = await fetch(`/api/artistas/${id}`, { method: "DELETE" });
+      if (res.ok) await cargarArtistas();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      setTimeout(() => document.body.classList.add("loaded"), 50);
+      cargarArtistas();
+    });
+  </script>
+</body>
+</html>

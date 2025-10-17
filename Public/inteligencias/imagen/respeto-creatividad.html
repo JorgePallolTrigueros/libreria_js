@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cómo Funciona la IA de Imágenes</title>
+  <script src="/assets/tailwind.js"></script>
+  <link href="/assets/fonts.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0f172a;
+      color: white;
+    }
+    #search-input, #filter-select {
+      background-color: rgb(31 41 55 / var(--tw-bg-opacity, 1));
+      width: auto;
+      height: 48px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 text-center text-sm md:text-base font-semibold uppercase tracking-wider">
+    <a href="../../a.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+  </nav>
+
+  <!-- Encabezado con imagen y franja -->
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div class="relative flex items-center justify-between">
+      <!-- Imagen circular -->
+      <div class="absolute -left-4 md:-left-10 z-20">
+  <video autoplay muted loop
+         class="w-40 h-40 md:w-52 md:h-52 object-cover rounded-full border-4 border-yellow-400 shadow-2xl">
+    <source src="/ruta/ia_imagen.mp4" type="video/mp4">
+  </video>
+      </div>
+
+      <!-- Franja con título -->
+      <div class="w-full bg-purple-800 h-28 md:h-32 rounded-xl flex items-center pl-48 pr-6 z-10 shadow-lg">
+        <h2 class="text-2xl md:text-4xl text-yellow-400 font-bold ml-auto">IA IMAGEN</h2>
+      </div>
+    </div>
+
+    <!-- Menú navegación -->
+    <nav class="flex justify-end mt-4 space-x-6 text-white text-sm md:text-base">
+      <a href="origenes.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Orígenes de la IA</a>
+      <a href="como-funciona.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Cómo funciona</a>
+      <a href="respeto-creatividad.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Respeto a la creatividad</a>
+      <a href="ia-sin-censura.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">IA sin censura</a>
+      <a href="tutorial-stable-diffusion.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Tutorial SD</a>
+      <a href="top10-ia-imagenes.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Top 10 IA Imagen</a>
+      <a href="Imagen-Local.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Local</a>
+      <a href="midjurnet7.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Midjurney </a>  
+            <a href="Galeria.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Galeria </a> 
+    </nav>
+  </section>
+
+  <!-- Contenido principal -->
+  <section class="max-w-4xl mx-auto px-6 text-justify leading-relaxed">
+    <h3 class="text-xl md:text-2xl font-bold mb-4 text-yellow-400">¿Por qué muchas IA no respetan tu imagen?</h3>
+    <p class="mb-4">
+      Si creas una escena detallada en Daz 3D, como una pose específica o una iluminación dramática, puede ser frustrante ver cómo una IA como Midjourney transforma tu imagen en algo que solo conserva un 10% de tu idea original. Esto sucede porque muchas IA se enfocan más en estilo que en fidelidad.
+    </p>
+
+    <h4 class="text-lg md:text-xl font-semibold mb-2 text-yellow-300">Comparativa rápida</h4>
+    <ul class="list-disc ml-6 mb-4">
+      <li><strong>Midjourney</strong>: Creativa pero poco controlable. No respeta bien imágenes.</li>
+      <li><strong>DALL·E</strong>: Acepta imágenes, pero cambia muchos detalles.</li>
+      <li><strong>Stable Diffusion + ControlNet</strong>: <span class="text-green-300">La más respetuosa</span>. Puedes usar tu render y controlar poses, formas y fondo.</li>
+    </ul>
+
+    <h4 class="text-lg md:text-xl font-semibold mb-2 text-yellow-300">Prompt recomendado (tipo ChatGPT visual)</h4>
+    <div class="bg-gray-800 border-l-4 border-yellow-400 p-4 mb-6 text-sm">
+      <p class="mb-2"><strong>Imagen:</strong> [tu render de Daz 3D]</p>
+      <p><strong>Prompt:</strong> "Keep the exact same pose, lighting, and perspective. Render this in cyberpunk anime style, high detail, with glowing effects, using the input image as base."</p>
+    </div>
+
+    <h4 class="text-lg md:text-xl font-semibold mb-2 text-yellow-300">Mini Tutorial: Juega con tus renders</h4>
+    <ol class="list-decimal ml-6 mb-4">
+      <li>Haz tu escena en <strong>Daz 3D</strong> y exporta como imagen (preferiblemente PNG con fondo transparente o fondo simple).</li>
+      <li>Usa <strong>Stable Diffusion + ControlNet</strong> (en AUTOMATIC1111) para subir la imagen.</li>
+      <li>Activa el módulo <strong>OpenPose</strong> o <strong>Canny</strong> para que detecte la pose y contorno.</li>
+      <li>Introduce tu prompt y ajusta el nivel de respeto a la imagen original (Control Weight: 0.5 a 1.0).</li>
+      <li>¡Genera y compara! Ahora tu IA respetará mucho más tu escena original.</li>
+    </ol>
+
+    <h4 class="text-lg md:text-xl font-semibold mb-2 text-yellow-300">¿Qué IA respetan más tu imagen?</h4>
+    <ul class="list-disc ml-6 mb-8">
+      <li><strong>Stable Diffusion + ControlNet</strong> ✅</li>
+      <li><strong>Runway ML (con imagen base)</strong> ✅</li>
+      <li><strong>Midjourney</strong> ❌ (no acepta imágenes como control directo, solo como inspiración)</li>
+      <li><strong>Adobe Firefly</strong> ⚠️ (respetuosa, pero con censura y licencia)</li>
+    </ul>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-center text-xs text-gray-400 mt-10 mb-4">
+    &copy; 2025 Proyecto IA Visual - Todos los derechos reservados.
+  </footer>
+
+</body>
+</html>

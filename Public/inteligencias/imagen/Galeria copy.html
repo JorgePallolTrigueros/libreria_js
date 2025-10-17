@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cómo Funciona la IA de Imágenes</title>
+  <script src="/assets/tailwind.js"></script>
+  <link href="/assets/fonts.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0f172a;
+      color: white;
+    }
+    #search-input, #filter-select {
+      background-color: rgb(31 41 55 / var(--tw-bg-opacity, 1));
+      width: auto;
+      height: 48px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 text-center text-sm md:text-base font-semibold uppercase tracking-wider">
+    <a href="../../a.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+  </nav>
+
+  <!-- Encabezado con imagen y franja -->
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div class="relative flex items-center justify-between">
+      <!-- Imagen circular -->
+      <div class="absolute -left-4 md:-left-10 z-20">
+        <img src="ima/ia-funciona.png" alt="Funcionamiento IA"
+             class="w-40 h-40 md:w-52 md:h-52 object-cover rounded-full border-4 border-yellow-400 shadow-2xl">
+      </div>
+
+      <!-- Franja con título -->
+      <div class="w-full bg-purple-800 h-28 md:h-32 rounded-xl flex items-center pl-48 pr-6 z-10 shadow-lg">
+        <h2 class="text-2xl md:text-4xl text-yellow-400 font-bold ml-auto">IA IMAGEN</h2>
+      </div>
+    </div>
+
+    <!-- Menú navegación -->
+    <nav class="flex justify-end mt-4 space-x-6 text-white text-sm md:text-base">
+      <a href="origenes.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Orígenes de la IA</a>
+      <a href="como-funciona.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Cómo funciona</a>
+      <a href="respeto-creatividad.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Respeto a la creatividad</a>
+      <a href="ia-sin-censura.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">IA sin censura</a>
+      <a href="tutorial-stable-diffusion.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Tutorial SD</a>
+      <a href="top10-ia-imagenes.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Top 10 IA Imagen</a>
+      <a href="Imagen-Local.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Local</a>
+      <a href="midjurnet7.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Midjurney </a>  
+            <a href="Galeria.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Galeria </a> 
+    </nav>
+  </section>
+
+  <!-- Encabezado -->
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div class="relative flex items-center justify-between">
+      <div class="absolute -left-4 md:-left-10 z-20">
+  <video autoplay muted loop
+         class="w-40 h-40 md:w-52 md:h-52 object-cover rounded-full border-4 border-yellow-400 shadow-2xl">
+    <source src="/ruta/ia_imagen.mp4" type="video/mp4">
+  </video>
+      </div>
+      <div class="w-full bg-purple-800 h-28 md:h-32 rounded-xl flex items-center pl-48 pr-6 z-10 shadow-lg">
+        <h2 class="text-2xl md:text-4xl text-yellow-400 font-bold ml-auto">Galería de Imágenes IA</h2>
+      </div>
+    </div>
+  </section>
+
+  <!-- Galería -->
+  <main class="max-w-6xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="pruebasContainer"></main>
+
+  <!-- Script galería -->
+  <script>
+    const Inteligencia = [
+      {
+        img: "ima/a1.png",
+        titulo: "Pruebas",
+        texto: "<b>Prompt:</b> <p class='alfa'>Ejemplo de descripción.</p><b>Inteligencia:</b> Texta<br><b>Fecha:</b> Fecha<br><div class='mini-buttons-container flex flex-wrap gap-2 mt-2'><div class='mini-button' data-img='ima/a2.png' style='background-color: #ff0000;'></div><div class='mini-button' data-img='ima/a3.png' style='background-color: #00ff00;'></div><div class='mini-button' data-img='ima/a4.png' style='background-color: #0000ff;'></div></div>"
+      }
+    ];
+
+    const pruebasContainer = document.getElementById("pruebasContainer");
+
+    function generarTarjetas(datos, contenedor) {
+      datos.forEach((elemento, index) => {
+        const cardHTML = `
+          <div class="bg-slate-800 rounded-xl overflow-hidden shadow-xl flex flex-col">
+            <img id="card-img-${index}" src="${elemento.img}" class="w-full h-64 object-cover" alt="Imagen generada por IA">
+            <div class="p-4 flex-1 flex flex-col">
+              <h5 class="text-yellow-400 text-lg font-semibold mb-2">${elemento.titulo}</h5>
+              <div class="text-sm text-white flex-1">${elemento.texto}</div>
+            </div>
+          </div>
+        `;
+        contenedor.innerHTML += cardHTML;
+      });
+
+      document.querySelectorAll(".mini-button").forEach(button => {
+        button.addEventListener("click", function () {
+          const imgSrc = this.getAttribute("data-img");
+          const cardImg = this.closest("div").parentNode.parentNode.querySelector("img");
+          cardImg.src = imgSrc;
+        });
+      });
+    }
+
+    generarTarjetas(Inteligencia.filter(item => item.titulo === "Pruebas"), pruebasContainer);
+  </script>
+
+</body>
+</html>

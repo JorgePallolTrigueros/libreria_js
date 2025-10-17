@@ -1,0 +1,505 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Partes de la Novela</title>
+  <script src="/assets/tailwind.js"></script>
+  <link href="/assets/fonts.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0f172a;
+      color: white;
+    }
+    #search-input, #filter-select {
+      background-color: rgb(31 41 55 / var(--tw-bg-opacity, 1));
+      width: auto;
+      height: 48px;
+    }
+    .border-custom {
+      border: solid 3px rgb(250, 204, 21);
+    }
+  </style>
+</head>
+<body>
+
+
+
+
+
+
+  <!-- Navbar -->
+  <nav class="bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 flex justify-between items-center text-sm md:text-base font-semibold uppercase tracking-wider">
+    <!-- Botones de login/logout a la izquierda -->
+    <div class="flex items-center space-x-2">
+      <button id="loginBtn" onclick="toggleLogin()" class="text-white hover:text-yellow-400 text-xl" title="Iniciar sesión">👤</button>
+    </div>
+  
+    <!-- Menú de navegación centrado -->
+    <div class="text-center flex-grow">
+      <a href="index.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+    </div>
+  </nav>
+
+
+
+
+  <!-- Imagen + Filtros -->
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div class="relative flex items-center justify-between">
+
+      <!-- Imagen redonda superpuesta -->
+      <div class="absolute -left-4 md:-left-10 z-20 rounded-full overflow-hidden w-40 h-40 md:w-60 md:h-60 border-custom">
+        <video id="videoPrincipal" autoplay muted loop class="w-full h-full object-cover">
+          <source id="videoSource" src="" type="video/mp4">
+          Tu navegador no soporta video HTML5.
+        </video>
+      </div>
+
+
+
+      <!-- Franja violeta que atraviesa -->
+      <div class="w-full bg-purple-800 h-28 md:h-32 rounded-xl flex items-center pl-48 pr-6 z-10 shadow-lg">
+        <h2 id="tituloDinamico" class="text-2xl md:text-4xl text-yellow-400 font-bold ml-auto">Jhevis</h2>
+
+      </div>
+    </div>
+
+    <!-- Barra de navegación -->
+
+    <nav id="dynamicMenu" class="flex justify-end mt-4 space-x-6 text-white text-sm md:text-base">
+
+
+    </nav>
+  </section>
+
+
+
+
+  <!-- Buscador -->
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div class="bg-gray-900 p-10 rounded-xl shadow-lg">
+      <form id="search-form" class="mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <input type="text" id="search-input" class="rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="Buscar por nombre...">
+                  <select id="filter-select" class="rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400">
+                    <option value="">Filtrar por etiqueta</option>
+                  </select>
+          <button type="button" onclick="filtrarPersonajes()"
+          class="bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-3 px-6 rounded-lg transition w-full">Buscar</button>
+        </div>
+      </form>
+    </div>
+
+
+
+
+
+
+
+    <div id="addPersonajeContainer" class="flex justify-end mb-4 pr-6 hidden">
+      <button onclick="abrirModalInsertarPersonaje()" 
+        class="bg-yellow-400 text-black text-2xl font-bold w-10 h-10 rounded-full shadow-lg hover:bg-yellow-300 transition duration-200"
+        title="Añadir personaje">+</button>
+    </div>
+  </section>
+
+
+
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div id="personajesContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-10"></div>
+    <div id="pagination" class="flex justify-center gap-2 mt-4"></div>
+  </section>
+
+
+  <!-- Cards de personajes -->
+  <section class="max-w-7xl mx-auto px-6">
+    <div id="personajesContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-10"></div>
+    <div id="pagination" class="flex justify-center gap-2 mt-4"></div>
+  </section>
+
+
+  
+
+  <!-- Modal -->
+  <div id="personajeModal" class="fixed inset-0 bg-black bg-opacity-80 z-50 hidden items-center justify-center">
+    <div class="bg-gray-900 p-6 rounded-lg max-w-4xl w-full relative">
+      <button onclick="cerrarModal()" class="absolute top-4 right-4 text-white text-xl font-bold hover:text-yellow-400">&times;</button>
+      <h2 id="modalNombre" class="text-2xl text-yellow-400 font-bold mb-2"></h2>
+      <div class="text-white overflow-y-auto max-h-[70vh]">
+        <img id="modalImagen" class="w-40 h-40 object-cover rounded-full mx-auto my-4 border-4 border-yellow-400">
+        <h3 class="text-lg font-bold mt-4">Historia</h3>
+        <p id="modalTexto" class="mb-4 whitespace-pre-wrap"></p>
+        <h3 class="text-lg font-bold mt-4">Momentos Estelares</h3>
+        <p id="modalMomentos" class="whitespace-pre-wrap"></p>
+        <h3 class="text-lg font-bold mt-4">Etiquetas</h3>
+        <p id="modalEtiquetas" class="text-sm italic text-gray-400"></p>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+</body>
+<script src="enrrutamiento.js"></script>
+<script>
+
+
+
+
+
+window.addEventListener("DOMContentLoaded", () => {
+  if (localStorage.getItem("admin")) {
+    document.getElementById("addPersonajeContainer").style.display = "block";
+  }
+});
+
+
+
+
+
+const params = new URLSearchParams(window.location.search);
+const valor = params.get("valor") || "novela";
+
+const valorActual = valor;
+const data = contenido[valor];
+// ————————————————
+// Popula el select desde data.array_del_select
+const select = document.getElementById('filter-select');
+// ponemos primero el placeholder
+select.innerHTML = `<option value="">Filtrar por etiqueta</option>`;
+// añadimos cada etiqueta
+data.array_del_select.forEach(e => {
+  const opt = document.createElement('option');
+  opt.value = e;
+  opt.textContent = e;
+  select.appendChild(opt);
+});
+// ————————————————
+
+document.getElementById("dynamicMenu").innerHTML = `
+  <a href="partes.html?valor=${valor}" class="hover:text-yellow-400 transition" style="font-size: 10px;">Partes de la novela</a>
+  <a href="index copy.html?valor=${valor}" class="hover:text-yellow-400 transition" style="font-size: 10px;">Personajes</a>
+  <a href="resumen.html?valor=${valor}" class="hover:text-yellow-400 transition" style="font-size: 10px;">Resumen</a>
+  <a href="agrupamiento.html?valor=${valor}" class="hover:text-yellow-400 transition" style="font-size: 10px;">agrupamiento</a>
+  <a href="resumen.html?valor=${valor}" class="hover:text-yellow-400 transition" style="font-size: 10px;">Resumen</a>
+  <a href="Quiénes_estuvieron_ah.html?valor=${valor}" class="hover:text-yellow-400 transition" style="font-size: 10px;">1 Prueba</a>
+  <a href="2_prueba.html?valor=${valor}" class="hover:text-yellow-400 transition" style="font-size: 10px;">2 Prueba</a>
+  <a href="juego3.html?valor=${valor}" class="hover:text-yellow-400 transition" style="font-size: 10px;">2 Prueba</a>
+  <a href="versiones.html?valor=${valor}" class="hover:text-yellow-400 transition" style="font-size: 10px;">Versiones</a>
+  <a href="galeria_de_personaje.html?valor=${valor}" class="hover:text-yellow-400 transition" style="font-size: 10px;">Añadir Galeria</a>
+`;
+
+
+
+
+//const valorActual = new URLSearchParams(window.location.search).get("valor") || "general";
+
+
+
+
+if (!data) {
+  alert("Contenido no encontrado para: " + valor);
+} else {
+  const videoSource = document.getElementById("videoSource");
+  const videoElement = document.getElementById("videoPrincipal");
+  videoSource.src = `ruta/${data.video}`;
+  videoElement.load();
+
+  const tituloEl = document.getElementById("tituloDinamico");
+  if (tituloEl) tituloEl.textContent = data.titulo;
+
+  const menuExtra = document.createElement("div");
+  menuExtra.innerHTML = data.menu;
+  document.querySelector("nav.flex.justify-end").appendChild(menuExtra);
+
+  const script = document.createElement("script");
+  script.src = `${data.personajes}`;
+  script.onload = () => {
+    if (typeof PERSONAJES !== "undefined" && PERSONAJES.length > 0) {
+      renderizarPersonajes(PERSONAJES);
+    } else {
+      document.getElementById("personajesContainer").innerHTML = `
+        <div class="bg-gray-800 rounded-xl p-6 text-center text-white shadow-lg animate-pulse col-span-full">
+          <div class="text-5xl mb-4">😢</div>
+          <p class="text-xl font-semibold">Aún no hay personajes en esta sección</p>
+          <p class="text-sm mt-2 italic text-gray-400">Pronto llegarán nuevos héroes y dioses...</p>
+        </div>`;
+      document.getElementById("pagination").innerHTML = "";
+    }
+  };
+  script.onerror = () => {
+    console.error("❌ No se pudo cargar el archivo personajes JS:", script.src);
+    document.getElementById("personajesContainer").innerHTML = `
+      <div class="text-center text-red-400 p-6 animate-pulse">
+        <div class="text-5xl mb-4">🚫</div>
+        <p class="text-lg">No se encontró el archivo de personajes <code>${data.personajes}</code></p>
+      </div>`;
+  };
+  document.head.appendChild(script);
+}
+
+if (typeof PERSONAJES === "undefined") {
+  var PERSONAJES = [];
+}
+
+
+
+let paginaActual = 1;
+
+
+
+const personajesPorPagina = 10;
+  function renderizarPersonajes(lista) {
+    const container = document.getElementById("personajesContainer");
+    const paginacion = document.getElementById("pagination");
+    container.innerHTML = "";
+    paginacion.innerHTML = "";
+
+    const totalPaginas = Math.ceil(lista.length / personajesPorPagina);
+    const inicio = (paginaActual - 1) * personajesPorPagina;
+    const paginados = lista.slice(inicio, inicio + personajesPorPagina);
+
+    paginados.forEach((p, index) => {
+      const i = PERSONAJES.findIndex(item => item.id_Personaje === p.id_Personaje);
+      const card = document.createElement("div");
+      card.className = "bg-gray-800 rounded-lg p-4 text-center shadow-lg hover:scale-105 transition cursor-pointer";
+      card.innerHTML = `
+        <img src="${p.url_imagen}" alt="${p.Nombre}" class="w-32 h-32 mx-auto object-cover rounded-full mb-4 border-4 border-yellow-400" />
+        <h3 class="text-lg font-bold text-yellow-400">${p.Nombre}</h3>
+        ${localStorage.getItem("admin") ? `
+  <div class="mt-2 space-x-2">
+    <button onclick="editarPersonajePorId(${p.id_Personaje})" class="bg-blue-600 px-2 py-1 rounded hover:bg-blue-800">✏️</button>
+    <button onclick="redirigirAPersonaje('${valor}', ${p.id_Personaje})" class="bg-blue-600 px-2 py-1 rounded hover:bg-blue-800">👀</button>
+    <button onclick="borrarPersonaje(${i}, ${p.id_Personaje})" class="bg-red-600 px-2 py-1 rounded hover:bg-red-800">🗑️</button>
+    <button onclick="creargaleriaPersonaje(${i}, ${p.id_Personaje})" class="bg-red-600 px-2 py-1 rounded hover:bg-red-800">📷</button>
+    
+  </div>
+        ` : ""}
+      `;
+      card.onclick = () => abrirModal(p);
+      container.appendChild(card);
+    });
+
+    for (let i = 1; i <= totalPaginas; i++) {
+      const btn = document.createElement("button");
+      btn.className = "px-3 py-1 bg-gray-700 text-white rounded hover:bg-yellow-400 hover:text-black";
+      btn.textContent = i;
+      btn.onclick = () => {
+        paginaActual = i;
+        renderizarPersonajes(lista);
+      };
+      paginacion.appendChild(btn);
+    }
+  }
+
+
+
+  function filtrarPersonajes() {
+    const nombre = document.getElementById('search-input').value.toLowerCase();
+    const etiqueta = document.getElementById('filter-select').value.toLowerCase();
+
+    const filtrados = PERSONAJES.filter(p => {
+      const coincideNombre = p.Nombre?.toLowerCase().includes(nombre) ?? false;
+      const coincideEtiqueta = etiqueta === "" || (Array.isArray(p.etiqueta) && p.etiqueta.some(e => e.toLowerCase().includes(etiqueta)));
+      return coincideNombre && coincideEtiqueta;
+    });
+
+    renderizarPersonajes(filtrados);
+  }
+
+  function abrirModal(p) {
+    document.getElementById("modalNombre").textContent = p.Nombre;
+    document.getElementById("modalImagen").src = p.url_imagen || p.imagen;
+    document.getElementById("modalTexto").textContent = p.texto || "Sin descripción.";
+    document.getElementById("modalMomentos").textContent = p.momentos_estelares || "N/A";
+    document.getElementById("modalEtiquetas").textContent =
+      Array.isArray(p.etiqueta) ? p.etiqueta.join(", ") : (p.etiqueta || "Sin etiquetas");
+    document.getElementById("personajeModal").classList.remove("hidden");
+    document.getElementById("personajeModal").classList.add("flex");
+  }
+
+  function cerrarModal() {
+    document.getElementById("personajeModal").classList.add("hidden");
+    document.getElementById("personajeModal").classList.remove("flex");
+  }
+
+  if (typeof PERSONAJES === "undefined") {
+    var PERSONAJES = [];
+  }
+
+
+  
+  function toggleLogin() {
+    const admin = localStorage.getItem("admin");
+    const btn = document.getElementById("loginBtn");
+
+    if (admin) {
+      localStorage.removeItem("admin");
+      btn.innerText = "👤";
+      alert("Sesión cerrada");
+      renderizarPersonajes(PERSONAJES);
+    } else {
+      const usuario = prompt("Usuario:");
+      const clave = prompt("Contraseña:");
+      if (usuario === "sade" && clave === "123") {
+        localStorage.setItem("admin", "true");
+        btn.innerText = "❌";
+        alert("Sesión iniciada");
+        renderizarPersonajes(PERSONAJES);
+      } else {
+        alert("Credenciales incorrectas");
+      }
+    }
+  }
+
+
+function creargaleriaPersonaje(id) { 
+   window.location.href = `galeria_personaje.html?valor=${valorActual}&id=${id}&modo=editar`;}
+
+
+
+
+
+function abrirModalInsertarPersonaje() {
+  // Redirige a una página de creación que simula el modo de edición de detalle
+  // Usamos id=-1 o un valor especial que el backend ignore (o lo genere nuevo)
+  window.location.href = `detalle_personaje.html?valor=${valorActual}&id=-1&modo=editar`;
+}
+
+  function cerrarModalPersonaje() {
+    document.getElementById("modalPersonaje").classList.add("hidden");
+    document.getElementById("modalPersonaje").classList.remove("flex");
+  }
+
+
+
+function editarPersonajePorId(id) {
+  window.location.href = `detalle_personaje.html?valor=${valorActual}&id=${id}&modo=editar`;
+}
+
+
+
+document.getElementById("formPersonaje").addEventListener("submit", async function (e) {
+  e.preventDefault();
+
+  const imagenInput = document.getElementById("imagen");
+  const file = imagenInput.files[0];
+
+  if (!file) {
+    alert("Por favor selecciona una imagen");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("imagen", file);
+  console.log("🟡 valorActual usado en FormData:", valorActual);
+  formData.append("categoria", valorActual);
+  console.log("📂 Categoría para imagen:", valorActual); // 💥 VERIFICACIÓN CLAVE
+
+  try {
+    const respuesta = await fetch("/api/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    const resultado = await respuesta.json();
+
+    if (!resultado.success) {
+      return alert("❌ Error al subir la imagen");
+    }
+
+    const nuevaRuta = resultado.path;
+
+    // Datos del personaje
+    const id = parseInt(document.getElementById("personajeIndex").value);
+    const index = PERSONAJES.findIndex(p => p.id_Personaje === id);
+
+    const nuevo = {
+      id_Personaje: id,
+      Nombre: document.getElementById("nombre").value,
+      url_imagen: nuevaRuta,
+      texto: document.getElementById("texto").value,
+      etiqueta: document.getElementById("etiquetas").value.split(',').map(e => e.trim()),
+      momentos_estelares: document.getElementById("momentos_estelares").value || "N/A"
+
+    };
+
+    if (index === -1) {
+      const nuevoId = PERSONAJES.length > 0 ? Math.max(...PERSONAJES.map(p => p.id_Personaje || 0)) + 1 : 1;
+      nuevo.id_Personaje = nuevoId;
+      PERSONAJES.push(nuevo);
+    } else {
+      nuevo.id_Personaje = id;
+      PERSONAJES[index] = nuevo;
+    }
+
+    await fetch(`/api/personajes/${valorActual}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(nuevo),
+    });
+
+    cerrarModalPersonaje();
+    renderizarPersonajes(PERSONAJES);
+
+  } catch (err) {
+    console.error("❌ Error en la subida o guardado:", err);
+    alert("Hubo un error al guardar el personaje");
+  }
+});
+
+
+
+function redirigirAPersonaje(valor, idPersonaje) {
+  window.location.href = `detalle_personaje.html?valor=${valor}&id=${idPersonaje}`;
+}
+
+
+
+
+function mostrarVistaPrevia() {
+  const input = document.getElementById("imagen");
+  const preview = document.getElementById("preview");
+
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      preview.src = e.target.result;
+      preview.classList.remove("hidden");
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+
+  async function borrarPersonaje(i, idPersonaje) {
+    if (confirm("¿Deseas eliminar este personaje?")) {
+      PERSONAJES.splice(i, 1);
+      await fetch(`/api/personajes/${valorActual}/${idPersonaje}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" }
+      });
+      renderizarPersonajes(PERSONAJES);
+    }
+  }
+
+
+
+
+
+</script>
+
+</html>
+
+
+
+
+

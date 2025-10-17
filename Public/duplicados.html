@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Articulillos</title>
+<script src="/assets/tailwind.js"></script>
+<link href="/assets/fonts.css" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Orbitron', sans-serif;
+    background-color: #0f172a;
+    color: white;
+  }
+
+  #contenedor-tarjetas img {
+    background-color: white;
+  }
+
+.line-clamp-5 {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+</style>
+</head>
+<body class="min-h-screen p-6">
+
+
+
+
+
+
+
+
+  <!-- Navbar -->
+  <nav class="bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 text-center text-sm md:text-base font-semibold uppercase tracking-wider">
+    <a href="/../e.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+  </nav>
+
+  <!-- Encabezado -->
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div class="relative flex items-center justify-between">
+      <div class="absolute -left-4 md:-left-10 z-20">
+  <video autoplay muted loop
+         class="w-40 h-40 md:w-52 md:h-52 object-cover rounded-full border-4 border-yellow-400 shadow-2xl">
+    <source src="/ruta/articulillos.mp4" type="video/mp4">
+  </video>
+      </div>
+      <div class="w-full bg-purple-800 h-28 md:h-32 rounded-xl flex items-center pl-48 pr-6 z-10 shadow-lg">
+        <h2 class="text-2xl md:text-4xl text-yellow-400 font-bold ml-auto">Articulillos</h2>
+      </div>
+    </div>
+</section>
+
+
+
+
+
+
+  
+<section class="max-w-7xl mx-auto px-6 mt-6 mb-10">
+    <p><a href ="Articulillos_designacion.html">Rea signacion</a>&nbsp; |&nbsp; <a href ="Articulillos.html">Articulillos</a>&nbsp; |&nbsp;  <a href ="duplicados.html">Rea signacion</a>&nbsp; |&nbsp;   
+
+</p>
+
+  <h1 class="text-3xl text-yellow-400 font-bold mb-6">Revisión de Nombres Duplicados</h1>
+<p></p>
+
+  <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
+
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="contenedor">
+    <!-- Tarjetas generadas por JS -->
+  </div>
+
+  <script>
+    const contenedor = document.getElementById("contenedor");
+    let articulillos = [];
+
+    // Cargar datos
+    fetch("/api/articulillos")
+      .then(res => res.json())
+      .then(data => {
+        articulillos = data;
+        mostrarDuplicados();
+      })
+      .catch(err => {
+        contenedor.innerHTML = `<p class="text-red-500">Error al cargar los datos.</p>`;
+        console.error(err);
+      });
+
+    function mostrarDuplicados() {
+      const nombreMap = new Map();
+
+      // Contar ocurrencias
+      articulillos.forEach(a => {
+        const nombre = a.nombre?.trim().toLowerCase() || "";
+        if (nombre) {
+          if (!nombreMap.has(nombre)) nombreMap.set(nombre, []);
+          nombreMap.get(nombre).push(a);
+        }
+      });
+
+      // Filtrar duplicados
+      const duplicados = [...nombreMap.values()].filter(lista => lista.length > 1).flat();
+
+      // Mostrar cards
+      contenedor.innerHTML = "";
+      duplicados.forEach(a => {
+        const card = document.createElement("div");
+        card.className = "bg-gray-800 p-4 rounded shadow-md flex flex-col items-center";
+        card.innerHTML = `
+          <img src="${a.imagen || '/articulillos/ima/default.png'}" class="w-full h-40 object-cover rounded mb-2 shadow" alt="${a.nombre}">
+          <h3 class="text-yellow-400 font-bold text-center">${a.nombre}</h3>
+          <p class="text-xs text-gray-300 text-center mb-2">${a.descripcion || ''}</p>
+          <p class="text-xs text-gray-400 text-center mb-2">ID: ${a.id}</p>
+          <button onclick="eliminarArticulo(${a.id})" class="bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded mt-2">Eliminar</button>
+        `;
+        contenedor.appendChild(card);
+      });
+
+      if (duplicados.length === 0) {
+        contenedor.innerHTML = `<p class="text-green-400">No se encontraron nombres duplicados.</p>`;
+      }
+    }
+
+    function eliminarArticulo(id) {
+      if (!confirm("¿Seguro que deseas eliminar este artículo?")) return;
+
+      fetch(`/api/articulillos/${id}`, { method: "DELETE" })
+        .then(res => res.json())
+        .then(res => {
+          if (res.success) {
+            alert("Artículo eliminado.");
+            articulillos = articulillos.filter(a => a.id !== id);
+            mostrarDuplicados(); // recargar sin el eliminado
+          } else {
+            alert("Error al eliminar.");
+            console.error(res);
+          }
+        })
+        .catch(err => {
+          alert("Error en la conexión.");
+          console.error(err);
+        });
+    }
+  </script>
+</body>
+</html>

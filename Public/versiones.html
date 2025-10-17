@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Partes de la Novela</title>
+  <script src="/assets/tailwind.js"></script>
+  <link href="/assets/fonts.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0f172a;
+      color: white;
+    }
+    #videoPrincipal {
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+    .border-custom {
+      border: solid 3px rgb(250, 204, 21);
+    }
+
+
+
+    #search-input, #filter-select, #filter-select-2 {
+      background-color: rgb(31 41 55 / var(--tw-bg-opacity, 1));
+      width: auto;
+      height: 48px;
+    }
+
+    .modal-scroll {
+        max-height: 95%;
+        overflow-y: auto;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 flex justify-between items-center text-sm md:text-base font-semibold uppercase tracking-wider">
+    <div class="flex items-center space-x-2">
+
+    </div>
+    <div class="text-center flex-grow">
+      <a href="index.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+    </div>
+  </nav>
+
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div class="relative flex items-center justify-between">
+      <div class="absolute -left-4 md:-left-10 z-20 rounded-full overflow-hidden w-40 h-40 md:w-60 md:h-60 border-custom">
+        <video id="videoPrincipal" autoplay muted loop class="w-full h-full object-cover">
+          <source id="videoSource" src="" type="video/mp4" />
+        </video>
+      </div>
+      <div class="w-full bg-purple-800 h-28 md:h-32 rounded-xl flex items-center pl-48 pr-6 z-10 shadow-lg">
+        <h2 id="tituloDinamico" class="text-2xl md:text-4xl text-yellow-400 font-bold ml-auto">Jhevis</h2>
+      </div>
+    </div>
+    <nav id="dynamicMenu" class="flex justify-end mt-4 space-x-6 text-white text-sm md:text-base"></nav>
+  </section>
+
+
+
+<!-- Tabla -->
+<main class="max-w-7xl mx-auto px-6 space-y-10">
+
+
+  <section>
+    <div class="overflow-auto rounded-lg">
+      <table class="w-full text-sm text-white">
+        <thead class="bg-gray-800 text-yellow-400">
+          <tr>
+            <th>personaje</th>
+
+<th>Fat men</th>. <th>fat kids</th>  <th>Muscle</th><th>Strong</th>
+
+            <th>ACCIONES</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-personajes" class="bg-gray-900">
+          <!-- Filas generadas dinámicamente -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+
+
+
+<!-- Modal para insertar/editar personaje -->
+<div id="modalPersonaje" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 hidden">
+  <div class="bg-gray-900 p-6 rounded-lg max-w-2xl w-full relative">
+    <button onclick="cerrarModalPersonaje()" class="absolute top-2 right-2 text-white text-2xl font-bold">&times;</button>
+    <h2 id="tituloModalPersonaje" class="text-2xl text-yellow-400 mb-4 font-bold text-center">Agregar / Editar Personaje</h2>
+    <form id="formPersonaje" onsubmit="guardarPersonaje(event)" class="space-y-4">
+      <input type="hidden" id="personajeId">
+
+      <label class="block text-white">Nombre:</label>
+      <input type="text" id="personajeNombre" class="w-full p-2 bg-slate-800 text-white" required>
+
+
+      <label class="block text-white">Imagen estándar:</label>
+      <input type="file" id="personajeImagen" class="w-full p-2 bg-slate-800 text-white">
+
+      <div class="grid grid-cols-2 gap-4">
+        <div><label class="block text-white">Fat men:</label><input type="file" id="imgMen" class="w-full p-2 bg-slate-800 text-white"></div>
+        <div><label class="block text-white">Fat kids:</label><input type="file" id="imgKids" class="w-full p-2 bg-slate-800 text-white"></div>
+        <div><label class="block text-white">Muscle:</label><input type="file" id="imgMuscle" class="w-full p-2 bg-slate-800 text-white"></div>
+        <div><label class="block text-white">Strong:</label><input type="file" id="imgStrong" class="w-full p-2 bg-slate-800 text-white"></div>
+      </div>
+
+
+
+      <button type="submit" class="bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-2 px-4 rounded w-full">
+        Guardar personaje
+      </button>
+    </form>
+  </div>
+</div>
+
+
+<script src="enrrutamiento.js"></script>
+
+<script>
+  const valor = new URLSearchParams(window.location.search).get('valor') || "novela";
+  const data = contenido[valor];
+
+  // Título
+  document.getElementById("tituloDinamico").textContent = data.titulo;
+
+  // Video
+  const videoSource = document.getElementById("videoSource");
+  const videoElement = document.getElementById("videoPrincipal");
+  if (videoSource && videoElement) {
+    videoSource.src = `ruta/${data.video}`;
+    videoElement.load();
+  }
+
+  // Menú
+  document.getElementById("dynamicMenu").innerHTML = `
+          <a href="partes.html?valor=${valor}" class="hover:text-yellow-400 transition" style="font-size: 10px;">Partes de la novela</a>
+          <a href="index copy.html?valor=${valor}" class="hover:text-yellow-400 transition" style="font-size: 10px;">Personajes</a>
+          <a href="resumen.html?valor=${valor}" class="hover:text-yellow-400 transition" style="font-size: 10px;">Resumen</a>
+          <a href="agrupamiento.html?valor=${valor}" class="hover:text-yellow-400 transition" style="font-size: 10px;">agrupamiento</a>
+          <a href="resumen.html?valor=${valor}" class="hover:text-yellow-400 transition" style="font-size: 10px;">Resumen</a>
+          <a href="Quiénes_estuvieron_ah.html?valor=${valor}" class="hover:text-yellow-400 transition" style="font-size: 10px;">1 Prueba</a>
+          <a href="2_prueba.html?valor=${valor}" class="hover:text-yellow-400 transition" style="font-size: 10px;">2 Prueba</a>
+          <a href="juego3.html?valor=${valor}" class="hover:text-yellow-400 transition" style="font-size: 10px;">2 Prueba</a>
+          <a href="versiones.html?valor=${valor}" class="hover:text-yellow-400 transition" style="font-size: 10px;">Versiones</a>
+    ${data.menu}
+  `;
+
+  // Filtro
+  const select = document.getElementById('filter-select');
+  if (select) {
+    select.innerHTML = "<option value=''>Filtrar por etiqueta</option>";
+    data.array_del_select.forEach(e => {
+      const opt = document.createElement('option');
+      opt.value = e;
+      opt.textContent = e;
+      select.appendChild(opt);
+    });
+  }
+
+  // Función para mostrar tabla
+  function renderPage(pagina = 1) {
+    const tabla = document.getElementById("tabla-personajes");
+    if (!tabla || typeof PERSONAJES === 'undefined') return;
+
+    tabla.innerHTML = "";
+    const porPagina = 10;
+    const inicio = (pagina - 1) * porPagina;
+    const personajesPagina = PERSONAJES.slice(inicio, inicio + porPagina);
+
+    personajesPagina.forEach((p, i) => {
+      const fila = document.createElement("tr");
+      fila.innerHTML = `
+        <td>${p.Nombre}</td>
+        <td><img src="${p.versiones?.strong || p.url_imagen}" width="50"></td>
+        <td><img src="${p.versiones?.men || p.url_imagen}" width="50"></td>
+        <td><img src="${p.versiones?.kids || p.url_imagen}" width="50"></td>
+        <td><img src="${p.versiones?.muscle || p.url_imagen}" width="50"></td>
+        <td>
+          <button onclick="abrirModal('editar', ${inicio + i})" class="text-yellow-400 hover:underline">Editar</button>
+        </td>
+      `;
+      tabla.appendChild(fila);
+    });
+  }
+
+  // Carga de JS de personajes
+  const script = document.createElement('script');
+  script.src = data.personajes;
+  script.onload = () => {
+    if (typeof PERSONAJES !== "undefined") {
+      renderPage(1);
+    } else {
+      console.error("PERSONAJES no definido.");
+    }
+  };
+  script.onerror = () => {
+    console.error("Error al cargar:", data.personajes);
+  };
+  document.head.appendChild(script);
+
+  // Carga opcional de escenas
+  fetch(`/api/scenes/${valor}`)
+    .then(res => res.json())
+    .then(scenes => {
+      filteredScenes = scenes;
+      renderPage(1);
+    })
+    .catch(error => console.error("Error al cargar scenes:", error));
+
+
+
+
+
+
+
+  function abrirModal(modo, index) {
+    const modal = document.getElementById("modalPersonaje");
+    const form = document.getElementById("formPersonaje");
+    const titulo = document.getElementById("tituloModalPersonaje");
+
+   if (modo === 'editar') {
+      const personaje = PERSONAJES[index];
+      titulo.textContent = "Editar personaje";
+      document.getElementById("personajeId").value = index;
+      document.getElementById("personajeNombre").value = personaje.Nombre || "";
+
+    }
+
+    modal.classList.remove("hidden");
+  }
+
+  function cerrarModalPersonaje() {
+    document.getElementById("modalPersonaje").classList.add("hidden");
+  }
+
+  function guardarPersonaje(event) {
+    event.preventDefault();
+    const id = document.getElementById("personajeId").value;
+    const nombre = document.getElementById("personajeNombre").value;
+    const etiquetas = document.getElementById("personajeEtiquetas").value.split(',').map(e => e.trim());
+    const momentos = document.getElementById("personajeMomentos").value;
+
+    const nuevo = {
+      Nombre: nombre,
+
+      versiones: {}
+    };
+
+    if (id === "") {
+      PERSONAJES.push(nuevo);
+    } else {
+      PERSONAJES[parseInt(id)] = nuevo;
+    }
+
+    cerrarModalPersonaje();
+    renderPage(1);
+  }
+</script>
