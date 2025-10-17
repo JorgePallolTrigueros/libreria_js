@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Influencias de la Novela</title>
+<script src="/assets/tailwind.js"></script>
+<link href="/assets/fonts.css" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Orbitron', sans-serif;
+    background-color: #0f172a;
+    color: white;
+  }
+  a {
+    text-decoration: underline;
+  }
+  table th, table td {
+    border: 1px solid #ffffff33;
+    padding: 1rem;
+    text-align: left;
+    vertical-align: top;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+</style>
+</head>
+<body>
+<!-- Navbar superior -->
+<nav class="bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 text-center text-sm md:text-base font-semibold uppercase tracking-wider">
+  <a href="index.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+</nav>
+
+<!-- Cabecera -->
+<section class="max-w-7xl mx-auto px-6 mb-10">
+  <div class="relative flex items-center justify-between">
+    <div class="absolute -left-4 md:-left-10 z-20">
+      <video src="ruta/videos44 (1).mp4"
+             class="w-40 h-40 md:w-52 md:h-52 object-cover rounded-full border-4 border-yellow-400 shadow-2xl"
+             autoplay muted loop playsinline>
+      </video>
+    </div>
+    <div class="w-full bg-purple-800 h-28 md:h-32 rounded-xl flex items-center pl-48 pr-6 z-10 shadow-lg">
+      <h2 class="text-2xl md:text-4xl text-yellow-400 font-bold ml-auto">Mitos Modernos</h2>
+    </div>
+  </div>
+</section>
+
+<!-- Tabla -->
+<main class="max-w-7xl mx-auto px-6 space-y-10">
+  <!-- Botón insertar general -->
+  <div class="text-right mb-4">
+        <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-3 rounded text-xs" onclick="abrirModal('insertar', mitosGriegos.length - 1)">Insertar</button>
+  </div>
+
+  <section>
+    <div class="overflow-auto rounded-lg">
+      <table class="w-full text-sm text-white">
+        <thead class="bg-gray-800 text-yellow-400">
+          <tr>
+            <th>MITO</th>
+            <th>HISTORIA</th>
+            <th>ACCIONES</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-mitos" class="bg-gray-900">
+          <!-- Filas generadas dinámicamente -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+<!-- Modal -->
+<div id="modal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center hidden z-50">
+  <div class="bg-gray-800 text-white rounded-lg shadow-lg w-full max-w-2xl p-6">
+    <h2 id="modal-title" class="text-xl font-bold mb-4">Modal</h2>
+    <form id="modal-form" class="space-y-4">
+      <div>
+        <label for="mito-input" class="block mb-1 text-yellow-300">Nombre del mito:</label>
+        <input type="text" id="mito-input" class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600" required>
+      </div>
+      <div>
+        <label for="historia-input" class="block mb-1 text-yellow-300">Historia:</label>
+        <textarea id="historia-input" class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600" rows="4" required></textarea>
+      </div>
+      <div class="flex justify-end space-x-2">
+        <button type="button" onclick="cerrarModal()" class="bg-gray-600 hover:bg-gray-500 text-white px-4 py-2 rounded">Cancelar</button>
+        <button type="submit" class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+const mitosGriegos = [
+  "Prometeo", "Narciso", "Eco", "Medusa", "Ícaro", "Orfeo y Eurídice",
+  "Hércules", "Edipo", "Perseo", "Ulises (Odiseo)", "Atlas", "Sísifo",
+  "Pandora", "Teseo y el Minotauro", "Dédalo", "Ariadna", "Hipólita", "Héctor y Aquiles",
+  "Casandra", "Hécate", "Helios", "Selene", "Eros y Psique", "Apolo y Dafne", "Aracne",
+  "Calipso", "Circe", "Dionisio", "Perséfone y Hades", "Hermafrodito", "Asclepio",
+  "Atalanta", "Belerofonte", "Cadmo", "Deucalión y Pirra", "Eolo", "Faetón", "Ganimedes",
+  "Licaón", "Meleagro", "Midas", "Níobe", "Píramo y Tisbe", "Tántalo", "Acteón"
+];
+
+const historias = [
+  "Prometeo robó el fuego de los dioses y lo dio a los hombres, siendo castigado eternamente.",
+  "Narciso se enamoró de su propio reflejo y murió contemplándose.",
+  "Eco amaba a Narciso pero no pudo ser correspondida; su voz quedó como eco en las montañas.",
+  "Medusa era un monstruo con serpientes por cabellos; quien la miraba quedaba convertido en piedra.",
+  "Ícaro voló demasiado cerca del sol con alas de cera y se desplomó en el mar.",
+  "Orfeo descendió al inframundo para rescatar a su amada Eurídice con su música.",
+  "Hércules realizó doce trabajos casi imposibles para redimir sus pecados.",
+  "Edipo mató a su padre y se casó con su madre, sin saber su verdadera identidad.",
+  "Perseo decapitó a Medusa y salvó a Andrómeda de un monstruo marino.",
+  "Ulises viajó durante diez años para regresar a Ítaca tras la guerra de Troya.",
+  "Atlas sostiene el cielo sobre sus hombros como castigo eterno.",
+  "Sísifo fue condenado a empujar una roca por la eternidad sin éxito.",
+  "Pandora abrió una caja que liberó todos los males del mundo.",
+  "Teseo mató al Minotauro en el laberinto de Creta.",
+  "Dédalo fue un inventor que construyó el laberinto para el Minotauro.",
+  "Ariadna ayudó a Teseo a salir del laberinto con un hilo.",
+  "Hipólita, reina de las amazonas, fue amada y traicionada por Teseo.",
+  "Héctor, héroe troyano, murió luchando contra Aquiles en la guerra de Troya.",
+  "Casandra fue bendecida con la profecía pero maldita para que nadie la creyera.",
+  "Hécate es la diosa de la magia y la encrucijada.",
+  "Helios es el dios del sol que guía su carro dorado por el cielo.",
+  "Selene es la diosa de la luna que cabalga en un carro plateado.",
+  "Eros y Psique vivieron un amor prohibido que superó muchas pruebas.",
+  "Apolo persiguió a Dafne, pero ella se transformó en un laurel para escapar.",
+  "Aracne retó a Atenea en un concurso de tejido y fue convertida en araña.",
+  "Calipso retuvo a Ulises en su isla durante años.",
+  "Circe convirtió a los hombres en cerdos y ayudó a Ulises a regresar a casa.",
+  "Dionisio es el dios del vino y la celebración.",
+  "Perséfone fue raptada por Hades y se convirtió en reina del inframundo.",
+  "Hermafrodito era un joven que se fusionó con la ninfa Salmacis, combinando sus cuerpos."
+];
+
+const tabla = document.getElementById("tabla-mitos");
+let modo = ""; // 'insertar' o 'editar'
+let indexActual = -1;
+
+function renderizarTabla() {
+  tabla.innerHTML = "";
+  mitosGriegos.forEach((mito, index) => {
+    const fila = document.createElement("tr");
+    fila.innerHTML = `
+      <td>${mito}</td>
+      <td>${historias[index]}</td>
+      <td class="space-x-2">
+        <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded text-xs" onclick="abrirModal('editar', ${index})">Editar</button>
+        <button class="bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-3 rounded text-xs" onclick="borrar(${index})">Borrar</button>
+
+      </td>
+    `;
+    tabla.appendChild(fila);
+  });
+}
+
+function borrar(index) {
+  if (confirm(`¿Seguro que quieres borrar el mito: ${mitosGriegos[index]}?`)) {
+    mitosGriegos.splice(index, 1);
+    historias.splice(index, 1);
+    renderizarTabla();
+  }
+}
+
+function abrirModal(tipo, index) {
+  modo = tipo;
+  indexActual = index;
+  document.getElementById('modal-title').textContent = tipo === 'editar' ? 'Editar mito' : 'Insertar nuevo mito';
+  document.getElementById('mito-input').value = tipo === 'editar' ? mitosGriegos[index] : '';
+  document.getElementById('historia-input').value = tipo === 'editar' ? historias[index] : '';
+  document.getElementById('modal').classList.remove('hidden');
+}
+
+function cerrarModal() {
+  document.getElementById('modal').classList.add('hidden');
+}
+
+document.getElementById('modal-form').addEventListener('submit', function (e) {
+  e.preventDefault();
+  const nuevoMito = document.getElementById('mito-input').value.trim();
+  const nuevaHistoria = document.getElementById('historia-input').value.trim();
+  if (!nuevoMito || !nuevaHistoria) return;
+
+  if (modo === 'editar') {
+    mitosGriegos[indexActual] = nuevoMito;
+    historias[indexActual] = nuevaHistoria;
+  } else if (modo === 'insertar') {
+    mitosGriegos.splice(indexActual + 1, 0, nuevoMito);
+    historias.splice(indexActual + 1, 0, nuevaHistoria);
+  }
+
+  cerrarModal();
+  renderizarTabla();
+});
+
+// Inicializa
+renderizarTabla();
+</script>

@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Articulillos</title>
+<script src="/assets/tailwind.js"></script>
+<link href="/assets/fonts.css" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Orbitron', sans-serif;
+    background-color: #0f172a;
+    color: white;
+  }
+
+  #contenedor-tarjetas img {
+    background-color: white;
+  }
+
+.line-clamp-5 {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+ /* Cabeceras sin fondo + línea decorativa */
+table thead {
+  background-color: transparent !important;
+  color: #ffd700;
+  border-bottom: 2px solid #4b0082;
+}
+
+/* Stripe + hover */
+#tabla-actores tbody tr:nth-child(even),
+#tabla-grab tbody tr:nth-child(even) {
+  background-color: rgba(255,255,255,.05);
+}
+#tabla-actores tbody tr:hover,
+#tabla-grab tbody tr:hover {
+  background-color: rgba(255,255,255,.1);
+}
+
+/* Ocultar columna ID en ambas tablas */
+#tabla-actores th:nth-child(1),
+#tabla-actores td:nth-child(1),
+#tabla-grab th:nth-child(1),
+#tabla-grab td:nth-child(1) {
+  display: none;
+}
+
+/* Quitar min-width heredado para ajustar bien */
+#tabla-actores th, #tabla-actores td,
+#tabla-grab th,   #tabla-grab td {
+  min-width: 0;
+  padding: 0.75rem 1rem;
+}
+
+/* === ACTORES: estrechar Foto y Acciones === */
+/* Columna 3 = Foto */
+#tabla-actores th:nth-child(3),
+#tabla-actores td:nth-child(3) {
+  width: 72px;
+  min-width: 72px;
+  padding-right: .25rem;
+}
+/* Columna 4 = Acciones */
+#tabla-actores th:nth-child(4),
+#tabla-actores td:nth-child(4) {
+  width: 56px;
+  min-width: 56px;
+  padding-left: .25rem;
+}
+
+/* Botones compactos (ambas tablas) */
+#tabla-actores td:nth-child(4) .btn,
+#tabla-grab   td:nth-child(5) .btn {
+  font-size: 12px;
+  line-height: 1;
+  padding: 4px 6px;
+}
+
+/* Acciones en columna, pegadas */
+.act-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-end; /* usa flex-start si prefieres a la izquierda */
+}
+
+
+
+/* La sección de Grabaciones que ocupe todo su ancho */
+#tabla-grab {
+  width: 100%;
+  table-layout: fixed; /* control total de columnas */
+}
+
+/* Ocultar ID (por si no lo tenías ya) */
+#tabla-grab th:nth-child(1),
+#tabla-grab td:nth-child(1) { display: none; }
+
+/* Distribución de columnas de GRABACIONES (fija las estrechas) */
+#tabla-grab th:nth-child(3), /* Actor */
+#tabla-grab td:nth-child(3) { width: 230px; min-width: 200px; }
+
+#tabla-grab th:nth-child(4), /* Revisado */
+#tabla-grab td:nth-child(4) { width: 120px; min-width: 100px; }
+
+#tabla-grab th:nth-child(5), /* Acciones */
+#tabla-grab td:nth-child(5) { width: 72px; min-width: 64px; padding-left: .25rem; }
+
+/* “Nombre” (columna 2) que se quede flexible y con elipsis */
+#tabla-grab th:nth-child(2),
+#tabla-grab td:nth-child(2) {
+  width: auto;            /* ocupa el resto */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Botones de acciones compactos y en columna */
+#tabla-grab td:nth-child(5) .btn { 
+  font-size: 12px; line-height: 1; padding: 4px 6px; 
+}
+.act-col { display: flex; flex-direction: column; gap: 2px; align-items: flex-end; }
+
+
+
+</style>
+</head>
+<body class="min-h-screen p-6">
+
+
+
+
+
+
+
+
+  <!-- Navbar -->
+  <nav class="bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 text-center text-sm md:text-base font-semibold uppercase tracking-wider">
+    <a href="/../e.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+  </nav>
+
+  <!-- Encabezado -->
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div class="relative flex items-center justify-between">
+      <div class="absolute -left-4 md:-left-10 z-20">
+  <video autoplay muted loop
+         class="w-40 h-40 md:w-52 md:h-52 object-cover rounded-full border-4 border-yellow-400 shadow-2xl">
+    <source src="/ruta/articulillos.mp4" type="video/mp4">
+  </video>
+      </div>
+      <div class="w-full bg-purple-800 h-28 md:h-32 rounded-xl flex items-center pl-48 pr-6 z-10 shadow-lg">
+        <h2 class="text-2xl md:text-4xl text-yellow-400 font-bold ml-auto">Articulillos</h2>
+      </div>
+    </div>
+
+<body class="min-h-screen bg-slate-50 text-slate-900">
+  <header class="sticky top-0 z-10  border-b shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <h1 class="text-2xl font-bold">🎬 Gestión de Actores & Grabaciones</h1>
+      <div class="text-xs text-slate-500">Backend: <code>/api/actores</code>, <code>/api/grabaciones</code>, <code>/api/upload/actor</code></div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Columna Actores -->
+    <section class="lg:col-span-1  rounded-xl shadow p-4 border">
+      <h2 class="text-xl font-semibold mb-3">Actores</h2>
+
+      <!-- Form crear actor -->
+      <form id="form-actor" class="space-y-2 mb-4">
+        <label class="block text-sm">Nombre del actor</label>
+        <input id="actor-nombre" class="input" placeholder="p.ej. Don Long" required />
+        <label class="block text-sm mt-2">Imagen (opcional)</label>
+        <input id="actor-file" type="file" accept="image/*" class="block text-sm" />
+        <div class="flex gap-2 mt-2">
+          <button class="btn btn-primary" type="submit">➕ Crear actor</button>
+          <button class="btn btn-ghost" type="button" id="btn-refrescar-actores">↻ Refrescar</button>
+        </div>
+      </form>
+
+      <!-- Tabla Actores -->
+      <div class="overflow-auto max-h-[60vh] border rounded">
+        <table class="min-w-full text-sm" id="tabla-actores">
+          <thead class="bg-slate-100 sticky top-0">
+            <tr>
+              <th class="text-left p-2 w-16">ID</th>
+              <th class="text-left p-2">Nombre</th>
+              <th class="text-left p-2 w-24">Foto</th>
+              <th class="text-right p-2 w-48">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-actores"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Columna Grabaciones -->
+<section class="lg:col-span-2 rounded-xl shadow p-4 border">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
+        <h2 class="text-xl font-semibold">Grabaciones</h2>
+        <div class="flex flex-wrap gap-2 items-end">
+          <div>
+            <label class="block text-sm">Filtrar por actor</label>
+            <select id="filtro-actor" class="input min-w-52"></select>
+          </div>
+          <button class="btn btn-ghost" id="btn-limpiar-filtro">✖ Limpiar filtro</button>
+        </div>
+      </div>
+
+      <!-- Form crear grabación -->
+      <form id="form-grab" class="grid md:grid-cols-8 gap-6 my-6">
+        <div class="md:col-span-2">
+          <label class="block text-sm">Nombre de la grabación / película</label>
+          <input id="grab-nombre" class="input" placeholder="p.ej. Night of Champions 1996" required />
+        </div>
+        <div>
+          <label class="block text-sm">Actor</label>
+          <select id="grab-actor" class="input" required></select>
+        </div>
+        <div class="flex items-center gap-2 mt-6 md:mt-0">
+          <input id="grab-revisado" type="checkbox" class="h-4 w-4" />
+          <label for="grab-revisado" class="text-sm">Revisado</label>
+        </div>
+        <div class="md:col-span-4 flex gap-2">
+          <button class="btn btn-primary" type="submit">➕ Añadir</button>
+          <button class="btn btn-ghost" type="button" id="btn-refrescar-grab">↻ Refrescar</button>
+        </div>
+      </form>
+
+      <!-- Tabla Grabaciones -->
+      <div class="overflow-auto max-h-[60vh] border rounded">
+        <table class="min-w-full text-sm" id="tabla-grab">
+<thead class="sticky top-0">
+  <tr>
+    <th class="text-left p-2">ID</th>
+    <th class="text-left p-2">Nombre</th>
+    <th class="text-left p-2">Actor</th>
+    <th class="text-left p-2">Revisado</th>
+    <th class="text-right p-2">Acciones</th>
+  </tr>
+</thead>
+
+          <tbody id="tbody-grab"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Diálogo genérico para editar -->
+  <dialog id="dlg-editar" class="rounded-xl p-0 w-[32rem]">
+    <form method="dialog" class="p-4 space-y-3">
+      <h3 class="text-lg font-semibold" id="dlg-titulo">Editar</h3>
+      <div id="dlg-campos" class="space-y-2"></div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button class="btn btn-ghost" value="cancel">Cancelar</button>
+        <button class="btn btn-primary" value="ok">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <template id="tpl-actor-row">
+    <tr>
+      <td class="p-2 align-top font-mono"></td>
+      <td class="p-2 align-top"></td>
+      <td class="p-2 align-top"></td>
+      <td class="p-2 align-top text-right space-x-1 whitespace-nowrap"></td>
+    </tr>
+  </template>
+
+  <template id="tpl-grab-row">
+    <tr>
+      <td class="p-2 align-top font-mono"></td>
+      <td class="p-2 align-top"></td>
+      <td class="p-2 align-top"></td>
+      <td class="p-2 align-top"></td>
+      <td class="p-2 align-top text-right space-x-1 whitespace-nowrap"></td>
+    </tr>
+  </template>
+
+  <script>
+    const $ = (sel, el=document) => el.querySelector(sel);
+    const $$ = (sel, el=document) => Array.from(el.querySelectorAll(sel));
+
+    // === Helpers ===
+    async function fetchJSON(url, opts={}) {
+      const res = await fetch(url, {
+        headers: { 'Content-Type': 'application/json' },
+        ...opts,
+      });
+      if (!res.ok) {
+        const txt = await res.text().catch(()=> "");
+        throw new Error(`${res.status} ${res.statusText}: ${txt}`);
+      }
+      const ct = res.headers.get('content-type') || '';
+      return ct.includes('application/json') ? res.json() : {};
+    }
+
+    async function subirImagenActor(file) {
+      const fd = new FormData();
+      fd.append('file', file);
+      const res = await fetch('/api/upload/actor', { method: 'POST', body: fd });
+      if (!res.ok) {
+        const txt = await res.text().catch(()=> "");
+        throw new Error(`${res.status} ${res.statusText}: ${txt}`);
+      }
+      const data = await res.json();
+      if (!data || !data.url) throw new Error('Respuesta de subida sin URL');
+      return data.url; // /actores/ima/xxx.png
+    }
+
+    // Estado
+    const state = {
+      actores: [],
+      grabaciones: [],
+      filtroActor: null,
+    };
+
+    // === Carga ===
+    async function cargarActores() {
+      state.actores = await fetchJSON('/api/actores');
+      renderActores();
+      poblarSelectActores();
+    }
+
+    async function cargarGrabaciones() {
+      if (state.filtroActor) {
+        state.grabaciones = await fetchJSON(`/api/grabaciones/by-actor/${state.filtroActor}`);
+      } else {
+        state.grabaciones = await fetchJSON('/api/grabaciones');
+      }
+      renderGrabaciones();
+    }
+
+    function poblarSelectActores() {
+      const selFiltro = $('#filtro-actor');
+      const selGrab = $('#grab-actor');
+      selFiltro.innerHTML = '';
+      selGrab.innerHTML = '';
+
+      const optAll = document.createElement('option');
+      optAll.value = '';
+      optAll.textContent = '— Todos —';
+      selFiltro.appendChild(optAll);
+
+      for (const a of state.actores) {
+        const o1 = document.createElement('option');
+        o1.value = a.id;
+        o1.textContent = `${a.id} · ${a.nombre}`;
+        selFiltro.appendChild(o1);
+
+        const o2 = document.createElement('option');
+        o2.value = a.id;
+        o2.textContent = `${a.id} · ${a.nombre}`;
+        selGrab.appendChild(o2);
+      }
+
+      if (state.filtroActor) selFiltro.value = String(state.filtroActor);
+    }
+
+    // === Render tablas ===
+    function renderActores() {
+      const tbody = $('#tbody-actores');
+      tbody.innerHTML = '';
+      const tpl = $('#tpl-actor-row');
+
+      for (const a of state.actores) {
+        const row = tpl.content.cloneNode(true);
+        const tds = $$('td', row);
+        tds[0].textContent = a.id;
+        tds[1].textContent = a.nombre || '';
+
+        const imgBox = document.createElement('div');
+        imgBox.className = 'w-16 h-16 bg-slate-100 border rounded flex items-center justify-center overflow-hidden';
+        if (a.imagen) {
+          const im = document.createElement('img');
+          im.src = a.imagen;
+          im.alt = a.nombre || 'actor';
+          im.className = 'object-cover w-full h-full';
+          imgBox.appendChild(im);
+        } else {
+          imgBox.innerHTML = '<span class="text-xs text-slate-400">—</span>';
+        }
+        tds[2].appendChild(imgBox);
+
+const actions = tds[3];
+actions.style.display = "flex";
+actions.style.flexDirection = "column";
+actions.style.alignItems = "flex-end"; // o "flex-start" si los prefieres alineados a la izquierda
+actions.style.gap = "4px"; // separación vertical entre botones
+
+const btnEdit = btn('✏️', 'btn-ghost', () => editarPais(p));
+const btnDel  = btn('🗑️ ', 'btn-danger', () => borrarPais(p));
+const btnVer  = btn('📰 ', 'btn-secondary', () => {
+  state.filtroPais = p.id; $('#filtro-pais').value = String(p.id); cargarNoticias();
+});
+actions.append(btnVer, btnEdit, btnDel);        
+
+        tbody.appendChild(row);
+      }
+    }
+
+    function renderGrabaciones() {
+      const tbody = $('#tbody-grab');
+      tbody.innerHTML = '';
+      const tpl = $('#tpl-grab-row');
+
+      const actorPorId = new Map(state.actores.map(a => [a.id, a]));
+
+      for (const g of state.grabaciones) {
+        const row = tpl.content.cloneNode(true);
+        const tds = $$('td', row);
+        tds[0].textContent = g.id;
+        tds[1].textContent = g.nombre;
+        const actor = actorPorId.get(Number(g.id_actor));
+        tds[2].textContent = actor ? `${actor.id} · ${actor.nombre}` : `(${g.id_actor})`;
+
+        // Revisado
+        const chip = document.createElement('button');
+        chip.className = `tag ${g.Revisado === '1' ? 'border-green-500 text-green-700' : 'border-slate-300 text-slate-600'}`;
+        chip.textContent = g.Revisado === '1' ? 'Sí' : 'No';
+        chip.title = 'Cambiar estado';
+        chip.addEventListener('click', async () => {
+          try {
+            await fetchJSON(`/api/grabaciones/${g.id}/toggle`, { method: 'POST' });
+            await cargarGrabaciones();
+          } catch (e) { alert('Error al alternar Revisado: ' + e.message); }
+        });
+        tds[3].appendChild(chip);
+
+        // Acciones
+        const actions = tds[4];
+        const btnEdit = btn('✏️ Editar', 'btn-ghost', () => editarGrab(g));
+        const btnDel = btn('🗑️ Borrar', 'btn-danger', () => borrarGrab(g));
+        actions.append(btnEdit, btnDel);
+
+        tbody.appendChild(row);
+      }
+    }
+
+    // === CRUD Actores ===
+    async function crearActor(nombre, imagen) {
+      const body = { nombre: nombre.trim() };
+      if (imagen && imagen.trim()) body.imagen = imagen.trim();
+      return fetchJSON('/api/actores', { method: 'POST', body: JSON.stringify(body) });
+    }
+
+ async function editarActor(actor) {
+  const dlg = $('#dlg-editar');
+  $('#dlg-titulo').textContent = `Editar actor #${actor.id}`;
+  const campos = $('#dlg-campos');
+  campos.innerHTML = '';
+
+  // Nombre
+  const inpNombre = document.createElement('input');
+  inpNombre.className = 'input w-full';
+  inpNombre.value = actor.nombre || '';
+
+  // Vista previa de imagen actual
+  const preview = document.createElement('div');
+  preview.className = 'w-20 h-20 mt-2 border rounded overflow-hidden flex items-center justify-center bg-slate-100';
+  if (actor.imagen) {
+    const img = document.createElement('img');
+    img.src = actor.imagen;
+    img.className = 'object-cover w-full h-full';
+    preview.appendChild(img);
+  } else {
+    preview.innerHTML = '<span class="text-xs text-slate-400">— sin imagen —</span>';
+  }
+
+  // Nuevo archivo (para reemplazar la imagen)
+  const inpFile = document.createElement('input');
+  inpFile.type = 'file';
+  inpFile.accept = 'image/*';
+  inpFile.className = 'block text-sm mt-1';
+
+  // Previsualización cuando selecciones una nueva imagen
+  inpFile.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        preview.innerHTML = '';
+        const img = document.createElement('img');
+        img.src = ev.target.result;
+        img.className = 'object-cover w-full h-full';
+        preview.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  campos.appendChild(labelWrap('Nombre', inpNombre));
+  campos.appendChild(labelWrap('Imagen actual / nueva', preview));
+  campos.appendChild(inpFile);
+
+  dlg.returnValue = '';
+  dlg.showModal();
+  const done = await waitDialog(dlg);
+  if (done !== 'ok') return;
+
+  const nombre = inpNombre.value.trim();
+  if (!nombre) return alert('El nombre es obligatorio.');
+
+  try {
+    let imagenUrl = actor.imagen || '';
+    const file = inpFile.files[0];
+    if (file) {
+      // Sube la nueva imagen y usa su URL
+      imagenUrl = await subirImagenActor(file);
+    }
+
+    const body = { nombre };
+    if (imagenUrl) body.imagen = imagenUrl;
+
+    await fetchJSON(`/api/actores/${actor.id}`, {
+      method: 'PUT',
+      body: JSON.stringify(body),
+    });
+
+    await cargarActores();
+    await cargarGrabaciones();
+  } catch (e) {
+    alert('Error al editar actor: ' + e.message);
+  }
+}
+
+    async function borrarActor(actor) {
+      if (!confirm(`¿Borrar actor #${actor.id} «${actor.nombre}»?\nTambién se eliminarán sus grabaciones.`)) return;
+      try {
+        await fetchJSON(`/api/actores/${actor.id}`, { method: 'DELETE' });
+        if (state.filtroActor === actor.id) state.filtroActor = null;
+        await cargarActores();
+        await cargarGrabaciones();
+      } catch (e) {
+        alert('Error al borrar actor: ' + e.message);
+      }
+    }
+
+    // === CRUD Grabaciones ===
+    async function crearGrab(nombre, id_actor, revisado) {
+      const body = { nombre: nombre.trim(), id_actor: Number(id_actor), Revisado: revisado ? '1' : '0' };
+      return fetchJSON('/api/grabaciones', { method: 'POST', body: JSON.stringify(body) });
+    }
+
+    async function editarGrab(g) {
+      const dlg = $('#dlg-editar');
+      $('#dlg-titulo').textContent = `Editar grabación #${g.id}`;
+      const campos = $('#dlg-campos');
+      campos.innerHTML = '';
+
+      const inpNombre = document.createElement('input');
+      inpNombre.className = 'input';
+      inpNombre.value = g.nombre || '';
+
+      const selActor = document.createElement('select');
+      selActor.className = 'input';
+      for (const a of state.actores) {
+        const opt = document.createElement('option');
+        opt.value = a.id;
+        opt.textContent = `${a.id} · ${a.nombre}`;
+        selActor.appendChild(opt);
+      }
+      selActor.value = String(g.id_actor);
+
+      const chkRev = document.createElement('input');
+      chkRev.type = 'checkbox';
+      chkRev.className = 'h-4 w-4';
+      chkRev.checked = String(g.Revisado) === '1';
+
+      campos.appendChild(labelWrap('Nombre', inpNombre));
+      campos.appendChild(labelWrap('Actor', selActor));
+      campos.appendChild(labelWrap('Revisado', chkRev));
+
+      dlg.returnValue = '';
+      dlg.showModal();
+      const done = await waitDialog(dlg);
+      if (done !== 'ok') return;
+
+      const body = {
+        nombre: inpNombre.value.trim(),
+        id_actor: Number(selActor.value),
+        Revisado: chkRev.checked ? '1' : '0'
+      };
+      if (!body.nombre) return alert('El nombre es obligatorio.');
+
+      try {
+        await fetchJSON(`/api/grabaciones/${g.id}`, { method: 'PUT', body: JSON.stringify(body) });
+        await cargarGrabaciones();
+      } catch (e) {
+        alert('Error al editar grabación: ' + e.message);
+      }
+    }
+
+    async function borrarGrab(g) {
+      if (!confirm(`¿Borrar grabación #${g.id} «${g.nombre}»?`)) return;
+      try {
+        await fetchJSON(`/api/grabaciones/${g.id}`, { method: 'DELETE' });
+        await cargarGrabaciones();
+      } catch (e) {
+        alert('Error al borrar grabación: ' + e.message);
+      }
+    }
+
+    // === UI helpers ===
+    function btn(text, cls, onClick) {
+      const b = document.createElement('button');
+      b.className = `btn ${cls}`;
+      b.textContent = text;
+      b.addEventListener('click', onClick);
+      return b;
+    }
+
+    function labelWrap(label, el) {
+      const w = document.createElement('label');
+      w.className = 'block text-sm';
+      w.textContent = label;
+      const wrap = document.createElement('div');
+      wrap.className = 'mt-1';
+      wrap.appendChild(el);
+      const box = document.createElement('div');
+      box.appendChild(w);
+      box.appendChild(wrap);
+      return box;
+    }
+
+    function waitDialog(dlg) {
+      return new Promise(resolve => {
+        const onClose = () => { dlg.removeEventListener('close', onClose); resolve(dlg.returnValue); };
+        dlg.addEventListener('close', onClose);
+      });
+    }
+
+    // === Eventos ===
+    // Crear actor: si hay archivo, primero lo subimos y usamos su URL; si no, creamos sin imagen
+    $('#form-actor').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const nombre = $('#actor-nombre').value;
+      const file = $('#actor-file').files[0];
+      if (!nombre.trim()) return;
+
+      try {
+        let imagenUrl = '';
+        if (file) {
+          imagenUrl = await subirImagenActor(file);
+        }
+        await crearActor(nombre, imagenUrl);
+        $('#actor-nombre').value = '';
+        const f = $('#actor-file'); if (f) f.value = '';
+        await cargarActores();
+      } catch (err) {
+        alert('Error al crear actor: ' + err.message);
+      }
+    });
+
+    $('#btn-refrescar-actores').addEventListener('click', () => cargarActores());
+
+    $('#form-grab').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const nombre = $('#grab-nombre').value;
+      const idActor = $('#grab-actor').value;
+      const revisado = $('#grab-revisado').checked;
+      if (!nombre.trim() || !idActor) return;
+      try {
+        await crearGrab(nombre, idActor, revisado);
+        $('#grab-nombre').value = '';
+        $('#grab-revisado').checked = false;
+        await cargarGrabaciones();
+      } catch (err) {
+        alert('Error al crear grabación: ' + err.message);
+      }
+    });
+
+    $('#btn-refrescar-grab').addEventListener('click', () => cargarGrabaciones());
+
+    $('#filtro-actor').addEventListener('change', async (e) => {
+      const val = e.target.value;
+      state.filtroActor = val ? Number(val) : null;
+      await cargarGrabaciones();
+    });
+
+    $('#btn-limpiar-filtro').addEventListener('click', async () => {
+      state.filtroActor = null;
+      $('#filtro-actor').value = '';
+      await cargarGrabaciones();
+    });
+
+    // === Init ===
+    (async function init() {
+      try {
+        await cargarActores();
+        await cargarGrabaciones();
+      } catch (e) {
+        console.error(e);
+        alert('No se pudo conectar con el backend. Asegúrate de tener el servidor encendido.');
+      }
+    })();
+  </script>
+</body>
+</html>

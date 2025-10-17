@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Partes de la Novela</title>
+  <script src="/assets/tailwind.js"></script>
+  <link href="/assets/fonts.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0f172a;
+      color: white;
+    }
+    #videoPrincipal {
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+    .border-custom {
+      border: solid 3px rgb(250, 204, 21);
+    }
+
+
+
+    #search-input, #filter-select, #filter-select-2 {
+      background-color: rgb(31 41 55 / var(--tw-bg-opacity, 1));
+      width: auto;
+      height: 48px;
+    }
+
+    .modal-scroll {
+        max-height: 95%;
+        overflow-y: auto;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 flex justify-between items-center text-sm md:text-base font-semibold uppercase tracking-wider">
+    <div class="flex items-center space-x-2">
+      <button id="loginBtn" onclick="toggleLogin()" class="text-white hover:text-yellow-400 text-xl" title="Iniciar sesión">👤</button>
+    </div>
+    <div class="text-center flex-grow">
+      <a href="index.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+    </div>
+  </nav>
+
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div class="relative flex items-center justify-between">
+      <div class="absolute -left-4 md:-left-10 z-20 rounded-full overflow-hidden w-40 h-40 md:w-60 md:h-60 border-custom">
+        <video id="videoPrincipal" autoplay muted loop class="w-full h-full object-cover">
+          <source id="videoSource" src="" type="video/mp4" />
+        </video>
+      </div>
+      <div class="w-full bg-purple-800 h-28 md:h-32 rounded-xl flex items-center pl-48 pr-6 z-10 shadow-lg">
+        <h2 id="tituloDinamico" class="text-2xl md:text-4xl text-yellow-400 font-bold ml-auto">Jhevis</h2>
+      </div>
+    </div>
+    <nav id="dynamicMenu" class="flex justify-end mt-4 space-x-6 text-white text-sm md:text-base"></nav>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div class="bg-gray-900 p-10 rounded-xl shadow-lg">
+      <form id="search-form" class="mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-6 gap-2">
+          <input type="text" id="search-input" class="rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="Buscar por nombre...">
+          <select id="filter-select-2" class="rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400">
+            <option value="">Filtrar por etiqueta</option>
+            <option value="Divinos">Divinos</option>
+            <option value="url_imagen1">url_imagen1</option>
+            <option value="url_imagen">url_imagen</option>
+          </select>
+          <button type="button" onclick="filterCards()" class="bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-3 px-6 rounded-lg transition w-full">Buscar</button>
+        </div>
+      </form>
+    </div>
+
+    <div id="addSceneContainer" class="hidden mb-6 text-right">
+      <button onclick="abrirModalInsertarScene()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded shadow">
+        ➕ Añadir nueva escena
+      </button>
+    </div>
+  </section>
+
+
+
+
+
+  <section class="max-w-7xl mx-auto px-6">
+    <div id="cardContainer" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8 mt-6"></div>
+    <div id="pagination" class="flex justify-center gap-2 mt-10"></div>
+  </section>
+
+
+
+
+
+  <div id="sceneModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center">
+    <div class="bg-gray-900 p-8 rounded-lg w-full max-w-6xl relative shadow-xl modal-scroll">
+      <button onclick="closeModal()" class="absolute top-4 right-4 text-white text-xl font-bold hover:text-yellow-400">&times;</button>
+      <h2 id="modalTitle" class="text-yellow-400 text-2xl mb-4 font-bold"></h2>
+      <div class="grid md:grid-cols-3 gap-6 text-white">
+        <div id="modalCharacters" class="grid grid-cols-4 gap-4 md:col-span-2"></div>
+        <div class="md:col-span-1">
+          <img id="modalFlag" class="w-16 h-10 object-cover mb-2 mx-auto" alt="Bandera" />
+          <h3 class="font-bold mb-1">Descripción</h3>
+          <p id="modalText"></p>
+          <h3 class="font-bold mb-1 text-center">Lugar</h3>
+          <p id="modalCountryName" class="text-center"></p>
+          <hr class="my-2 border-gray-600">
+          <div class="flex items-center justify-between">
+            <p class="font-bold">Fechas asociadas</p>
+            <a id="nuevaFechaBtn" href="#" target="_self" title="Agregar nuevo día" class="text-yellow-400 text-xl font-bold hover:text-white">+</a>
+          </div>
+          <div id="modalDateLinks" class="text-sm"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Modal de insertar/editar escena -->
+  <div id="modalScene" class="modal fixed inset-0 bg-black bg-opacity-80 justify-center items-center z-50 hidden">
+    <div class="bg-gray-900 p-6 rounded-lg max-w-md w-full relative">
+      <button onclick="document.getElementById('modalScene').classList.add('hidden')" class="absolute top-2 right-2 text-white text-2xl font-bold">&times;</button>
+      <h2 class="text-2xl text-yellow-400 mb-4 font-bold text-center">Agregar / Editar Escena</h2>
+      <form id="formScene" class="space-y-4" onsubmit="event.preventDefault(); guardarSceneEnServidor();">
+        <input type="hidden" id="sceneId" value="-1">
+        
+        <div>
+          <label class="block mb-1">Nombre:</label>
+          <input type="text" id="sceneNombre" class="w-full p-2 rounded bg-slate-800 text-white" required>
+        </div>
+      
+        <div>
+          <label class="block mb-1">Imagen:</label>
+          <input type="file" id="sceneImagenFile" class="w-full p-2 rounded bg-slate-800 text-white bg-gray-800" accept="image/*">
+        </div>
+      
+        <div>
+          <label class="block mb-1">Descripción:</label>
+          <textarea id="sceneTexto" class="w-full p-2 rounded bg-slate-800 text-white"></textarea>
+        </div>
+      
+        <div>
+          <label class="block mb-1">Imagen de bandera:</label>
+          <input type="file" id="sceneBanderaFile" class="w-full p-2 rounded bg-slate-800 text-white bg-gray-800" accept="image/*">
+        </div>
+      
+        <button type="submit" class="bg-yellow-400 text-black px-4 py-2 rounded font-bold w-full">Guardar</button>
+      </form>
+    </div>
+  </div>
+
+
+
+
+
+
+
+  <div id="modalRelacion" class="modal fixed inset-0 bg-black bg-opacity-80 justify-center items-center z-50 hidden">
+    <div class="bg-gray-900 p-6 rounded-lg max-w-md w-full relative">
+      <button onclick="cerrarModalRelacion()" class="absolute top-2 right-2 text-white text-2xl font-bold">&times;</button>
+      <h2 class="text-2xl text-yellow-400 mb-4 font-bold text-center">Relacionar Personajes</h2>
+                  <select id="filter-select" class="rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400">
+                    <option value="">Filtrar por etiqueta</option>
+                  </select>
+      <input type="hidden" id="modalRelacionSceneId">
+      <div id="relacionPersonajesLista" class="max-h-60 overflow-y-auto mb-4"></div>
+      <button onclick="guardarRelacionPersonajes()" class="bg-yellow-400 text-black px-4 py-2 rounded font-bold w-full">Guardar</button>
+    </div>
+  </div>
+
+
+  <script src="enrrutamiento.js"></script>
+  <script src="mes.js"></script>
+  <script>
+    const container = document.getElementById('cardContainer');
+    const pagination = document.getElementById('pagination');
+    let currentPage = 1;
+    const itemsPerPage = 6;
+    let filteredScenes = [];
+    const params = new URLSearchParams(window.location.search);
+
+    const valor = new URLSearchParams(window.location.search).get('valor') || "novela";
+
+fetch(`/api/scenes/${valor}`)
+  .then(response => response.json())
+  .then(scenes => {
+    filteredScenes = scenes;  // <-- Asigna las scenes que cargaste
+    renderPage(1);
+  })
+  .catch(error => console.error("Error al cargar las scenes:", error));
+
+
+  
+
+    const data = contenido[valor];
+
+
+    // ————————————————
+    // Popula el select desde data.array_del_select
+    const select = document.getElementById('filter-select');
+    // ponemos primero el placeholder
+    select.innerHTML = `<option value="">Filtrar por etiquetaaaa</option>`;
+    // añadimos cada etiqueta
+    data.array_del_select.forEach(e => {
+      const opt = document.createElement('option');
+      opt.value = e;
+      opt.textContent = e;
+      select.appendChild(opt);
+    });
+
+  
+    document.getElementById("tituloDinamico").textContent = data.titulo;
+    document.getElementById("dynamicMenu").innerHTML = `
+  <a href="partes.html?valor=${valor}" class="hover:text-yellow-400 transition" style="font-size: 10px;">Partes de la novela</a>
+  <a href="index copy.html?valor=${valor}" class="hover:text-yellow-400 transition" style="font-size: 10px;">Personajes</a>
+  <a href="resumen.html?valor=${valor}" class="hover:text-yellow-400 transition" style="font-size: 10px;">Resumen</a>
+  <a href="agrupamiento.html?valor=${valor}" class="hover:text-yellow-400 transition" style="font-size: 10px;">agrupamiento</a>
+  <a href="resumen.html?valor=${valor}" class="hover:text-yellow-400 transition" style="font-size: 10px;">Resumen</a>
+  <a href="Quiénes_estuvieron_ah.html?valor=${valor}" class="hover:text-yellow-400 transition" style="font-size: 10px;">1 Prueba</a>
+  <a href="2_prueba.html?valor=${valor}" class="hover:text-yellow-400 transition" style="font-size: 10px;">2 Prueba</a>
+  <a href="juego3.html?valor=${valor}" class="hover:text-yellow-400 transition" style="font-size: 10px;">2 Prueba</a>
+  <a href="versiones.html?valor=${valor}" class="hover:text-yellow-400 transition" style="font-size: 10px;">Versiones</a>
+      ${data.menu}
+    `;
+  
+    const videoSource = document.getElementById("videoSource");
+    const videoElement = document.getElementById("videoPrincipal");
+    if (videoSource && videoElement) {
+      videoSource.src = `ruta/${data.video}`;
+      videoElement.load();
+    }
+  
+    document.addEventListener("DOMContentLoaded", () => {
+      const btn = document.getElementById("loginBtn");
+      const addSceneContainer = document.getElementById("addSceneContainer");
+      if (localStorage.getItem("admin")) {
+        btn.innerText = "❌";
+        addSceneContainer?.classList.remove("hidden");
+      } else {
+        btn.innerText = "👤";
+        addSceneContainer?.classList.add("hidden");
+      }
+    });
+  
+    function toggleLogin() {
+      const btn = document.getElementById("loginBtn");
+      const addSceneContainer = document.getElementById("addSceneContainer");
+  
+      if (localStorage.getItem("admin")) {
+        localStorage.removeItem("admin");
+        btn.innerText = "👤";
+        addSceneContainer?.classList.add("hidden");
+      } else {
+        const usuario = prompt("Usuario:");
+        const contrasena = prompt("Contraseña:");
+        if (usuario === "sade" && contrasena === "123") {
+          localStorage.setItem("admin", "true");
+          btn.innerText = "❌";
+          addSceneContainer?.classList.remove("hidden");
+        } else {
+          alert("❌ Usuario o contraseña incorrectos");
+        }
+      }
+      renderPage(1);
+    }
+  
+    const script = document.createElement("script");
+script.src = data.personajes;
+script.onload = () => {
+  setTimeout(() => {
+    try {
+      // Intentamos extraer de window.scenes y window.PERSONAJES
+      const scenesFromGlobal = window.scenes || [];
+      const personajesFromGlobal = window.PERSONAJES || [];
+
+      if (scenesFromGlobal.length > 0 && personajesFromGlobal.length > 0) {
+        filteredScenes = scenesFromGlobal;
+        window.PERSONAJES = personajesFromGlobal; // Aseguramos que PERSONAJES esté definido
+        renderPage(1);
+      } else {
+        console.error("❌ No se pudieron cargar correctamente scenes o PERSONAJES");
+      }
+    } catch (error) {
+      console.error("❌ Error cargando escenas o personajes:", error);
+    }
+  }, 50); // Pequeño delay para asegurar que el navegador cargó el JS
+};
+script.onerror = () => {
+  console.error("❌ No se pudo cargar el archivo de personajes:", script.src);
+};
+document.head.appendChild(script);
+  
+
+
+
+
+
+
+
+
+
+    function renderPage(page = 1) {
+    container.innerHTML = '';
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const currentScenes = filteredScenes.slice(startIndex, endIndex);
+
+    currentScenes.forEach(scene => {
+      const card = document.createElement('div');
+      card.className = 'bg-gray-800 p-4 rounded-xl shadow hover:scale-105 transition';
+      card.innerHTML = `
+        <img src="${scene.imagen}" alt="${scene.nombre}" class="rounded-lg mb-3 w-full h-48 object-cover">
+        <h3 class="text-center font-bold text-yellow-400 text-xl mb-2">${scene.nombre}</h3>
+        ${localStorage.getItem("admin") ? `
+          <div class="flex justify-center gap-4 mt-2">
+            <button onclick="editarScene(${scene.id_scene})" class="bg-blue-500 px-2 py-1 rounded text-white text-sm">Editar</button>
+            <button onclick="borrarSceneEnServidor(${scene.id_scene})" class="bg-red-500 px-2 py-1 rounded text-white text-sm">Borrar</button>
+          </div>
+        ` : ''}
+      `;
+      card.addEventListener('click', () => openModal(scene));
+      container.appendChild(card);
+    });
+    renderPagination();
+  }
+
+
+  function abrirRelacionPersonajes(id_scene) {
+  alert(`🔧 Aquí se abriría el modal de gestión de personajes para la escena ${id_scene}`);
+}
+
+
+function editarScene(id) {
+  const scene = filteredScenes.find(s => s.id_scene === id);
+  if (!scene) return alert("❌ Escena no encontrada");
+
+  document.getElementById("sceneId").value = scene.id_scene;
+  document.getElementById("sceneNombre").value = scene.nombre;
+  document.getElementById("sceneTexto").value = scene.Texto_descriptivo || "";
+
+
+
+
+
+  // No intentamos poner "value" en los input file porque eso no se puede
+  // En su lugar, guardamos la imagen y bandera actuales en atributos del formulario
+  const form = document.getElementById("formScene");
+  form.dataset.imagenActual = scene.imagen || "";
+  form.dataset.banderaActual = scene.imagen_url_pais || "";
+
+  // Opcional: puedes limpiar el input file si quieres (aunque no es obligatorio)
+  document.getElementById("sceneImagenFile").value = "";
+  document.getElementById("sceneBanderaFile").value = "";
+
+  document.getElementById("modalScene").classList.remove("hidden");
+  document.getElementById("modalScene").classList.add("flex");
+}
+  
+    function renderPagination() {
+      const totalPages = Math.ceil(filteredScenes.length / itemsPerPage);
+      pagination.innerHTML = '';
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.className = `px-4 py-2 rounded-lg ${i === currentPage ? 'bg-yellow-400 text-black' : 'bg-gray-700 text-white'} hover:bg-yellow-500`;
+        btn.textContent = i;
+        btn.onclick = () => { currentPage = i; renderPage(i); };
+        pagination.appendChild(btn);
+      }
+    }
+  
+
+
+
+
+    function abrirModalInsertarScene() {
+  document.getElementById("sceneId").value = "-1";
+  document.getElementById("sceneNombre").value = "";
+  document.getElementById("sceneTexto").value = "";
+
+  // NO intentamos acceder a sceneImagen porque ahora es un file input
+  document.getElementById("sceneImagenFile").value = "";
+  document.getElementById("sceneBanderaFile").value = "";
+
+  // Borrar rutas antiguas del form
+  delete document.getElementById("formScene").dataset.imagenActual;
+  delete document.getElementById("formScene").dataset.banderaActual;
+
+  document.getElementById("modalScene").classList.remove("hidden");
+  document.getElementById("modalScene").classList.add("flex");
+}
+
+
+
+
+
+    function openModal(scene) {
+    const modal = document.getElementById('sceneModal');
+    modal.removeAttribute("aria-hidden");
+    modal.removeAttribute("inert");
+    modal.classList.remove("hidden");
+
+    document.getElementById('modalTitle').textContent = scene.nombre;
+    document.getElementById('modalText').textContent = scene.Texto_descriptivo;
+    document.getElementById('modalCountryName').textContent = scene.lugar || '';
+    document.getElementById('modalFlag').src = scene.imagen_url_pais || '';
+
+
+    const personajesHTML = scenes_Personajes.filter(sp => sp.id_scene === scene.id_scene)
+      .map(sp => {
+        const personaje = PERSONAJES.find(p => p.id_Personaje === sp.id_personaje);
+        return personaje ? `
+          <div class="text-center">
+            <img src="${personaje.url_imagen}" class="rounded-full w-20 h-20 mx-auto mb-2">
+            <p>${personaje.Nombre}</p>
+          </div>
+        ` : '';
+      }).join('');
+    const botonRelacion = `<div class="text-center mt-2">
+      <button onclick="abrirRelacionPersonajes(${scene.id_scene})" class="text-yellow-400 text-sm underline">Gestionar personajes</button>
+    </div>`;
+    document.getElementById('modalCharacters').innerHTML = personajesHTML + botonRelacion;
+    document.getElementById("nuevaFechaBtn").href = `nuevodia.html?valor=${valor}&id_scene=${scene.id_scene}`;
+    const fechasHTML = dia_escena.filter(d => d.id_scene === scene.id_scene).map(f => {
+      const d = dia.find(di => di.id_dia === f.id_dia);
+      const m = mes.find(me => me.id_mes === d?.id_mes);
+      console.log('d', d);
+      return d && m
+  ? `<p><a href="dia.html?valor=${valor}&dia=${d.id_dia}&id_scene=${scene.id_scene}" class="text-yellow-400 hover:underline">${d.titulo}-->&nbsp; ${d.Dia} ${m.nombre}</a></p>`
+  : '';
+    }).join('');
+    document.getElementById('modalDateLinks').innerHTML = fechasHTML || '<p>Sin fecha asignada</p>';
+  }
+  
+
+
+
+
+
+
+
+
+
+    function closeModal() {
+      const modal = document.getElementById('sceneModal');
+      modal.setAttribute("aria-hidden", "true");
+      modal.setAttribute("inert", "");
+      modal.classList.add("hidden");
+    }
+  
+    function filterCards() {
+      const searchTerm = document.getElementById('search-input').value.toLowerCase();
+      const etiqueta = document.getElementById('filter-select-2').value.toLowerCase();
+  
+      filteredScenes = scenes.filter(scene => {
+        const nameMatch = scene.nombre.toLowerCase().includes(searchTerm);
+        const etiquetaMatch = etiqueta === "" || (scene.etiqueta && scene.etiqueta.toLowerCase() === etiqueta);
+        return nameMatch && etiquetaMatch;
+      });
+  
+      currentPage = 1;
+      renderPage();
+    }
+
+
+    function abrirRelacionPersonajes(id_scene) {
+
+
+      const refrescarPersonajes = () => {
+        const modalRelacion = document.getElementById("modalRelacion");
+        const lista = document.getElementById("relacionPersonajesLista");
+        lista.innerHTML = "";
+
+        PERSONAJES.forEach(p => {
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.value = p.id_Personaje;
+          checkbox.id = `check_${p.id_Personaje}`;
+
+          const relacionado = scenes_Personajes.some(sp => sp.id_scene === id_scene && sp.id_personaje === p.id_Personaje);
+          checkbox.checked = relacionado;
+
+          const label = document.createElement("label");
+          label.htmlFor = checkbox.id;
+          label.textContent = p.Nombre;
+          label.className = "ml-2";
+
+          const etiquetaSelected = document.getElementById('filter-select').value;
+          console.log(p.etiqueta);
+          console.log('etiquetaSelected', etiquetaSelected);
+          if (p.etiqueta.includes(etiquetaSelected)) {
+            const div = document.createElement("div");
+            div.className = "flex items-center space-x-2 mb-2";
+            div.appendChild(checkbox);
+            div.appendChild(label);
+            lista.appendChild(div);
+          }
+
+
+        });
+
+        
+        document.getElementById("modalRelacionSceneId").value = id_scene;
+        modalRelacion.classList.remove("hidden");
+        modalRelacion.classList.add("flex");
+      }
+
+
+      refrescarPersonajes();
+
+
+
+  console.log('holaaaa');
+  console.log(document.getElementById('filter-select'));
+  document.getElementById('filter-select').addEventListener('change', () => {
+    console.log('changed');
+      refrescarPersonajes();
+  });
+
+
+}
+
+function cerrarModalRelacion() {
+  document.getElementById("modalRelacion").classList.add("hidden");
+  document.getElementById("modalRelacion").classList.remove("flex");
+}
+
+
+
+  function filtrarPersonajes() {
+    const nombre = document.getElementById('search-input').value.toLowerCase();
+    const etiqueta = document.getElementById('filter-select').value.toLowerCase();
+
+    const filtrados = PERSONAJES.filter(p => {
+      const coincideNombre = p.Nombre?.toLowerCase().includes(nombre) ?? false;
+      const coincideEtiqueta = etiqueta === "" || (Array.isArray(p.etiqueta) && p.etiqueta.some(e => e.toLowerCase().includes(etiqueta)));
+      return coincideNombre && coincideEtiqueta;
+    });
+
+    renderizarPersonajes(filtrados);
+  }
+
+
+
+
+function guardarRelacionPersonajes() {
+  const id_scene = parseInt(document.getElementById("modalRelacionSceneId").value);
+  const seleccionados = Array.from(document.querySelectorAll("#relacionPersonajesLista input[type=checkbox]:checked")).map(cb => parseInt(cb.value));
+
+  // Actualizar en memoria
+  scenes_Personajes = scenes_Personajes.filter(sp => sp.id_scene !== id_scene);
+
+  seleccionados.forEach(id_personaje => {
+    scenes_Personajes.push({
+      id_asociacion: scenes_Personajes.length + 1,
+      id_scene: id_scene,
+      id_personaje: id_personaje
+    });
+  });
+
+  
+
+  // ✨ Grabar en el servidor
+  fetch(`/api/scenes-personajes/${valor}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(scenes_Personajes)
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      alert("✅ Relaciones guardadas correctamente.");
+      closeModal();
+      abrirRelacionPersonajes(id_scene);
+      renderPage(currentPage);
+
+      
+
+    } else {
+      alert("❌ Error al guardar relaciones.");
+    }
+  })
+  .catch(error => {
+    console.error("❌ Error al guardar relaciones:", error);
+    alert("❌ Error al guardar relaciones.");
+  });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+async function guardarSceneEnServidor() {
+  const id = parseInt(document.getElementById("sceneId").value, 10);
+  const nombre = document.getElementById("sceneNombre").value.trim();
+  const texto = document.getElementById("sceneTexto").value.trim();
+
+  const imagenInput = document.getElementById("sceneImagenFile");
+  const banderaInput = document.getElementById("sceneBanderaFile");
+
+  const form = document.getElementById("formScene");
+  let imagenFinal = form.dataset.imagenActual || "";
+  let banderaFinal = form.dataset.banderaActual || "";
+
+  // Subimos imagen si seleccionó una nueva
+  if (imagenInput.files.length > 0) {
+    const formData = new FormData();
+    formData.append("imagen", imagenInput.files[0]);
+    formData.append("categoria", valor); // novela, comic, mansion...
+
+    const res = await fetch("/api/upload", { method: "POST", body: formData });
+    const data = await res.json();
+    if (data.success) {
+      imagenFinal = data.path;
+    }
+  }
+
+  // Subimos bandera si seleccionó una nueva
+  if (banderaInput.files.length > 0) {
+    const formData = new FormData();
+    formData.append("imagen", banderaInput.files[0]);
+    formData.append("categoria", valor);
+
+    const res = await fetch("/api/upload", { method: "POST", body: formData });
+    const data = await res.json();
+    if (data.success) {
+      banderaFinal = data.path;
+    }
+  }
+
+  if (!nombre || !imagenFinal) {
+    alert("❗ Nombre e Imagen son campos obligatorios.");
+    return;
+  }
+
+  const nuevaScene = {
+    id_scene: id === -1 ? Date.now() : id,
+    nombre: nombre,
+    imagen: imagenFinal,
+    Texto_descriptivo: texto,
+    imagen_url_pais: banderaFinal
+  };
+
+  fetch(`/api/scenes/${valor}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(nuevaScene)
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      alert("✅ Escena guardada correctamente.");
+      location.reload();
+    } else {
+      alert("❌ Error al guardar la escena.");
+    }
+  })
+  .catch(error => {
+    console.error("❌ Error al guardar escena:", error);
+    alert("❌ Error al guardar escena.");
+  });
+}
+
+
+function borrarSceneEnServidor(id_scene) {
+  if (!confirm("⚠️ ¿Seguro que quieres borrar esta escena?")) return;
+
+  fetch(`/api/scenes/${valor}/${id_scene}`, {
+    method: "DELETE"
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      alert("✅ Escena eliminada correctamente.");
+      location.reload(); // Refrescamos para ver los cambios
+    } else {
+      alert("❌ Error al eliminar la escena.");
+    }
+  })
+  .catch(error => {
+    console.error("❌ Error al eliminar escena:", error);
+    alert("❌ Error al eliminar escena.");
+  });
+}
+
+
+
+
+  </script>
+  
+  
+  
+</body>
+</html>

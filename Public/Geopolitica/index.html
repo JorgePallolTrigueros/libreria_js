@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Articulillos</title>
+<script src="/assets/tailwind.js"></script>
+<link href="/assets/fonts.css" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Orbitron', sans-serif;
+    background-color: #0f172a;
+    color: white;
+  }
+
+  #contenedor-tarjetas img {
+    background-color: white;
+  }
+
+.line-clamp-5 {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+  /* === Ajustes solicitados === */
+
+  /* === Ajustes solicitados === */
+
+  /* 1️⃣ Ocultar columna ID y NOMBRE en la tabla de Países */
+  #tabla-paises th:nth-child(1),
+  #tabla-paises td:nth-child(1),
+  #tabla-paises th:nth-child(2),
+  #tabla-paises td:nth-child(2) {
+    display: none;
+  }
+
+  /* 2️⃣ Ocultar columna ID en la tabla de Noticias */
+  #tabla-noticias th:nth-child(1),
+  #tabla-noticias td:nth-child(1) {
+    display: none;
+  }
+
+  /* 3️⃣ Eliminar fondo blanco en cabecera */
+  table thead {
+    background-color: transparent !important;
+    color: #ffd700; /* opcional: color de texto dorado */
+    border-bottom: 2px solid #4b0082; /* línea decorativa */
+  }
+
+  /* 4️⃣ Aumentar ancho de columnas */
+  #tabla-paises th,
+  #tabla-noticias th,
+  #tabla-paises td,
+  #tabla-noticias td {
+    padding: 0.75rem 1rem;
+    min-width: 160px; /* ajusta si lo quieres más ancho */
+  }
+
+  /* 5️⃣ Opcional: contraste visual en filas */
+  #tabla-paises tbody tr:nth-child(even),
+  #tabla-noticias tbody tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  #tabla-paises tbody tr:hover,
+  #tabla-noticias tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+/* Acciones en columna (ambas tablas) */
+.act-col {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+  align-items: flex-end; /* o flex-start si prefieres a la izquierda */
+}
+
+
+
+/* Quitar el min-width global solo en la tabla de paises */
+#tabla-paises th, 
+#tabla-paises td {
+  min-width: 0; /* anula los 160px globales para esta tabla */
+}
+
+/* Columna 3 = Imagen (estrecha) */
+#tabla-paises th:nth-child(3),
+#tabla-paises td:nth-child(3) {
+  width: 72px;
+  min-width: 72px;
+  padding-right: .25rem; /* menos aire a la derecha */
+}
+
+/* Columna 4 = Acciones (muy estrecha) */
+#tabla-paises th:nth-child(4),
+#tabla-paises td:nth-child(4) {
+  width: 56px;
+  min-width: 56px;
+  padding-left: .25rem; /* acerca a la imagen */
+}
+
+/* Botones de acción más compactos (opcional) */
+#tabla-paises td:nth-child(4) .btn {
+  font-size: 12px;
+  line-height: 1;
+  padding: 4px 6px;
+}
+
+/* Acciones en columna, pegadas */
+.act-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-end; /* o flex-start si te gusta más */
+}
+</style>
+</head>
+<body class="min-h-screen p-6">
+
+
+
+
+
+
+
+
+  <!-- Navbar -->
+  <nav class="bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 text-center text-sm md:text-base font-semibold uppercase tracking-wider">
+    <a href="/../e.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+  </nav>
+
+  <!-- Encabezado -->
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div class="relative flex items-center justify-between">
+      <div class="absolute -left-4 md:-left-10 z-20">
+  <video autoplay muted loop
+         class="w-40 h-40 md:w-52 md:h-52 object-cover rounded-full border-4 border-yellow-400 shadow-2xl">
+    <source src="/ruta/articulillos.mp4" type="video/mp4">
+  </video>
+      </div>
+      <div class="w-full bg-purple-800 h-28 md:h-32 rounded-xl flex items-center pl-48 pr-6 z-10 shadow-lg">
+        <h2 class="text-2xl md:text-4xl text-yellow-400 font-bold ml-auto">Geopolitica</h2>
+      </div>
+    </div>
+
+
+
+<body class="min-h-screen bg-slate-50 text-slate-900">
+  <header class="sticky top-0 z-10 border-b shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <h1 class="text-2xl font-bold">🌍 Geopolítica – Países & Noticias</h1>
+      <div class="text-xs text-slate-500">API: <code>/api/paises</code> · <code>/api/noticias</code> · <code>/api/upload/pais</code></div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Países -->
+    <section class="lg:col-span-1 rounded-xl shadow p-4 border">
+      <h2 class="text-xl font-semibold mb-3">Países</h2>
+      <form id="form-pais" class="space-y-2 mb-4">
+        <input id="pais-nombre" class="input" placeholder="p.ej. España" required />
+        <label class="block text-sm mt-2">Bandera / imagen (opcional)</label>
+        <input id="pais-file" type="file" accept="image/*" class="block text-sm" />
+        <div class="flex gap-2 mt-2">
+          <button class="btn btn-primary" type="submit">➕ Crear país</button>
+          <button class="btn btn-ghost" type="button" id="btn-refrescar-paises">↻ Refrescar</button>
+        </div>
+      </form>
+
+      <div class="overflow-auto max-h-[60vh] border rounded">
+        <table class="min-w-full text-sm" id="tabla-paises">
+          <thead class="bg-slate-100 sticky top-0">
+            <tr>
+              <th class="text-left p-2 w-16">ID</th>
+              <th class="text-left p-2">Nombre</th>
+              <th class="text-left p-2 w-24">Imagen</th>
+              <th class="text-right p-2 w-48">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-paises"></tbody>
+        </table>
+      </div>
+
+      <div id="paginacion-paises" class="flex items-center justify-between mt-2 text-xs">
+  <div class="space-x-1">
+    <button id="paises-prev" class="btn btn-ghost">← Anterior</button>
+    <span id="paises-pageinfo" class="mx-2"></span>
+    <button id="paises-next" class="btn btn-ghost">Siguiente →</button>
+  </div>
+  <label class="flex items-center gap-2">
+    Por página
+    <select id="paises-pagesize" class="input h-8">
+      <option value="5">5</option>
+      <option value="10" selected>10</option>
+      <option value="20">20</option>
+    </select>
+  </label>
+</div>
+
+    </section>
+
+    <!-- Noticias -->
+    <section class="lg:col-span-2 rounded-xl shadow p-4 border">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
+        <h2 class="text-xl font-semibold">Noticias</h2>
+        <div class="flex flex-wrap gap-2 items-end">
+          <div>
+            <label class="block text-sm">Filtrar por país</label>
+            <select id="filtro-pais" class="input min-w-52"></select>
+          </div>
+          <button class="btn btn-ghost" id="btn-limpiar-filtro">✖ Limpiar filtro</button>
+        </div>
+      </div>
+
+      <form id="form-noticia" class="grid md:grid-cols-4 gap-3 my-4">
+        <div class="md:col-span-2">
+          <label class="block text-sm">Título de la noticia</label>
+          <input id="noticia-nombre" class="input" placeholder="p.ej. Cumbre regional..." required />
+        </div>
+        <div>
+          <label class="block text-sm">País</label>
+          <select id="noticia-pais" class="input" required></select>
+        </div>
+        <div class="flex items-center gap-2 mt-6 md:mt-0">
+          <input id="noticia-contenido" type="checkbox" class="h-4 w-4" />
+          <label for="noticia-contenido" class="text-sm">Contenido publicado</label>
+        </div>
+        <div class="md:col-span-4 flex gap-2">
+          <button class="btn btn-primary" type="submit">➕ Añadir</button>
+          <button class="btn btn-ghost" type="button" id="btn-refrescar-noticias">↻ Refrescar</button>
+        </div>
+      </form>
+
+      <div class="overflow-auto max-h-[60vh] border rounded">
+        <table class="min-w-full text-sm" id="tabla-noticias">
+          <thead class="bg-slate-100 sticky top-0">
+            <tr>
+              <th class="text-left p-2 w-16">ID</th>
+              <th class="text-left p-2">Título</th>
+              <th class="text-left p-2 w-48">País</th>
+              <th class="text-left p-2 w-28">Contenido</th>
+              <th class="text-right p-2 w-56">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-noticias"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Diálogo genérico -->
+  <dialog id="dlg-editar" class="rounded-xl p-0 w-[34rem]">
+    <form method="dialog" class="p-4 space-y-3">
+      <h3 class="text-lg font-semibold" id="dlg-titulo">Editar</h3>
+      <div id="dlg-campos" class="space-y-2"></div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button class="btn btn-ghost" value="cancel">Cancelar</button>
+        <button class="btn btn-primary" value="ok">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <template id="tpl-pais-row">
+    <tr>
+      <td class="p-2 align-top font-mono"></td>
+      <td class="p-2 align-top"></td>
+      <td class="p-2 align-top"></td>
+      <td class="p-2 align-top text-right space-x-1 whitespace-nowrap"></td>
+    </tr>
+  </template>
+
+  <template id="tpl-noti-row">
+    <tr>
+      <td class="p-2 align-top font-mono"></td>
+      <td class="p-2 align-top"></td>
+      <td class="p-2 align-top"></td>
+      <td class="p-2 align-top"></td>
+      <td class="p-2 align-top text-right space-x-1 whitespace-nowrap"></td>
+    </tr>
+  </template>
+
+  <script>
+    const $ = (sel, el=document) => el.querySelector(sel);
+    const $$ = (sel, el=document) => Array.from(el.querySelectorAll(sel));
+
+    // === Helpers ===
+    async function fetchJSON(url, opts={}) {
+      const res = await fetch(url, { headers: { 'Content-Type': 'application/json' }, ...opts });
+      if (!res.ok) {
+        const txt = await res.text().catch(()=> "");
+        throw new Error(`${res.status} ${res.statusText}: ${txt}`);
+      }
+      const ct = res.headers.get('content-type') || '';
+      return ct.includes('application/json') ? res.json() : {};
+    }
+
+    async function subirImagenPais(file) {
+      const fd = new FormData();
+      fd.append('file', file);
+      const res = await fetch('/api/upload/pais', { method: 'POST', body: fd });
+      if (!res.ok) {
+        const txt = await res.text().catch(()=> "");
+        throw new Error(`${res.status} ${res.statusText}: ${txt}`);
+      }
+      const data = await res.json();
+      if (!data || !data.url) throw new Error('Respuesta de subida sin URL');
+      return data.url; // /Geopolitica/ima/xxx.png
+    }
+
+    // Estado
+    const state = { paises: [], noticias: [], filtroPais: null };
+
+    // === Carga ===
+    async function cargarPaises() {
+      state.paises = await fetchJSON('/api/paises');
+      renderPaises();
+      poblarSelectsPais();
+    }
+
+    async function cargarNoticias() {
+      if (state.filtroPais) {
+        state.noticias = await fetchJSON(`/api/noticias/by-pais/${state.filtroPais}`);
+      } else {
+        state.noticias = await fetchJSON('/api/noticias');
+      }
+      renderNoticias();
+    }
+
+    function poblarSelectsPais() {
+      const selFiltro = $('#filtro-pais');
+      const selNoti = $('#noticia-pais');
+      selFiltro.innerHTML = '';
+      selNoti.innerHTML = '';
+
+      const optAll = document.createElement('option');
+      optAll.value = '';
+      optAll.textContent = '— Todos —';
+      selFiltro.appendChild(optAll);
+
+      for (const p of state.paises) {
+        const o1 = document.createElement('option');
+        o1.value = p.id;
+        o1.textContent = `${p.id} · ${p.nombre}`;
+        selFiltro.appendChild(o1);
+
+        const o2 = document.createElement('option');
+        o2.value = p.id;
+        o2.textContent = `${p.id} · ${p.nombre}`;
+        selNoti.appendChild(o2);
+      }
+
+      if (state.filtroPais) selFiltro.value = String(state.filtroPais);
+    }
+
+    // === Render ===
+    function renderPaises() {
+      const tbody = $('#tbody-paises');
+      tbody.innerHTML = '';
+      const tpl = $('#tpl-pais-row');
+
+      for (const p of state.paises) {
+        const row = tpl.content.cloneNode(true);
+        const tds = $$('td', row);
+        tds[0].textContent = p.id;
+        tds[1].textContent = p.nombre || '';
+
+        const imgBox = document.createElement('div');
+        imgBox.className = 'w-16 h-16 bg-slate-100 border rounded flex items-center justify-center overflow-hidden';
+        if (p.imagen) {
+          const im = document.createElement('img');
+          im.src = p.imagen;
+          im.alt = p.nombre || 'pais';
+          im.className = 'object-cover w-full h-full';
+          imgBox.appendChild(im);
+        } else {
+          imgBox.innerHTML = '<span class="text-xs text-slate-400">—</span>';
+        }
+        tds[2].appendChild(imgBox);
+
+const actions = tds[3];
+actions.style.display = "flex";
+actions.style.flexDirection = "column";
+actions.style.alignItems = "flex-end"; // o "flex-start" si los prefieres alineados a la izquierda
+actions.style.gap = "4px"; // separación vertical entre botones
+
+const btnEdit = btn('✏️', 'btn-ghost', () => editarPais(p));
+const btnDel  = btn('🗑️ ', 'btn-danger', () => borrarPais(p));
+const btnVer  = btn('📰 ', 'btn-secondary', () => {
+  state.filtroPais = p.id; $('#filtro-pais').value = String(p.id); cargarNoticias();
+});
+actions.append(btnVer, btnEdit, btnDel);        
+
+        tbody.appendChild(row);
+      }
+    }
+
+    function renderNoticias() {
+      const tbody = $('#tbody-noticias');
+      tbody.innerHTML = '';
+      const tpl = $('#tpl-noti-row');
+
+      const paisPorId = new Map(state.paises.map(p => [p.id, p]));
+
+      for (const n of state.noticias) {
+        const row = tpl.content.cloneNode(true);
+        const tds = $$('td', row);
+        tds[0].textContent = n.id;
+        tds[1].textContent = n.nombre || '';
+        const pais = paisPorId.get(Number(n.id_Pais));
+        tds[2].textContent = pais ? `${pais.id} · ${pais.nombre}` : `(${n.id_Pais})`;
+
+        const chip = document.createElement('button');
+        chip.className = `tag ${n.Contenido === '1' ? 'border-green-500 text-green-700' : 'border-slate-300 text-slate-600'}`;
+        chip.textContent = n.Contenido === '1' ? 'Sí' : 'No';
+        chip.title = 'Cambiar estado';
+        chip.addEventListener('click', async () => {
+          try {
+            await fetchJSON(`/api/noticias/${n.id}/toggle`, { method: 'POST' });
+            await cargarNoticias();
+          } catch (e) { alert('Error al alternar Contenido: ' + e.message); }
+        });
+        tds[3].appendChild(chip);
+
+        const actions = tds[4];
+        const btnEdit = btn('✏️ Editar', 'btn-ghost', () => editarNoticia(n));
+        const btnDel  = btn('🗑️ Borrar', 'btn-danger', () => borrarNoticia(n));
+        actions.append(btnEdit, btnDel);
+
+        tbody.appendChild(row);
+      }
+    }
+
+    // === CRUD Países ===
+    async function crearPais(nombre, imagenUrl) {
+      const body = { nombre: nombre.trim() };
+      if (imagenUrl) body.imagen = imagenUrl;
+      return fetchJSON('/api/paises', { method: 'POST', body: JSON.stringify(body) });
+    }
+
+   async function editarPais(pais) {
+  const dlg = $('#dlg-editar');
+  $('#dlg-titulo').textContent = `Editar país #${pais.id}`;
+  const campos = $('#dlg-campos');
+  campos.innerHTML = '';
+
+  // Nombre
+  const inpNombre = document.createElement('input');
+  inpNombre.className = 'input w-full';
+  inpNombre.value = pais.nombre || '';
+
+  // Imagen actual
+  const preview = document.createElement('div');
+  preview.className = 'w-20 h-20 mt-2 border rounded overflow-hidden flex items-center justify-center bg-slate-100';
+  if (pais.imagen) {
+    const img = document.createElement('img');
+    img.src = pais.imagen;
+    img.className = 'object-cover w-full h-full';
+    preview.appendChild(img);
+  } else {
+    preview.innerHTML = '<span class="text-xs text-slate-400">— sin imagen —</span>';
+  }
+
+  // Nuevo archivo
+  const inpFile = document.createElement('input');
+  inpFile.type = 'file';
+  inpFile.accept = 'image/*';
+  inpFile.className = 'block text-sm mt-1';
+
+  // Previsualizar nueva imagen
+  inpFile.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        preview.innerHTML = '';
+        const img = document.createElement('img');
+        img.src = ev.target.result;
+        img.className = 'object-cover w-full h-full';
+        preview.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  campos.appendChild(labelWrap('Nombre', inpNombre));
+  campos.appendChild(labelWrap('Imagen actual / nueva', preview));
+  campos.appendChild(inpFile);
+
+  dlg.returnValue = '';
+  dlg.showModal();
+  const done = await waitDialog(dlg);
+  if (done !== 'ok') return;
+
+  const nombre = inpNombre.value.trim();
+  if (!nombre) return alert('El nombre es obligatorio.');
+
+  try {
+    let imagenUrl = pais.imagen || '';
+    const file = inpFile.files[0];
+    if (file) {
+      // Subir nueva imagen si se seleccionó
+      imagenUrl = await subirImagenPais(file);
+    }
+
+    const body = { nombre };
+    if (imagenUrl) body.imagen = imagenUrl;
+
+    await fetchJSON(`/api/paises/${pais.id}`, {
+      method: 'PUT',
+      body: JSON.stringify(body),
+    });
+    await cargarPaises();
+    await cargarNoticias();
+  } catch (e) {
+    alert('Error al editar país: ' + e.message);
+  }
+}
+
+    async function borrarPais(pais) {
+      if (!confirm(`¿Borrar país #${pais.id} «${pais.nombre}»?\nSe eliminarán también sus noticias.`)) return;
+      try {
+        await fetchJSON(`/api/paises/${pais.id}`, { method: 'DELETE' });
+        if (state.filtroPais === pais.id) state.filtroPais = null;
+        await cargarPaises();
+        await cargarNoticias();
+      } catch (e) { alert('Error al borrar país: ' + e.message); }
+    }
+
+    // === CRUD Noticias ===
+    async function crearNoticia(nombre, id_Pais, Contenido) {
+      const body = { nombre: nombre.trim(), id_Pais: Number(id_Pais), Contenido: Contenido ? '1' : '0' };
+      return fetchJSON('/api/noticias', { method: 'POST', body: JSON.stringify(body) });
+    }
+
+    async function editarNoticia(n) {
+      const dlg = $('#dlg-editar');
+      $('#dlg-titulo').textContent = `Editar noticia #${n.id}`;
+      const campos = $('#dlg-campos');
+      campos.innerHTML = '';
+
+      const inpNombre = document.createElement('input');
+      inpNombre.className = 'input';
+      inpNombre.value = n.nombre || '';
+
+      const selPais = document.createElement('select');
+      selPais.className = 'input';
+      for (const p of state.paises) {
+        const opt = document.createElement('option');
+        opt.value = p.id;
+        opt.textContent = `${p.id} · ${p.nombre}`;
+        selPais.appendChild(opt);
+      }
+      selPais.value = String(n.id_Pais);
+
+      const chkContenido = document.createElement('input');
+      chkContenido.type = 'checkbox';
+      chkContenido.className = 'h-4 w-4';
+      chkContenido.checked = String(n.Contenido) === '1';
+
+      campos.appendChild(labelWrap('Título', inpNombre));
+      campos.appendChild(labelWrap('País', selPais));
+      campos.appendChild(labelWrap('Contenido publicado', chkContenido));
+
+      dlg.returnValue = '';
+      dlg.showModal();
+      const done = await waitDialog(dlg);
+      if (done !== 'ok') return;
+
+      const body = {
+        nombre: inpNombre.value.trim(),
+        id_Pais: Number(selPais.value),
+        Contenido: chkContenido.checked ? '1' : '0'
+      };
+      if (!body.nombre) return alert('El título es obligatorio.');
+
+      try {
+        await fetchJSON(`/api/noticias/${n.id}`, { method: 'PUT', body: JSON.stringify(body) });
+        await cargarNoticias();
+      } catch (e) { alert('Error al editar noticia: ' + e.message); }
+    }
+
+    async function borrarNoticia(n) {
+      if (!confirm(`¿Borrar noticia #${n.id} «${n.nombre}»?`)) return;
+      try {
+        await fetchJSON(`/api/noticias/${n.id}`, { method: 'DELETE' });
+        await cargarNoticias();
+      } catch (e) { alert('Error al borrar noticia: ' + e.message); }
+    }
+
+    // === UI helpers ===
+    function btn(text, cls, onClick) {
+      const b = document.createElement('button');
+      b.className = `btn ${cls}`;
+      b.textContent = text;
+      b.addEventListener('click', onClick);
+      return b;
+    }
+    function labelWrap(label, el) {
+      const w = document.createElement('label');
+      w.className = 'block text-sm';
+      w.textContent = label;
+      const wrap = document.createElement('div');
+      wrap.className = 'mt-1';
+      wrap.appendChild(el);
+      const box = document.createElement('div');
+      box.appendChild(w);
+      box.appendChild(wrap);
+      return box;
+    }
+    function waitDialog(dlg) {
+      return new Promise(resolve => {
+        const onClose = () => { dlg.removeEventListener('close', onClose); resolve(dlg.returnValue); };
+        dlg.addEventListener('close', onClose);
+      });
+    }
+
+    // === Eventos ===
+    // Crear país: si hay archivo, primero subirlo, luego crear con la URL
+    $('#form-pais').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const nombre = $('#pais-nombre').value;
+      const file = $('#pais-file').files[0];
+      if (!nombre.trim()) return;
+      try {
+        let imagenUrl = '';
+        if (file) imagenUrl = await subirImagenPais(file);
+        await crearPais(nombre, imagenUrl);
+        $('#pais-nombre').value = '';
+        const f = $('#pais-file'); if (f) f.value = '';
+        await cargarPaises();
+      } catch (err) { alert('Error al crear país: ' + err.message); }
+    });
+
+    $('#btn-refrescar-paises').addEventListener('click', () => cargarPaises());
+
+    $('#form-noticia').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const nombre = $('#noticia-nombre').value;
+      const idPais = $('#noticia-pais').value;
+      const publicado = $('#noticia-contenido').checked;
+      if (!nombre.trim() || !idPais) return;
+      try {
+        await crearNoticia(nombre, idPais, publicado);
+        $('#noticia-nombre').value = '';
+        $('#noticia-contenido').checked = false;
+        await cargarNoticias();
+      } catch (err) { alert('Error al crear noticia: ' + err.message); }
+    });
+
+    $('#btn-refrescar-noticias').addEventListener('click', () => cargarNoticias());
+
+    $('#filtro-pais').addEventListener('change', async (e) => {
+      const val = e.target.value;
+      state.filtroPais = val ? Number(val) : null;
+      await cargarNoticias();
+    });
+
+    $('#btn-limpiar-filtro').addEventListener('click', async () => {
+      state.filtroPais = null; $('#filtro-pais').value = ''; await cargarNoticias();
+    });
+
+    // === Init ===
+    (async function init() {
+      try {
+        await cargarPaises();
+        await cargarNoticias();
+      } catch (e) {
+        console.error(e);
+        alert('No se pudo conectar con el backend. Verifica que el servidor esté encendido.');
+      }
+    })();
+
+
+
+    // En renderPaises() después de:  const actions = tds[3];
+actions.classList.add('act-col');
+
+// En renderNoticias() después de: const actions = tds[4];
+actions.classList.add('act-col');
+
+
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lista de Animes</title>
+  <script src="/assets/tailwind.js"></script>
+  <link href="/assets/fonts.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0f172a;
+      color: white;
+    }
+    .fade-page { opacity: 0; transition: opacity 0.5s ease; }
+    body.loaded .fade-page { opacity: 1; }
+
+    /* Animación modal */
+    @keyframes zoomIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .modal-animado {
+      animation: zoomIn 0.3s ease-out;
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+
+
+
+
+
+  <nav class="bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 text-center text-sm md:text-base font-semibold uppercase tracking-wider">
+    <a href="/../e.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+  </nav>
+
+  <!-- Encabezado -->
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div class="relative flex items-center justify-between">
+      <div class="absolute -left-4 md:-left-10 z-20">
+  <video autoplay muted loop
+         class="w-40 h-40 md:w-52 md:h-52 object-cover rounded-full border-4 border-yellow-400 shadow-2xl">
+    <source src="/ruta/pose-manga.mp4" type="video/mp4">
+  </video>
+      </div>
+      <div class="w-full bg-purple-800 h-28 md:h-32 rounded-xl flex items-center pl-48 pr-6 z-10 shadow-lg">
+        <h2 class="text-2xl md:text-4xl text-yellow-400 font-bold ml-auto">Obras</h2>
+      </div>
+    </div>
+
+<a href="mangas_index.html">Registros </a> | <a href="codigo_manga.html"> Webscraping</a>
+
+
+<section id="comandos">
+    <h3 class="text-yellow-400 text-2xl md:text-3xl font-bold border-b border-yellow-400 pb-2 mb-6">📋 Comandos Webscraping</h3>
+  
+    <div class="bg-gray-800 p-4 rounded-xl relative shadow-lg">
+      <pre id="codigo-iclone" class="whitespace-pre-wrap text-green-300 text-sm md:text-base font-mono">
+manga=['Black paradox', 'Blue Spring - Tomo Único', 'Dark', 'Deatte 5 Byou de Battle - 1-15 - Absorbiendo Mangas', 'El jurado 13 - Milky y Nakatsuka '];
+import numpy as np
+import pandas as pd
+import requests
+from bs4 import BeautifulSoup
+from time import sleep
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+import time 
+import pymysql
+try:
+    connection = pymysql.connect(host='localhost',user='root',password='Kojinanjo1@',db='pelis')
+    print("Conectado correctamente")
+except pymysql.Error as e:
+    print("No puede conectar con MySQL %d: %s" %(e.args[0], e.args[1]))
+
+cursor = connection.cursor()
+
+print("CONTINUE")
+
+df = pd.DataFrame()
+
+Nombres = list()
+Imagen = list()
+Autors = list()
+descripciones = list()
+cronologias = list()
+generos = list()
+
+
+
+
+url = "https://es.ninemanga.com/"
+response = requests.get(url)
+soup = BeautifulSoup(response.text, "html.parser")
+#driver = webdriver.Chrome(executable_path=r"C:\chromedriver.exe")
+s = Service('C:/chromedriver.exe')
+driver = webdriver.Chrome(service=s)
+driver.get(url)
+ 
+    # cosas PARA RELLENAR
+    
+nombrelista = list()
+imagenlista = list()
+descripcionlista = list()
+autorlista = list()
+
+comicsPrueba = list()
+       
+       
+#comicsPrueba.append('Saint seiya - Poseidon')
+#comicsPrueba.append('Saint Seiya')
+#comicsPrueba.append('Saint Seiya - Next Repeticion')
+
+comicsPrueba =["00dfghjfdgjfdgjfd-V", "Brother X Brother"];
+los_rechazados = list()
+
+
+for comic in comicsPrueba:
+    element = driver.find_element(By.ID, "lookupwords")
+    element.clear()
+    
+    print(comic)
+    element.send_keys(comic)
+    element.send_keys(Keys.ENTER)
+    time.sleep(5)
+    
+    #obtain window handle of browser in focus
+    # p = driver.current_window_handle
+    #obtain parent window handle
+    parent = driver.window_handles[0]
+    #obtain browser tab window
+    chld = driver.window_handles[1]
+    #switch to browser tab
+    driver.switch_to.window(chld)
+
+    url_actual = driver.current_url
+    print("URL actual:", url_actual)
+    
+    try:
+        parentElement = driver.find_element(By.CLASS_NAME, "direlist")
+        print("SI se ha encontrado direlist")
+    except:
+        print("NO se ha encontrado direlist") 
+    
+    enlaces = parentElement.find_elements(By.CLASS_NAME, "bookname")
+    enlaceFinal = None
+    for enlace in enlaces:
+        valorHtml = enlace.get_attribute('innerHTML')
+        if (valorHtml.lower() == comic.lower()):
+            enlaceFinal = enlace
+        
+    if enlaceFinal is None:
+        # Se pone en la lista de rechazados
+        print("No ha encontrado enlace final... RECHAZADO")
+        los_rechazados.append(comic)
+        print("volvemos a la pagina principal y buscamos el siguiente...")
+        driver.close()
+        driver.switch_to.window(driver.window_handles[0])
+        
+    else:
+
+        print("Enlace Final:")
+        print(enlaceFinal)
+
+        enlaceFinal.click()
+        time.sleep(5)
+
+
+        mangaContenedor = driver.find_element(By.CLASS_NAME,"bookintro")
+        imagen = mangaContenedor.find_element(By.TAG_NAME, "img")
+        foto = imagen.get_attribute("src")
+
+
+        mangaContenedor = driver.find_element(By.CLASS_NAME,"bookintro")
+
+        descripcion = ""
+        valorHtml_descripcion = ""
+        try:
+            descripcion = mangaContenedor.find_element(By.TAG_NAME, "p")
+            valorHtml_descripcion = descripcion.get_attribute('innerHTML')
+        except:
+              print("No se encuentra descripcion...")
+
+
+
+        ########################################
+
+        mangaContenedor = driver.find_element(By.CLASS_NAME,"bookintro")
+        enlas = mangaContenedor.find_elements(By.TAG_NAME, "a")
+        nombreAutor = ""
+        for enla in enlas:
+            try:
+                attrEnla = enla.get_attribute('itemprop')
+                if (attrEnla == 'author'):
+                    nombreAutor = enla.get_attribute('innerHTML')
+
+            except:
+                  print("En este enlace no hay atributo itemprop...")
+        
+        nombrelista.append(comic)
+        imagenlista.append(foto)
+        descripcionlista.append(valorHtml_descripcion)
+        autorlista.append(nombreAutor)
+        
+        print("volvemos a la pagina principal y buscamos el siguiente...")
+        driver.close()
+        driver.switch_to.window(driver.window_handles[0])
+        #driver.get(url)
+        time.sleep(5)
+
+                
+
+print("Longitud de nombrelista:", len(nombrelista))
+print("Longitud de imagenlista:", len(imagenlista))
+print("Longitud de descripcionlista:", len(descripcionlista))
+print("Longitud de autorlista:", len(autorlista))
+
+
+df["nombre"] = nombrelista
+df["imagen"] = imagenlista
+df["descripcion"] = descripcionlista
+df["autor"] = autorlista
+    
+sql = """INSERT INTO `pelis`.`manga` (`nombre`,`imagen`,`descripcion`,`autor`) VALUES (%s, %s, %s, %s)"""
+
+for ind in df.index:
+    cursor.execute(sql, (df['nombre'][ind], df['imagen'][ind], df['descripcion'][ind], df['autor'][ind] ))
+
+connection.commit() 
+    
+
+print("FIn del bucle")
+df.head(2)
+
+
+##########################################
+#Los rechazafos
+      </pre>
+  
+
+  
+      <button onclick="copiarCodigo()" class="absolute top-2 right-2 bg-yellow-400 text-black font-bold px-3 py-1 rounded hover:bg-yellow-500 transition">
+        Copiar
+      </button>
+    </div>
+  </section>
+  ✅ 2. Añade este script justo antes de </body>:
+  html
+  Copiar
+  Editar
+  <script>
+    function copiarCodigo() {
+      const codigo = document.getElementById("codigo-iclone").innerText;
+      navigator.clipboard.writeText(codigo)
+        .then(() => {
+          alert("¡Comando copiado al portapapeles!");
+        })
+        .catch(err => {
+          console.error("Error al copiar", err);
+          alert("Error al copiar el texto");
+        });
+    }
+  </script>
+
+<div class="max-w-7xl mx-auto px-6 mt-8">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Lista 1 -->
+    <div class="bg-gray-800 rounded-xl p-4 shadow">
+      <h4 class="text-yellow-400 text-xl font-bold mb-3">Castellano</h4>
+      <pre class="whitespace-pre-wrap leading-6">
+
+
+
+002 [FW] KnK-V
+Brother X Brother
+Chocolate Strawberry Vanilla
+Continuaciones
+hanger
+Hitomi No Dokusenyoku
+Im at the End of Your Sight
+julia ga kubittake
+Sora to Hana
+Sotsugyosei
+Taiyou no Kikoushi
+To Take An Enemy's Heart
+Toshishita no Ryuugi
+Totally Captivated Artbook
+Turning Point (yaoi)
+Yarichin ? Bitch Club
+ze
+[KNF&YD]1-M387L
+
+
+Saint Seiya
+Saint Seiya - Next Repeticion
+Saint seiya - Poseidon
+Saint Seiya - Saintia Shou
+Saint Seiya - The Lost Canvas - Meiou Shinwa Gaiden
+Saint Seiya Ares Chapter
+Saint Seiya Cruzada Guerra Santa
+Saint Seiya Destiny
+Saint Seiya Edici¢n Kazenban
+Saint Seiya Episode G
+Saint Seiya Hades
+Saint Seiya Mei“ Iden Dark Wing
+Saint Seiya Next Dimension
+Saint Seiya Origin
+Saint Seiya Rerise of Poseidon
+Saint Seiya The Lost Canvas
+Saint-Seiya-Episode-ZERO 1
+
+
+1 2 3
+20th Century Boys
+21st Century Boys
+7 Seeds
+7000 millones de Aguja
+A-Bout!
+A-I_Revolution
+Aa Harimanada
+ADONIS
+AISHA
+Akame ga KILL! Zero
+Alice in Borderland
+ALL OUT
+Ame no hi mo Kamisama to Sumoo
+Ano ko no kodomo
+Ao ashi
+Ao ni Naku
+Arai-kun and Haruma-senpai
+Arte
+Asa Dora!
+Asadora!
+Ashita no Joe
+ayakasy
+Bach Bachi Burst
+Bachi -Bachi
+Bajo Un Cielo Como Unos Pantis
+Bakemonogatari
+Baki Gaiden - Retsu Kaioh Isekai Tensei Shitemo Ikko Kamawan!
+BAKI GAIDEN - YUUENCHI
+Baki Gaiden Kizuzura
+Baki Gaiden Scarface
+Banana Fish
+Baraou no Souretsu
+Barbarities
+Beast Complex
+Beastars
+BEGIN
+Between Fate and Fortune
+Billion Dogs
+Billy Bat
+BJ Alex
+BJ ALEX T2
+Blinded by a Tiger
+Blood Blade
+Blue Heaven
+Blue Period
+Blue Sky Complex (Espa¤ol)
+Blue! Blue! Blue!
+Bouncer
+Boy's Abyss
+BRONZE
+Btooom!
+Btooom! U-18
+Candy Candy MANGA A COLOR
+canes
+Canis -THE SPEAKER-
+Captain Tsubasa
+Captain Tsubasa -Road to 2002-
+Captain Tsubasa Golden 23
+Captain Tsubasa Kaigai Gekito Hen en La Liga
+Captain Tsubasa Kaigai Gekitou hen in Calcio
+Captain Tsubasa Rising Sun
+Captain Tsubasa World Youth Hen
+Castle
+Chi - Chikyuu no Undou ni Tsuite
+Chi no Wadachi
+Chiisakobee
+Clover
+CLOVER (TETSUHIRO HIRAKAWA)
+Coyote
+Creyentes Fraudulentos
+Crimson Spell
+Crows
+Crows Respect
+D-Frag
+Dancing Policeman
+Dangerous Convenience Store
+Darwin's Game
+Deadlock
+Detective conan
+Detective Ritual
+Doberman Keiji
+Don't Touch me
+Dorei Yuugi
+Dosu Koi Jigoro
+Dungeon Meshi
+Eden
+Eden It's an Endless World!
+Eisen no lovelock
+El Conde de Montecristo
+El Extra es Demasiado Fuerte
+El husky y su maestro el gato blanco
+El Juguete del Gran Duque
+Emanon.Recuerdos
+Escape Journey
+Eternal Deity
+Failure
+Fangs
+Fight Club
+Freak Island
+Full Drum
+Funouhan
+Furitsumore Kodoku na Shi yo
+Futari no Lion
+G-Defend
+Gantz
+Gantz EXA
+GANTZ FULL COLOR
+Gantz G
+Gantz Minus
+GantzE
+Garou Densetsu Maougai
+Giant Killing
+Gifuu Doudou Gatari
+GIVEN
+Glamorous Killers
+Golden Kamui
+goodbye destini
+Goodbye to Destiny
+GunSmith Cats
+Gunsmith Cats Burst
+Hadakeru Kaibutsu
+happi
+Happy!
+Happy! I Scream
+Haru wo Daiteita ALIVE
+Harukoi Sakura
+Hatsukoi Body
+Hidamari ga Kikoeru
+Hikaru ga Shinda Natsu
+hinitai to itte kudasai hokenjo
+Hinomaru Zumou
+Hitorijime My Hero
+Hokuto no Ken Gaiden Tensai
+Hokuto no Ken Gaiden Tensai v01
+Hoshi wo Kazoeru Koto
+Houtou Ouji to Toraware no Kemono
+Humillando al jade y escogiendo a la perla
+Hyouryuu Net Caf‚
+Idol Shopping
+Ikigami
+IN THESE WORDS
+Intentando superar las olas
+Isekai chanko Yokozuna mokuzen
+Jitenshaya-san No Takahashi-kun
+Juujika no Rokunin
+Kaiju no Kodomo
+kakegurui
+Kakegurui Compulsive Gambler
+Kakegurui Twin
+Kamisama to Kawataredoki
+Kamonohashi Ron No Kindan Suiri
+Karadasagashi
+Karakuri Circus
+Kaze Gifuu Kanbee
+Kenka Kagyou
+Kieta Hatsukoi
+KILLING STALKING
+Kimi ni wa Todokanai
+Kimitachi wa Dou Ikiru ka
+King Of Gold
+King Of Hell
+Kishukusha no Kuroneko wa Yoru wo Shiranai
+Koi Ni Mo Naranai
+Kokou no Hito
+Kono Koi wa Himitsu
+Kuroshitsuji
+Kyougoku ka no Kekkon
+La Bendici¢n del Oficial del Cielo
+LA GUERRA NO TIENE ROSTRO DE MUJER
+La m£sica de Marie
+La novia del dios del agua
+La redenci¢n del Conde Nottingham
+Levius
+Liar Game
+Liar Game Roots Of A
+Links
+living dead
+Longtime Red Mall
+Los gatos dominan el mundo
+Love Nest
+Love Nest 2nd
+Love Supremacy Zone
+Low Tide in Twilight
+lucifer no migite
+Lupin III
+MADK
+mang
+MANWHA DANGEROUS CONVENIENCE STORE
+Mars
+Mask danshi wa Koishitakunai no ni
+Master Keaton
+Masters of the Universe
+Mecanismo de defensa
+Midnight Rain
+Midnight Rain Ctk
+Minato Shouji Coin Laundry
+Miraculous Tales of Ladybug
+Miserarete
+Momotarou
+Monotoneúblue
+Monster
+Moriarty El Patriota
+Mother's Spirit
+Muteki no Hito
+N-A-S-A
+Nana
+Neko ga Nishi Mukya
+Never Let Go
+Nine Peaks
+Noragami
+Noragami Stray God
+Nosaidokuesuto v01
+Notari Matsutarou
+Okaeri Alice
+On Doorstep
+On Ward
+Ookami wo Katte imasu
+Ore Monogatari
+Ore Monogatari!!
+Origin
+Osu Karatebu
+Otokozaka Tankoubon
+OTOUTO NO OTTO
+Otouto_no_Otto
+Otoyomegatari
+Pandora Hearts
+Paradise Kiss
+Psycho Revenge
+Psycho-Pass 2
+Psycho-Pass 3 First Inspector
+Psycho-Pass Sinners Of The System Caso 1
+Psychometrer Eiji
+Pumpkin Night
+QUERIDA PUERTA
+Rakuen Made Chotto
+Rasputin El patriota
+REAL
+Record of Racknarot
+Record of Ragnarok
+record Ragnarok
+Reincarnation no Kaben
+ReLIFE
+ReMonster
+Requiem of the Rose King
+Rikiou
+Rokudenashi Blues
+Ron Kamonohashi
+S (Novela)
+Sabita Yoru Demo Koi Wa Sasayaku
+Saezuru Tori wa Habatakanai
+saint seiya
+Saint Seiya Meio Iden Dark Wind
+Saint Seiya Saintia Sho
+Sakamichi no Apollon
+Samejima Juugonichi
+Sanctuary
+Saturn Return
+Say Hello to Black Jack
+Scramblues
+Second Hand
+Secuestrando A La Novia
+Seinto seiya episodo ji rekuiemu
+Seven Days
+Shadows House
+Shadows House - Digital Colored Comics
+Shadows House Full Color
+Shikakui Jungle
+Shin ai naru Boku e Satsui wo komete
+Shin'ai naru Boku e Satsui wo komete
+Shirogane no Nina
+Shokuryou Jinrui
+Shonen no Abyss
+Shuumatsu no Valkyrie
+Shuumatsu no Valkyrie Los expedientes de Jack el Destripador
+Shuumatsu no Valkyrie The Jack the Ripper Case Files
+Shuumatsu no Valkyrie The Legend of Lu Bu Fengxian
+Silver Diamond
+Slam Dunk
+Smells Like Green Spirit
+solo leveling
+Sorairo_Flutter
+Soten Nokobushi Rijeneshisu
+sotsugyousei
+Souten no Ken
+SPY X FAMILY
+ss
+Street Fighter
+Suicide Island
+Suiiki
+Sumai Torashimu
+sun ken rock
+Sun-Ken Rock
+Super Danganronpa 2 - Komaeda Nagito no Kouun to Kibou to Zetsubou
+Sweet Pool
+taiga
+Taiga of Genesis
+Tengen Hero Wars
+the boy and the wolf
+The Constellation That Returned From Hell
+The Dangerous Convenience Store
+The Strongest Wizard Becomes a Guardsman
+The Summit
+Therapy Game Restart
+Thirst
+Tobaku Datenroku Kaiji
+Tobaku Datenroku Kaiji 24-oku Dasshutsu-hen
+Tobaku Datenroku Kaiji Kazuya-hen
+Tobaku Datenroku Kaiji One Poker-hen
+Tokyo Duel Kanjousen
+Tomodachi Game
+Tomodachi o Tsukurou
+Toriko
+Touch your world
+toukyou kettou kanjou-sen
+trace
+Trace Kasouken
+T‚ Negro Caliente
+Uncanny Charm
+Until Death Do Us Part
+Usagi no Mori
+Usogui
+Work Fight and Love
+xXxHOLiC
+xxxHOLiC Rei
+Yano Kun No Futsu
+YASHA
+Yawara!
+Yoake no Uta
+Yokodzunadensetsukisenosato
+Yomawari Sensei
+Yondaime Ooyamato Tatsuyuki
+Yotsuba to!
+youka nitta
+Yu-Gi-Oh
+Yukoku no Moriarty
+Yumenashi-sensei no Shinroshidou
+Yuuutsu na Asa
+Zanzou Slow Motion
+
+Black paradox
+Blue Spring
+Dark.Hearts
+Deatte 5 Byou de Battle
+El jurado 13
+Forget me not
+N-A-S-A
+Room Share
+Jiraishin_Diablo_v01-03e
+
+
+
+
+      </pre>
+    </div>
+  </div>
+</div>
+
+

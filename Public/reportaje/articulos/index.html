@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Partes de la Novela</title>
+  <script src="/assets/tailwind.js"></script>
+  <link href="/assets/fonts.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0f172a;
+      color: white;
+    }
+    .card-img {
+      object-fit: cover;
+    }
+
+    .fade-page {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  body.loaded .fade-page {
+    opacity: 1;
+  }
+
+  </style>
+</head>
+<body class="min-h-screen">
+  <!-- Navbar -->
+  <nav class="bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 text-center text-sm md:text-base font-semibold uppercase tracking-wider">
+    <a href="/../e.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+  </nav>
+
+  <!-- Encabezado -->
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div class="relative flex items-center justify-between">
+      <div class="absolute -left-4 md:-left-10 z-20">
+  <video autoplay muted loop
+         class="w-40 h-40 md:w-52 md:h-52 object-cover rounded-full border-4 border-yellow-400 shadow-2xl">
+    <source src="revistas.mp4" type="video/mp4">
+  </video>
+      </div>
+      <div class="w-full bg-purple-800 h-28 md:h-32 rounded-xl flex items-center pl-48 pr-6 z-10 shadow-lg">
+        <h2 class="text-2xl md:text-4xl text-yellow-400 font-bold ml-auto">Articulos</h2>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+  <section class="max-w-7xl mx-auto px-6 mt-6 mb-10">
+
+
+        <button id="login-btn" onclick="toggleLogin()" class="text-sm text-yellow-400 hover:text-white transition duration-300">
+      🔐 Iniciar sesión
+    </button>
+    <span id="estadoSesion" class="float-right text-yellow-400 font-semibold"></span>
+    <a href="index.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+
+    <button id="btnLogin" onclick="abrirLogin()" class="ml-4 px-3 py-1 bg-yellow-500 text-black font-bold rounded hover:bg-yellow-400">Iniciar sesión</button>
+    <button id="btnLogout" onclick="cerrarSesion()" class="ml-2 px-3 py-1 bg-gray-600 text-white font-bold rounded hover:bg-gray-500 hidden">Salir</button>
+
+
+
+
+
+
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
+      <div class="flex gap-4 w-full md:w-auto">
+        <input id="filtro-titulo" type="text" placeholder="Buscar por título"
+               class="px-4 py-2 w-full md:w-64 bg-gray-700 text-white rounded" />
+        <select id="filtro-etiqueta" class="px-4 py-2 w-full md:w-48 bg-gray-700 text-white rounded">
+          <option value="">Todas las etiquetas</option>
+          <!-- Agrega etiquetas aquí si quieres precargarlas -->
+          <option value="Filosofia">Filosofía</option>
+          <option value="No se">No sé</option>
+          <option value="Humano">Humano</option>
+          <option value="Universo">Universo</option>
+        </select>
+      </div>
+      <button id="btnInsertar" onclick="abrirModalInsertar()" class="bg-yellow-400 text-black px-4 py-2 rounded hover:bg-yellow-300 font-bold">
+        ➕ Añadir
+      </button>
+    </div>
+  
+    <!-- Tarjetas -->
+    <div id="contenedor-tarjetas" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+
+  </section>
+  <div id="paginacion" class="flex justify-center gap-2 mt-4 text-white"></div>
+
+
+  <!-- Modal de Edición -->
+  <div id="modalEditar" class="fixed inset-0 hidden bg-black bg-opacity-70 flex items-center justify-center z-50">
+    <div class="bg-gray-800 p-6 rounded-lg w-full max-w-lg">
+      <h2 class="text-xl font-bold text-yellow-400 mb-4">Editar Artículo</h2>
+      <input type="hidden" id="editar-id">
+      <label>Título</label>
+      <input type="text" id="editar-titulo" class="w-full mb-2 p-2 bg-gray-700 text-white rounded">
+      <label>Etiqueta</label>
+      <input type="text" id="editar-etiqueta" class="w-full mb-2 p-2 bg-gray-700 text-white rounded">
+      <label>Tipo</label>
+      <input type="text" id="editar-tipo" class="w-full mb-2 p-2 bg-gray-700 text-white rounded">
+      <label>URL de Imagen</label>
+      <input type="file" id="nuevo-imagen" class="w-full mb-2 p-2 bg-gray-700 text-white rounded">
+      <label>Texto</label>
+      <textarea id="editar-texto" class="w-full mb-2 p-2 bg-gray-700 text-white rounded"></textarea>
+      <label>Texto 2</label>
+      <textarea id="editar-texto2" class="w-full mb-2 p-2 bg-gray-700 text-white rounded"></textarea>
+      <div class="text-right">
+        <button onclick="cerrarModal()" class="bg-gray-500 hover:bg-gray-600 px-4 py-2 rounded mr-2">Cancelar</button>
+        <button onclick="guardarCambios()" class="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div id="modalLogin" class="fixed inset-0 hidden bg-black bg-opacity-70 flex items-center justify-center z-50">
+    <div class="bg-gray-800 p-6 rounded-lg w-full max-w-sm">
+      <h2 class="text-xl font-bold text-yellow-400 mb-4">Iniciar sesión</h2>
+      <input type="text" id="login-usuario" placeholder="Usuario" class="w-full mb-2 p-2 bg-gray-700 text-white rounded">
+      <input type="password" id="login-password" placeholder="Contraseña" class="w-full mb-4 p-2 bg-gray-700 text-white rounded">
+      <div class="text-right">
+        <button onclick="cerrarLogin()" class="bg-gray-500 px-3 py-1 rounded mr-2">Cancelar</button>
+        <button onclick="iniciarSesion()" class="bg-yellow-400 text-black font-bold px-3 py-1 rounded">Entrar</button>
+      </div>
+    </div>
+  </div>
+
+
+<!-- Modal de Inserción -->
+<div id="modalInsertar" class="fixed inset-0 hidden bg-black bg-opacity-70 flex items-center justify-center z-50">
+  <div class="bg-gray-800 p-6 rounded-lg w-full max-w-lg">
+    <h2 class="text-xl font-bold text-yellow-400 mb-4">Nuevo Artículo</h2>
+    <label>Título</label>
+    <input type="text" id="nuevo-titulo" class="w-full mb-2 p-2 bg-gray-700 text-white rounded">
+    <label>Etiqueta</label>
+    <input type="text" id="nuevo-etiqueta" class="w-full mb-2 p-2 bg-gray-700 text-white rounded">
+    <label>Tipo</label>
+    <input type="text" id="nuevo-tipo" class="w-full mb-2 p-2 bg-gray-700 text-white rounded">
+    <label>Texto</label>
+    <textarea id="nuevo-texto" class="w-full mb-2 p-2 bg-gray-700 text-white rounded"></textarea>
+    <label>Texto 2</label>
+    <textarea id="nuevo-texto2" class="w-full mb-2 p-2 bg-gray-700 text-white rounded"></textarea>
+    <label>URL de Imagen</label>
+    <input type="file" id="nuevo-imagen" class="w-full mb-2 p-2 bg-gray-700 text-white rounded">
+    <div class="text-right">
+      <button onclick="cerrarModalInsertar()" class="bg-gray-500 hover:bg-gray-600 px-4 py-2 rounded mr-2">Cancelar</button>
+      <button onclick="insertarArticulo()" class="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(() => document.body.classList.add("loaded"), 50);
+  });
+</script>
+
+  <script>
+
+
+let usuarioLogueado = localStorage.getItem("usuarioLogueado") || null;
+
+function toggleLogin() {
+  if (usuarioLogueado) {
+    // Logout
+    usuarioLogueado = null;
+    localStorage.removeItem("usuarioLogueado");
+    document.getElementById("login-btn").textContent = "🔐 Iniciar sesión";
+    alert("Has cerrado sesión.");
+  } else {
+    // Login rápido (mock)
+    const user = prompt("Usuario:");
+    const pass = prompt("Contraseña:");
+    if (user === "sade" && pass === "123") {
+      usuarioLogueado = user;
+      localStorage.setItem("usuarioLogueado", user);
+      document.getElementById("login-btn").textContent = "🚪 Cerrar sesión";
+      alert("Sesión iniciada como " + user);
+    } else {
+      alert("Credenciales incorrectas.");
+    }
+  }
+}
+
+function verificarLogin() {
+  if (usuarioLogueado) {
+    document.getElementById("login-btn").textContent = "🚪 Cerrar sesión";
+  } else {
+    document.getElementById("login-btn").textContent = "🔐 Iniciar sesión";
+  }
+}
+
+
+let paginaActual = 1;
+const articulosPorPagina = 8;
+
+    let articulos = [];
+  
+    async function cargarArticulos() {
+      try {
+        const res = await fetch("/api/articulos");
+        const data = await res.json();
+        articulos = data;
+        renderizarTarjetas(); 
+        actualizarEstadoSesion();// ✅ Nueva función correcta
+      } catch (err) {
+        console.error("Error cargando articulos:", err);
+      }
+    }
+  
+    function renderizarTarjetas() {
+  const contenedor = document.getElementById("contenedor-tarjetas");
+  contenedor.classList.remove("opacity-100");
+  contenedor.classList.add("opacity-0");
+
+  setTimeout(() => {
+    contenedor.innerHTML = "";
+
+    // filtrado y renderizado normal
+    const texto = document.getElementById("filtro-titulo").value.toLowerCase();
+    const etiqueta = document.getElementById("filtro-etiqueta").value;
+
+    const filtrados = articulos.filter(a =>
+      a.titulo.toLowerCase().includes(texto) &&
+      (etiqueta === "" || a.etiquetas === etiqueta)
+    );
+
+    const inicio = (paginaActual - 1) * articulosPorPagina;
+    const fin = inicio + articulosPorPagina;
+    const pagina = filtrados.slice(inicio, fin);
+
+    pagina.forEach(a => {
+      const card = document.createElement("div");
+      card.className = "bg-gray-800 rounded-lg shadow-md p-4 flex flex-col items-center";
+      card.innerHTML = `
+  <img src="${a.imagen_url}" alt="${a.titulo}" class="w-full h-40 object-cover rounded mb-2 shadow">
+  <h3 class="text-yellow-400 font-bold text-lg text-center">${a.titulo}</h3>
+  <p class="text-sm text-gray-300 text-center mb-2">${a.etiquetas}</p>
+  <div class="flex gap-2 mt-auto">
+<button onclick="editarArticulo(${articulos.indexOf(a)})"class="btn-editar bg-yellow-500 hover:bg-yellow-600 text-black px-2 py-1 rounded text-sm font-bold w-full">  ✏️ Editar</button>
+<button onclick="borrarArticulo(${articulos.indexOf(a)})"class="btn-borrar bg-orange-500 hover:bg-orange-600 text-white px-2 py-1 rounded text-sm font-bold w-full">  🗑 Borrar</button>
+<button onclick="CameraArticulo(${articulos.indexOf(a)})"class="btn-borrar bg-pink-500 hover:bg-pink-600 text-white px-2 py-1 rounded text-sm font-bold w-full">  📷 Galeria</button>
+<button onclick="verMas(${a.id_articulo})" class="bg-violet-600 hover:bg-violet-700 text-white px-2 py-1 rounded text-sm font-bold w-full"> 🔍 Ver más </button> </div>
+
+
+`;
+      contenedor.appendChild(card);
+    });
+
+    renderizarPaginacion(filtrados.length);
+
+    contenedor.classList.remove("opacity-0");
+    contenedor.classList.add("opacity-100");
+    actualizarEstadoSesion();
+  }, 200);
+}
+  
+    function editarArticulo(index) {
+      const a = articulos[index];
+      document.getElementById("editar-id").value = index;
+      document.getElementById("editar-titulo").value = a.titulo;
+      document.getElementById("editar-etiqueta").value = a.etiquetas;
+      document.getElementById("editar-tipo").value = a.tipo;
+      document.getElementById("editar-texto").value = a.texto;
+      document.getElementById("editar-texto2").value = a.texto2;
+      document.getElementById("modalEditar").classList.remove("hidden");
+    }
+  
+
+
+
+
+
+
+
+
+    function cerrarModal() {
+      document.getElementById("modalEditar").classList.add("hidden");
+    }
+  
+    async function guardarCambios() {
+  const index = document.getElementById("editar-id").value;
+  const articulo = articulos[index];
+
+  const formData = new FormData();
+  formData.append("titulo", document.getElementById("editar-titulo").value);
+  formData.append("etiquetas", document.getElementById("editar-etiqueta").value);
+  formData.append("tipo", document.getElementById("editar-tipo").value);
+  formData.append("texto", document.getElementById("editar-texto").value);
+  formData.append("texto2", document.getElementById("editar-texto2").value);
+
+  const file = document.getElementById("nuevo-imagen").files[0];
+  if (file) {
+    formData.append("imagen", file);
+  }
+
+  try {
+    const res = await fetch(`/api/articulos/${articulo.id_articulo}`, {
+      method: "PUT",
+      body: formData
+    });
+
+    const data = await res.json();
+    if (data.mensaje) {
+      await cargarArticulos();
+      cerrarModal();
+    } else {
+      alert("Error al guardar cambios");
+    }
+  } catch (err) {
+    console.error("Error al guardar cambios:", err);
+  }
+}
+
+  
+    async function borrarArticulo(index) {
+      if (confirm("¿Estás seguro de que deseas borrar este artículo?")) {
+        articulos.splice(index, 1);
+        await guardarArticulosEnServidor();
+        renderizarTarjetas();
+      }
+    }
+  
+    async function guardarArticulosEnServidor() {
+      try {
+        await fetch("/api/articulos", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(articulos)
+        });
+      } catch (err) {
+        console.error("Error al guardar los artículos:", err);
+      }
+    }
+  
+    document.getElementById("filtro-titulo").addEventListener("input", renderizarTarjetas);
+    document.getElementById("filtro-etiqueta").addEventListener("change", renderizarTarjetas);
+
+    window.onload = () => {
+  estaLogeado = localStorage.getItem("logueado") === "true";
+  actualizarEstadoSesion();
+  cargarArticulos();
+};
+    verificarLogin();
+
+    function abrirModalInsertar() {
+  document.getElementById("modalInsertar").classList.remove("hidden");
+}
+
+function cerrarModalInsertar() {
+  document.getElementById("modalInsertar").classList.add("hidden");
+}
+
+async function insertarArticulo() {
+  const titulo = document.getElementById("nuevo-titulo").value;
+  const etiquetas = document.getElementById("nuevo-etiqueta").value;
+  const tipo = document.getElementById("nuevo-tipo").value;
+  const texto = document.getElementById("nuevo-texto").value;
+  const texto2 = document.getElementById("nuevo-texto2").value;
+  const file = document.getElementById("nuevo-imagen").files[0];
+
+  let imagen_url = "ima/default.png"; // valor por defecto
+
+  if (file) {
+    const formData = new FormData();
+    formData.append("imagen", file);
+    formData.append("categoria", "articulos"); // carpeta de destino
+
+    try {
+      
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData
+      });
+      const data = await res.json();
+      if (data.success) {
+        imagen_url = data.path;
+      }
+    } catch (err) {
+      console.error("Error subiendo imagen:", err);
+    }
+  }
+
+  const nuevo = {
+    id_articulo: Date.now(),
+    titulo,
+    etiquetas,
+    tipo,
+    texto,
+    texto2,
+    imagen_url
+  };
+
+  articulos.push(nuevo);
+  await guardarArticulosEnServidor();
+  cerrarModalInsertar();
+  renderizarTarjetas();
+}
+
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+function verMas(id) {
+  window.location.href = `detalle.html?id=${id}`;
+}
+
+
+function renderizarTarjetas() {
+  const contenedor = document.getElementById("contenedor-tarjetas");
+  contenedor.classList.remove("opacity-100");
+  contenedor.classList.add("opacity-0");
+
+  setTimeout(() => {
+    contenedor.innerHTML = "";
+
+    // filtrado y renderizado normal
+    const texto = document.getElementById("filtro-titulo").value.toLowerCase();
+    const etiqueta = document.getElementById("filtro-etiqueta").value;
+
+    const filtrados = articulos.filter(a =>
+      a.titulo.toLowerCase().includes(texto) &&
+      (etiqueta === "" || a.etiquetas === etiqueta)
+    );
+
+    const inicio = (paginaActual - 1) * articulosPorPagina;
+    const fin = inicio + articulosPorPagina;
+    const pagina = filtrados.slice(inicio, fin);
+
+    pagina.forEach(a => {
+      const card = document.createElement("div");
+      card.className = "bg-gray-800 rounded-lg shadow-md p-4 flex flex-col items-center";
+      card.innerHTML = `
+        <img src="${a.imagen_url}" alt="${a.titulo}" class="w-full h-40 object-cover rounded mb-2 shadow">
+        <h3 class="text-yellow-400 font-bold text-lg text-center">${a.titulo}</h3>
+        <p class="text-sm text-gray-300 text-center mb-2">${a.etiquetas}</p>
+        <div class="flex gap-2 mt-auto">
+          <button onclick="editarArticulo(${articulos.indexOf(a)})"
+            class="bg-yellow-500 hover:bg-yellow-600 text-black px-2 py-1 rounded text-sm font-bold w-full">✏️ Editar</button>
+          <button onclick="borrarArticulo(${articulos.indexOf(a)})"
+            class="bg-orange-500 hover:bg-orange-600 text-white px-2 py-1 rounded text-sm font-bold w-full">🗑 Borrar</button>
+          <button onclick="verMas(${a.id_articulo})"
+            class="bg-violet-600 hover:bg-violet-700 text-white px-2 py-1 rounded text-sm font-bold w-full">🔍 Ver más</button>
+          <button onclick="CameraArticulo(${articulos.indexOf(a)})"
+             class="btn-borrar bg-pink-500 hover:bg-pink-600 text-white px-2 py-1 rounded text-sm font-bold w-full">  📷 Galeria</button>
+
+        </div>
+      `;
+      contenedor.appendChild(card);
+    });
+
+    renderizarPaginacion(filtrados.length);
+
+    contenedor.classList.remove("opacity-0");
+    contenedor.classList.add("opacity-100");
+  }, 200);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+function renderizarPaginacion(totalFiltrados) {
+  const paginacion = document.getElementById("paginacion");
+  paginacion.innerHTML = "";
+
+  const totalPaginas = Math.ceil(totalFiltrados / articulosPorPagina);
+
+  for (let i = 1; i <= totalPaginas; i++) {
+    const btn = document.createElement("button");
+    btn.textContent = i;
+    btn.className = `px-3 py-1 rounded ${i === paginaActual ? "bg-yellow-400 text-black font-bold" : "bg-gray-700 hover:bg-gray-600"}`;
+    btn.onclick = () => {
+      paginaActual = i;
+      renderizarTarjetas();
+    };
+    paginacion.appendChild(btn);
+  }
+}
+
+let estaLogeado = false;
+
+function abrirLogin() {
+  document.getElementById("modalLogin").classList.remove("hidden");
+}
+function cerrarLogin() {
+  document.getElementById("modalLogin").classList.add("hidden");
+}
+
+
+
+
+
+
+
+async function iniciarSesion() {
+  const user = document.getElementById("login-usuario").value;
+  const password = document.getElementById("login-password").value;
+
+  try {
+    const res = await fetch("/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user, password })
+    });
+
+    const data = await res.json();
+    if (data.success) {
+      estaLogeado = true;
+      localStorage.setItem("logueado", "true");
+      actualizarEstadoSesion();
+      cerrarLogin();
+    } else {
+      alert("Credenciales inválidas");
+    }
+  } catch (err) {
+    console.error("Error al iniciar sesión", err);
+  }
+}
+
+
+
+
+
+
+
+
+
+function cerrarSesion() {
+  estaLogeado = false;
+  localStorage.removeItem("logueado");
+  actualizarEstadoSesion();
+}
+
+
+
+
+
+
+
+
+function actualizarEstadoSesion() {
+  document.getElementById("btnLogin").classList.toggle("hidden", estaLogeado);
+  document.getElementById("btnLogout").classList.toggle("hidden", !estaLogeado);
+  document.getElementById("estadoSesion").textContent = estaLogeado ? "Administrador" : "";
+  
+  // Controlar visibilidad de botones "Editar", "Borrar", "Añadir"
+  document.querySelectorAll(".btn-editar, .btn-borrar").forEach(btn => {
+    btn.classList.toggle("hidden", !estaLogeado);
+  });
+  document.querySelector("#btnInsertar")?.classList.toggle("hidden", !estaLogeado);
+}
+
+
+
+
+
+
+
+
+function CameraArticulo(index) {
+  const articulo = articulos[index];
+  window.location.href = `galeria.html?id=${articulo.id_articulo}`;
+}
+
+
+
+
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Detalle del Personaje</title>
+<script src="/assets/tailwind.js"></script>
+<link href="/assets/fonts.css" rel="stylesheet">
+<script src="enrrutamiento.js"></script>
+<style>
+  .relacion img, .scene img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid yellow;
+  }
+  body {
+    font-family: 'Orbitron', sans-serif;
+    background-color: #0f172a;
+    color: white;
+  }
+  .border-custom { border: solid 3px rgb(250, 204, 21); }
+  .container { display: flex; max-width: 900px; margin: 20px auto; gap: 20px; }
+  .right { flex: 2; }
+</style>
+</head>
+<body>
+
+<section class="max-w-7xl mx-auto px-6 mb-10">
+  <div class="relative flex items-center justify-between">
+    <div id="imagenContainer" class="absolute -left-4 md:-left-10 z-20 rounded-full overflow-hidden w-40 h-40 md:w-60 md:h-60 border-custom">
+      <img id="imagenPersonaje" src="" alt="Imagen del personaje">
+    </div>
+    <div class="w-full bg-purple-800 h-28 md:h-32 rounded-xl flex items-center pl-48 pr-6 z-10 shadow-lg">
+      <h2 id="nombrePersonaje" class="text-2xl md:text-4xl text-yellow-400 font-bold ml-auto"></h2>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="right">
+    <h1 id="nombrePersonaje"></h1>
+    <div id="relacionesContainer"></div>
+    <div id="scenesContainer" class="scene"></div>
+    <p><strong>Descripción:</strong></p>
+    <p id="descripcionPersonaje"></p>
+    <p><strong>Etiquetas:</strong></p>
+    <span id="etiquetasPersonaje"></span>
+    <p><strong>Momentos Estelares:</strong></p>
+    <span id="momentosPersonaje"></span>
+  </div>
+</div>
+
+<div class="p-6" id="notas-editar" style="display:none">
+  <label class="block mb-2 font-bold">Notas:</label>
+  <div class="mb-4">
+    ¿Cuántas notas quieres poner al personaje?
+    <input type="number" id="numNotas" min="0" class="ml-2 p-1 rounded text-black">
+  </div>
+  <div id="notasContainer" class="space-y-2"></div>
+</div>
+
+<div class="p-6">
+  <label class="block mb-2 font-bold">Notas:</label>
+  <div id="notasContainer2" class="space-y-2"></div>
+</div>
+
+
+<div class="p-6">
+  <label class="block mb-2 font-bold">Galeria:</label>
+  <div id="galeriaContainer" class="space-y-2"></div>
+</div>
+
+
+<script>
+  let personajeActual;
+
+
+// Relaciones disponibles
+const relacionesDisponibles = [
+  "Padre", "Madre", "Hermano", "Amigo", "Novio",
+  "Protegido", "Socio", "Socio a su pesar", "Tío", "Primo", "Hijo"
+];
+
+window.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const valor = params.get("valor") || "novela";
+  const idPersonaje = parseInt(params.get("id"));
+  const modo = params.get("modo") || "detalle";
+  const crearRelaciones = params.get("crearRelaciones") || "false";
+  const archivoPersonajes = contenido[valor].personajes;
+
+  if (crearRelaciones === 'true') {
+    setTimeout(() => {
+      crearRelacionesSimetricas(valor);
+    }, 500)
+  }
+
+  if (isNaN(idPersonaje) || !contenido[valor]) {
+    console.error("❌ ID o contenido no válido");
+    return;
+  }
+
+  const script = document.createElement("script");
+  script.src = archivoPersonajes;
+  script.onload = () => mostrarPersonaje(idPersonaje, modo, valor);
+  document.head.appendChild(script);
+});
+
+// ✅ AÑADE ESTO DESPUÉS
+function cargarNotasDesdePersonaje() {
+  const contenedor = document.getElementById("notasContainer");
+  contenedor.innerHTML = "";
+  const notas = personajeActual?.notas || [];
+
+  document.getElementById("numNotas").value = notas.length;
+
+  notas.forEach((nota, index) => {
+    const input = document.createElement("input");
+    input.type = "text";
+    input.placeholder = `Nota ${index + 1}`;
+    input.className = "notaInput w-full p-2 rounded bg-slate-800 text-white";
+    input.value = nota.texto_nota || "";
+    contenedor.appendChild(input);
+  });
+}
+
+// ✅ Y ESTO TAMBIÉN
+window.addEventListener("DOMContentLoaded", () => {
+  if (typeof personajeActual === 'object' && personajeActual.notas?.length) {
+    cargarNotasDesdePersonaje();
+  }
+});
+
+
+function mostrarPersonaje(idPersonaje, modo, valor) {
+  if (idPersonaje === -1) {
+    personajeActual = { id_Personaje: -1, Nombre: "", texto: "", etiqueta: [], momentos_estelares: "", url_imagen: "", relaciones: [] };
+    mostrarFormularioEdicion(valor, true);
+    return;
+  }
+
+  const personaje = PERSONAJES.find(p => p.id_Personaje === idPersonaje);
+  if (!personaje) { console.error("❌ Personaje no encontrado"); return; }
+
+  personajeActual = { ...personaje };
+  if (!personajeActual.relaciones) personajeActual.relaciones = [];
+
+  if (modo === "editar") mostrarFormularioEdicion(valor, false);
+  else mostrarDetalle();
+  mostrarEscenas(idPersonaje);
+  renderizarRelaciones(idPersonaje, modo);
+}
+
+
+
+function renderizarRelaciones(idPersonajeActual, modo = "detalle", valor) {
+  const contenedor = document.getElementById("relacionesContainer");
+  contenedor.innerHTML = "<h3 class='text-yellow-400 font-bold mb-2'>Relaciones</h3>";
+
+  const grid = document.createElement("div");
+  grid.className = "grid grid-cols-2 md:grid-cols-4 gap-4";
+
+  PERSONAJES.forEach(p => {
+    if (p.id_Personaje === idPersonajeActual) return;
+    const relacionDirecta = personajeActual.relaciones.find(r => r.id_personaje_relacionado === p.id_Personaje);
+    if (modo === "detalle" && !relacionDirecta) return;
+
+    let tipoRelacion = relacionDirecta ? relacionDirecta.Tipo_de_relacion : "";
+
+    const card = document.createElement("div");
+    card.className = "p-2 bg-gray-800 rounded shadow flex flex-col items-center";
+
+    let contenido = `
+      <img src="${p.url_imagen}" class="w-16 h-16 object-cover rounded-full border-2 border-yellow-400 mb-2" alt="${p.Nombre}">
+      <p class="text-sm font-bold mb-1">${p.Nombre}</p>
+    `;
+
+    if (modo === "editar") {
+      contenido += `
+        <input type="checkbox" id="relacion-${p.id_Personaje}" ${relacionDirecta ? "checked" : ""} />
+        <select id="tipo-${p.id_Personaje}" class="mt-1 text-black text-sm rounded p-1">
+          <option value="">(ninguna)</option>
+          ${relacionesDisponibles.map(rel => `
+            <option value="${rel}" ${tipoRelacion === rel ? "selected" : ""}>${rel}</option>
+          `).join("")}
+        </select>
+      `;
+    } else if (relacionDirecta) {
+      contenido += `<p class="text-xs italic text-yellow-400 mt-1">${tipoRelacion}</p>`;
+    }
+
+    card.innerHTML = contenido;
+    grid.appendChild(card);
+  });
+
+  contenedor.appendChild(grid);
+
+  if (modo === "editar") {
+    const btnSimetricas = document.createElement("button");
+    btnSimetricas.textContent = "Relaciones Simétricas";
+    btnSimetricas.className = "mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-800";
+    btnSimetricas.onclick = () => crearRelacionesSimetricas(valor);
+    contenedor.appendChild(btnSimetricas);
+  }
+}
+
+
+
+
+
+
+async function cargarGaleriaPersonaje(valor, id) {
+  try {
+    const galeriaPersonaje = await fetch(`/api/galeria/${encodeURIComponent(valor)}/${id}`);
+    const galeriaPersonajeData = await galeriaPersonaje.json();
+    console.log('galeriaPersonajeData', galeriaPersonajeData);
+
+    const galeriaCont = document.getElementById('galeriaContainer');
+    galeriaCont.innerHTML = ''; // Limpiar galería previa
+    galeriaCont.className = 'flex flex-wrap gap-4 justify-center'; // Clases Tailwind
+
+    galeriaPersonajeData.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'w-36 rounded-2xl overflow-hidden shadow-md bg-white';
+
+      const img = document.createElement('img');
+      img.src = item.url_imagen;
+      img.alt = `Imagen estilo ${item.estilo}`;
+      img.className = 'w-full h-auto cursor-pointer transition-transform hover:scale-105';
+
+      const estilo = document.createElement('div');
+      estilo.textContent = item.estilo;
+      estilo.className = 'text-center text-sm py-2 bg-gray-100 text-black';
+
+      card.appendChild(img);
+      card.appendChild(estilo);
+      galeriaCont.appendChild(card);
+    });
+  } catch (err) {
+    alert('Error al obtener la galería del personaje');
+  }
+}
+
+
+
+
+async function crearRelacionesSimetricas(valor) {
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = parseInt(urlParams.get("id"));
+
+  personajeActual = PERSONAJES.find(p => p.id_Personaje === id);
+
+  console.log("🟡 Ejecutando crearRelacionesSimetricas para:", valor, personajeActual);
+  console.log('personajeActual', personajeActual);
+
+  const relaciones = personajeActual.relaciones || [];
+
+  console.log('relaciones', relaciones);
+
+  for (const r of relaciones) {
+    const destino = PERSONAJES.find(p => p.id_Personaje === r.id_personaje_relacionado);
+    if (!destino) continue;
+
+    console.log('destino', destino);
+
+    if (!Array.isArray(destino.relaciones)) destino.relaciones = [];
+
+    const yaExiste = destino.relaciones.some(rel =>
+      rel.id_personaje === r.id_personaje_relacionado &&
+      rel.id_personaje_relacionado === r.id_personaje &&
+      rel.Tipo_de_relacion === r.Tipo_de_relacion
+    );
+
+    if (!yaExiste) {
+      destino.relaciones.push({
+        id_personaje: r.id_personaje_relacionado,
+        id_personaje_relacionado: r.id_personaje,
+        Tipo_de_relacion: r.Tipo_de_relacion
+      });
+
+      alert('put 1');
+      await fetch(`/api/personajes/${valor}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id_Personaje: destino.id_Personaje,
+          Nombre: destino.Nombre,
+          texto: destino.texto,
+          etiqueta: destino.etiqueta,
+          momentos_estelares: destino.momentos_estelares,
+          url_imagen: destino.url_imagen,
+          relaciones: destino.relaciones
+        })
+      });
+
+      console.log(`✅ Relación simétrica guardada para personaje ${destino.Nombre}`);
+    }
+  }
+
+  alert("✅ Relaciones simétricas generadas correctamente");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function mostrarPersonaje(idPersonaje, modo, valor) {
+  if (idPersonaje === -1) {
+    personajeActual = { id_Personaje: -1, Nombre: "", texto: "", etiqueta: [], momentos_estelares: "", url_imagen: "", relaciones: [] };
+    mostrarFormularioEdicion(valor, true);
+    return;
+  }
+
+  const personaje = PERSONAJES.find(p => p.id_Personaje === idPersonaje);
+  if (!personaje) {
+    console.error("❌ Personaje no encontrado");
+    return;
+  }
+
+  personajeActual = { ...personaje };
+  if (!personajeActual.relaciones) personajeActual.relaciones = [];
+
+  if (modo === "editar") {
+    mostrarFormularioEdicion(valor, false);
+  } else {
+    mostrarDetalle();
+  }
+
+  mostrarEscenas(idPersonaje);
+  renderizarRelaciones(idPersonaje, modo, valor);
+}
+
+
+function mostrarFormularioEdicion(valor, esNuevo) {
+
+  document.getElementById('notas-editar').style.display = 'block';
+
+  document.getElementById("imagenContainer").innerHTML = `
+    <div class="mb-4 flex flex-col items-center">
+      <label class="block mb-1">Imagen:</label>
+      <input type="file" id="inputImagen" accept="image/*" class="w-full p-2 rounded bg-slate-800 text-white" onchange="mostrarVistaPrevia()">
+      <img id="previewImagen" src="${personajeActual.url_imagen}" class="w-32 h-32 object-cover rounded-full mt-2 border-4 border-yellow-400">
+    </div>
+  `;
+
+  document.getElementById("nombrePersonaje").innerHTML = `<input id="inputNombre" class="w-full p-2 rounded bg-slate-800 text-white" value="${personajeActual.Nombre}">`;
+  document.getElementById("descripcionPersonaje").innerHTML = `<textarea id="inputDescripcion" class="w-full p-2 rounded bg-slate-800 text-white">${personajeActual.texto}</textarea>`;
+  document.getElementById("etiquetasPersonaje").innerHTML = `
+    <select id="inputEtiquetas" class="w-full p-2 rounded bg-slate-800 text-white" multiple>
+      ${contenido[valor].array_del_select.map(etiqueta => `
+        <option value="${etiqueta}" ${personajeActual.etiqueta.includes(etiqueta) ? "selected" : ""}>${etiqueta}</option>
+      `).join("")}
+    </select>`;
+  document.getElementById("momentosPersonaje").innerHTML = `<textarea id="inputMomentos" class="w-full p-2 rounded bg-slate-800 text-white">${personajeActual.momentos_estelares}</textarea>`;
+
+  const btn = document.createElement("button");
+  btn.textContent = esNuevo ? "Crear Personaje" : "Guardar Cambios";
+  btn.className = "bg-yellow-400 text-black px-4 py-2 rounded font-bold mt-4";
+  btn.onclick = () => guardarCambios(personajeActual?.id_Personaje, valor, esNuevo);
+  document.querySelector(".right").appendChild(btn);
+}
+
+function obtenerNotas() {
+  const inputs = document.querySelectorAll(".notaInput");
+  return Array.from(inputs).map((input, index) => ({
+    id_nota: index + 1,
+    texto_nota: input.value.trim()
+  })).filter(n => n.texto_nota.length > 0);
+}
+
+
+
+
+
+function mostrarDetalle() {
+  document.getElementById("imagenPersonaje").src = personajeActual.url_imagen;
+  document.getElementById("nombrePersonaje").textContent = personajeActual.Nombre;
+  document.getElementById("descripcionPersonaje").textContent = personajeActual.texto;
+  document.getElementById("etiquetasPersonaje").textContent = personajeActual.etiqueta.join(", ");
+  document.getElementById("momentosPersonaje").textContent = personajeActual.momentos_estelares;
+}
+
+
+function mostrarVistaPrevia() {
+  const input = document.getElementById("inputImagen");
+  const preview = document.getElementById("previewImagen");
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => preview.src = e.target.result;
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+
+window.addEventListener("DOMContentLoaded", () => {
+
+  const inputNotas = document.getElementById("numNotas");
+  inputNotas.addEventListener("input", () => {
+    const cantidad = parseInt(inputNotas.value) || 0;
+    const contenedor = document.getElementById("notasContainer");
+    contenedor.innerHTML = "";
+    for (let i = 0; i < cantidad; i++) {
+      const input = document.createElement("input");
+      input.type = "text";
+      input.placeholder = `Nota ${i + 1}`;
+      const idNota = i + 1;
+      input.className = "notaInput w-full p-2 rounded bg-slate-800 text-white";
+
+      const nota = personajeActual?.notas.find(n => n.id_nota === idNota);
+      if (nota) input.value = nota.texto_nota;
+
+      contenedor.appendChild(input);
+    }
+  });
+
+});
+
+function obtenerNotas() {
+  const inputs = document.querySelectorAll(".notaInput");
+  return Array.from(inputs).map((input, index) => ({
+    id_nota: index + 1,
+    texto_nota: input.value.trim()
+  })).filter(n => n.texto_nota.length > 0);
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  if (typeof personajeActual === 'object' && personajeActual.notas?.length) {
+    cargarNotasDesdePersonaje();
+  }
+});
+
+
+
+function mostrarEscenas(idPersonaje) {
+  const contenedor = document.getElementById("scenesContainer");
+  contenedor.innerHTML = "<h3 class='text-yellow-400 font-bold mb-2'>Escenas</h3>";
+  const escenasRelacionadas = scenes_Personajes.filter(sp => sp.id_personaje === idPersonaje);
+  if (escenasRelacionadas.length === 0) {
+    contenedor.innerHTML += "<p class='text-gray-400'>No aparece en ninguna escena registrada.</p>";
+    return;
+  }
+  const grid = document.createElement("div");
+  grid.className = "grid grid-cols-2 md:grid-cols-4 gap-4";
+  escenasRelacionadas.forEach(sp => {
+    const escena = scenes.find(s => s.id_scene === sp.id_scene);
+    if (escena) {
+      const card = document.createElement("div");
+      card.className = "p-2 bg-gray-800 rounded shadow flex flex-col items-center";
+      card.innerHTML = `<img src=\"${escena.imagen}\" class=\"w-16 h-16 object-cover rounded-full border-2 border-yellow-400 mb-2\"><p class=\"text-sm font-bold mb-1\">${escena.nombre}</p>`;
+      grid.appendChild(card);
+    }
+  });
+  contenedor.appendChild(grid);
+}
+
+
+
+
+
+
+window.addEventListener("DOMContentLoaded", async () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const valor = urlParams.get("valor");
+  const id = parseInt(urlParams.get("id"));
+
+  await cargarGaleriaPersonaje(valor, id);
+
+
+
+  fetch(`/api/personajes/${valor}`)
+    .then(res => res.json())
+    .then(data => {
+      personajeActual = data.find(p => p.id_Personaje === id);
+      if (personajeActual) {
+        mostrarNotas();
+      } else {
+        console.error("❌ Personaje no encontrado");
+      }
+    })
+    .catch(err => {
+      console.error("❌ Error al cargar personaje:", err.message);
+    });
+});
+
+
+
+
+
+function mostrarNotas() {
+  const contenedor = document.getElementById("notasContainer2");
+  contenedor.innerHTML = "";
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const idP = parseInt(urlParams.get("id"));
+  const personaje = PERSONAJES.find(p => p.id_Personaje === idP);
+  if (!personaje) { console.error("❌ Personaje no encontrado"); return; }
+
+  personajeActual = { ...personaje };
+
+
+  console.log('personajeActual', personajeActual);
+  if (personajeActual?.notas?.length) {
+    personajeActual.notas.forEach((nota, index) => {
+      console.log('nota', nota);
+      const p = document.createElement("p");
+      p.textContent = `Nota ${index + 1}: ${nota.texto_nota}`;
+      p.className = "bg-gray-700 p-2 rounded";
+      contenedor.appendChild(p);
+    });
+
+    const inputNotas = document.getElementById("numNotas");
+    inputNotas.value = personajeActual?.notas?.length;
+    inputNotas.dispatchEvent(new Event("input"));
+
+
+  } else {
+    contenedor.innerHTML = "<p class='text-gray-400'>Sin notas registradas.</p>";
+  }
+}
+
+// Llama a mostrarNotas cuando se cargue el DOM
+window.addEventListener("DOMContentLoaded", () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const valor = urlParams.get("valor");
+  const id = parseInt(urlParams.get("id"));
+
+  fetch(`/api/personajes/${valor}`)
+    .then(res => res.json())
+    .then(data => {
+      personajeActual = data.find(p => p.id_Personaje === id);
+      if (personajeActual) {
+        mostrarNotas();
+      } else {
+        console.error("❌ Personaje no encontrado");
+      }
+    })
+    .catch(err => {
+      console.error("❌ Error al cargar personaje:", err.message);
+    });
+});
+
+function cargarNotasDesdePersonaje() {
+  const contenedor = document.getElementById("notasContainer");
+  contenedor.innerHTML = "";
+  const notas = personajeActual?.notas || [];
+  document.getElementById("numNotas").value = notas.length;
+
+  // personajeActual.notas
+
+  notas.forEach((nota, index) => {
+    const input = document.createElement("input");
+    input.type = "text";
+    input.placeholder = `Nota ${index + 1}`;
+    input.className = "notaInput w-full p-2 rounded bg-slate-800 text-white";
+    input.value = nota.texto_nota || "";
+    contenedor.appendChild(input);
+  });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function guardarCambios(idPersonaje, valor, esNuevo) {
+  const idP = parseInt(new URLSearchParams(window.location.search).get("id"));
+  const nuevo = {
+    id_Personaje: esNuevo ? Date.now() : idP,
+    Nombre: document.getElementById("inputNombre").value,
+    texto: document.getElementById("inputDescripcion").value,
+    etiqueta: Array.from(document.getElementById("inputEtiquetas").selectedOptions).map(o => o.value),
+    momentos_estelares: document.getElementById("inputMomentos").value,
+    url_imagen: personajeActual?.url_imagen,
+    relaciones: [],
+    notas: obtenerNotas()
+  };
+
+  const inputImagen = document.getElementById("inputImagen");
+  const file = inputImagen && inputImagen.files[0];
+  if (file) {
+    const formData = new FormData();
+    formData.append("imagen", file);
+    formData.append("categoria", valor);
+    fetch("/api/upload", { method: "POST", body: formData })
+      .then(resp => resp.json())
+      .then(data => {
+        if (data.success) nuevo.url_imagen = data.path;
+        enviarPersonaje(nuevo, valor);
+      });
+  } else {
+    enviarPersonaje(nuevo, valor);
+  }
+}
+
+function enviarPersonaje(nuevo, valor) {
+  fetch(`/api/personajes/${valor}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(nuevo)
+  })
+  .then(() => {
+    alert("✅ Guardado correctamente");
+    window.location.href = `detalle_personaje.html?valor=${valor}&id=${nuevo.id_Personaje}&modo=editar&crearRelaciones=true`;
+  })
+  .catch(err => {
+    console.error("❌ Error al guardar personaje:", err);
+    alert("Hubo un error al guardar los datos del personaje");
+  });
+}
+
+
+
+
+</script>
+</body>
+</html>

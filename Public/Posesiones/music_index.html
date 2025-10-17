@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Lista de Mangas</title>
+<script src="/assets/tailwind.js"></script>
+<link href="/assets/fonts.css" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Orbitron', sans-serif;
+    background-color: #0f172a;
+    color: white;
+  }
+  .fade-page { opacity: 0; transition: opacity 0.5s ease; }
+  body.loaded .fade-page { opacity: 1; }
+  .card-title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+    display: block;
+  }
+</style>
+</head>
+<body class="min-h-screen">
+  <nav class="bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 text-center text-sm md:text-base font-semibold uppercase tracking-wider">
+    <a href="/../e.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+  </nav>
+
+  <!-- Encabezado -->
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div class="relative flex items-center justify-between">
+      <div class="absolute -left-4 md:-left-10 z-20">
+  <video autoplay muted loop
+         class="w-40 h-40 md:w-52 md:h-52 object-cover rounded-full border-4 border-yellow-400 shadow-2xl">
+    <source src="/ruta/pose-manga.mp4" type="video/mp4">
+  </video>
+      </div>
+      <div class="w-full bg-purple-800 h-28 md:h-32 rounded-xl flex items-center pl-48 pr-6 z-10 shadow-lg">
+        <h2 class="text-2xl md:text-4xl text-yellow-400 font-bold ml-auto">Obras</h2>
+      </div>
+    </div>
+<a href="mangas_index.html">Registros </a> | <a href="codigo_manga.html"> Webscraping</a>
+
+  <section class="max-w-7xl mx-auto px-6 mt-6 mb-10 fade-page">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
+      <input id="filtro-nombre" type="text" placeholder="Buscar por nombre" class="px-4 py-2 w-full md:w-64 bg-gray-700 text-white rounded"/>
+      <button onclick="cambiarPagina(1)" class="bg-yellow-400 text-black px-4 py-2 rounded hover:bg-yellow-300 font-bold">🔍 Buscar</button>
+    </div>
+    <div id="contenedor-mangas" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+    <div id="paginacion" class="flex justify-center gap-2 mt-4 text-white"></div>
+  </section>
+
+  <div id="modal" class="fixed inset-0 bg-black bg-opacity-70 hidden flex items-center justify-center z-50">
+    <div class="bg-gray-900 rounded-lg shadow-lg max-w-md w-full mx-4 p-6 relative max-h-[90vh] overflow-y-auto">
+      <button onclick="cerrarModal()" class="absolute top-2 right-2 text-white text-xl">✖</button>
+      <h2 id="modal-titulo" class="text-yellow-400 font-bold text-2xl mb-4 text-center"></h2>
+      <img id="modal-imagen" class="w-full h-48 object-cover rounded mb-4" />
+      <p id="modal-autor" class="text-sm text-gray-300 mb-3 leading-relaxed whitespace-pre-wrap"></p>
+      <p id="modal-descripcion" class="text-sm text-gray-300 leading-relaxed whitespace-pre-wrap"></p>
+    </div>
+  </div>
+
+<script src="music.js"></script>
+<script>
+let paginaActual = 1;
+const mangasPorPagina = 8;
+
+function renderizarMangas() {
+  const contenedor = document.getElementById("contenedor-mangas");
+  const nombre = document.getElementById("filtro-nombre").value.toLowerCase();
+
+  contenedor.innerHTML = "";
+
+  const filtrados = mangas.filter(m =>
+    m.nombre.toLowerCase().includes(nombre)
+  );
+
+  const totalPaginas = Math.ceil(filtrados.length / mangasPorPagina);
+  paginaActual = Math.min(paginaActual, totalPaginas);
+
+  const inicio = (paginaActual - 1) * mangasPorPagina;
+  const fin = inicio + mangasPorPagina;
+  const pagina = filtrados.slice(inicio, fin);
+
+  pagina.forEach(m => {
+    const card = document.createElement("div");
+    card.className = "bg-gray-800 rounded-lg shadow-md p-4 flex flex-col items-center";
+    card.innerHTML = `
+      <img src="${m.imagen || 'ima/default.png'}" alt="${m.nombre}" class="w-full h-40 object-cover rounded mb-2 shadow">
+      <h3 class="text-yellow-400 font-bold text-lg text-center mb-2 card-title" title="${m.nombre}">${m.nombre}</h3>
+      <button onclick='mostrarModal(${JSON.stringify(m)})' class="bg-yellow-400 text-black px-3 py-1 rounded hover:bg-yellow-300">👁 Ver más</button>
+    `;
+    contenedor.appendChild(card);
+  });
+
+  renderizarPaginacion(totalPaginas);
+}
+
+function renderizarPaginacion(totalPaginas) {
+  const paginacion = document.getElementById("paginacion");
+  paginacion.innerHTML = "";
+
+  if (totalPaginas <= 1) return;
+
+  if (paginaActual > 1) {
+    const btnPrev = document.createElement("button");
+    btnPrev.textContent = "◀️";
+    btnPrev.className = "px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded";
+    btnPrev.onclick = () => cambiarPagina(paginaActual - 1);
+    paginacion.appendChild(btnPrev);
+  }
+
+  for (let i = 1; i <= totalPaginas; i++) {
+    const btn = document.createElement("button");
+    btn.textContent = i;
+    btn.className = `px-3 py-1 rounded ${i === paginaActual ? "bg-yellow-400 text-black font-bold" : "bg-gray-700 hover:bg-gray-600"}`;
+    btn.onclick = () => cambiarPagina(i);
+    paginacion.appendChild(btn);
+  }
+
+  if (paginaActual < totalPaginas) {
+    const btnNext = document.createElement("button");
+    btnNext.textContent = "▶️";
+    btnNext.className = "px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded";
+    btnNext.onclick = () => cambiarPagina(paginaActual + 1);
+    paginacion.appendChild(btnNext);
+  }
+}
+
+function cambiarPagina(nuevaPagina) {
+  paginaActual = nuevaPagina;
+  renderizarMangas();
+}
+
+function mostrarModal(manga) {
+  document.getElementById("modal-titulo").textContent = manga.nombre;
+  document.getElementById("modal-imagen").src = manga.imagen || 'ima/default.png';
+  document.getElementById("modal-autor").textContent = "Autor: " + (manga.autor || 'Desconocido');
+  document.getElementById("modal-descripcion").textContent = manga.descripcion || '';
+  document.getElementById("modal").classList.remove("hidden");
+}
+
+function cerrarModal() {
+  document.getElementById("modal").classList.add("hidden");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  setTimeout(() => document.body.classList.add("loaded"), 50);
+  renderizarMangas();
+});
+</script>
+</body>
+</html>

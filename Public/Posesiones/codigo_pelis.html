@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lista de Animes</title>
+  <script src="/assets/tailwind.js"></script>
+  <link href="/assets/fonts.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0f172a;
+      color: white;
+    }
+    .fade-page { opacity: 0; transition: opacity 0.5s ease; }
+    body.loaded .fade-page { opacity: 1; }
+
+    /* Animación modal */
+    @keyframes zoomIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .modal-animado {
+      animation: zoomIn 0.3s ease-out;
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+
+
+
+
+
+  <nav class="bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 text-center text-sm md:text-base font-semibold uppercase tracking-wider">
+    <a href="/../e.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+  </nav>
+
+  <!-- Encabezado -->
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div class="relative flex items-center justify-between">
+      <div class="absolute -left-4 md:-left-10 z-20">
+  <video autoplay muted loop
+         class="w-40 h-40 md:w-52 md:h-52 object-cover rounded-full border-4 border-yellow-400 shadow-2xl">
+    <source src="/ruta/pose-pelis.mp4" type="video/mp4">
+  </video>
+      </div>
+      <div class="w-full bg-purple-800 h-28 md:h-32 rounded-xl flex items-center pl-48 pr-6 z-10 shadow-lg">
+        <h2 class="text-2xl md:text-4xl text-yellow-400 font-bold ml-auto">Obras</h2>
+      </div>
+    </div>
+
+<a href="pelis_index.html">Registros </a> | <a href="codigo_pelis.html"> Webscraping</a>
+
+
+<section id="comandos">
+    <h3 class="text-yellow-400 text-2xl md:text-3xl font-bold border-b border-yellow-400 pb-2 mb-6">📋 Comandos Webscraping</h3>
+  
+    <div class="bg-gray-800 p-4 rounded-xl relative shadow-lg">
+       <pre id="codigo-iclone" class="whitespace-pre-wrap text-green-300 text-sm md:text-base font-mono">
+ 
+
+import requests
+from bs4 import BeautifulSoup
+import requests
+from bs4 import BeautifulSoup
+import numpy as np
+import pandas as pd
+from time import sleep
+import pymysql
+import requests
+from bs4 import BeautifulSoup
+import numpy as np
+import pandas as pd
+from time import sleep
+import pymysql
+
+
+lista=['My Last Day','7seeds','acca','Akame ga Kill!'];
+       
+# lista='APARI3NCIAS','Assassination Classroom',
+lista1=[];
+#lista =["Futurama"];
+escluidos=[];   
+Lista_de_peliculas=[];
+
+
+escluidos=[];   
+Lista_de_peliculas=[];
+
+#El input del buscador
+id="top-search-input"
+
+# ir a la web https://www.filmaffinity.com/es/search.php?stext=NOMBRE_PELICULA
+# y coger el primer data-movie-id que aparezca
+
+lista_deurl=[]
+for nombrePeli in lista:
+    url = "https://www.filmaffinity.com/es/search.php?stext=" + nombrePeli
+    sleep(3)
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, "html.parser") 
+    
+    try:
+        peliId = soup.find("div", class_ = "rate-movie-box") # Casos de un solo resultado
+        if(peliId is None):
+            peliId = soup.find("div", class_ = "movie-card-1") # Casos de multiples resultados, cojo la primera peli (Comparar fecha )        
+        peliIdValue = peliId['data-movie-id'];
+        lista_deurl.append("https://www.filmaffinity.com/es/film" + peliIdValue + ".html")
+        Lista_de_peliculas.append(nombrePeli)
+    except:
+        print("continue")
+        escluidos.append(nombrePeli)
+    
+print(lista_deurl);
+
+
+
+try:
+    connection = pymysql.connect(host='localhost',user='root',password='Kojinanjo1@',db='pelis')
+    print("Conectado correctamente")
+except pymysql.Error as e:
+    print("No puede conectar con MySQL %d: %s" %(e.args[0], e.args[1]))
+
+cursor = connection.cursor()
+
+print("CONTINUE")
+
+df = pd.DataFrame()
+
+imagen =[]
+titulos = []
+años = []
+duraciones = []
+paises= []
+direcciones= []
+guiones= []
+musicas= []
+fotografias= []
+repartos= []
+productoras= []
+generos= []
+grupos= []
+sinopsises= []
+
+
+# Crear un DataFrame
+
+for url in lista_deurl:
+    
+    print(url)
+    reparto = ""
+    
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, "html.parser")
+
+    titulo = soup.find("dd").text.strip()
+    año = soup.find("dd", attrs = {"itemprop" : "datePublished"}).text
+    
+    duracionEl = soup.find("dd", attrs = {"itemprop" : "duration"})
+    if duracionEl is None:
+        duracion = ""
+    else:
+        duracion = duracionEl.text
+        
+    print(duracion)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    pais = soup.find("span", attrs = {"id" : "country-img"}).find("img")["alt"]
+    
+    
+    if soup.find_all("div", class_ = "credits")is None or len(soup.find_all("div", class_ = "credits")) <= 3:
+        direccion =""
+    else:
+        direccion ="".join(soup.find_all("div", class_ = "credits")[2].text)
+    
+    
+    
+    if soup.find_all("div", class_ = "credits")is None or len(soup.find_all("div", class_ = "credits")) <= 3:
+        guion =""
+    else:
+        guion ="".join(soup.find_all("div", class_ = "credits")[2].text)    
+    
+
+    
+    if soup.find_all("div", class_ = "credits") is None or len(soup.find_all("div", class_ = "credits")) <= 3:
+        musica= ""
+    else:
+        musica = " ".join(soup.find_all("div", class_ = "credits")[3].text)
+    
+    
+       
+    fotografia = soup.find("div", attrs = {"id" : "movie-main-image-container"}).find("img")["src"]
+    
+    
+    
+    
+    if soup.find_all("nb", class_ = "credits") is None or len(soup.find_all("nb", class_ = "credits")) <= 0:
+        reparto= ""
+    else:
+        reparto = " ".join([t.text for t in soup.find("nb", class_ = "credits").find_all("span", class_ = "nb")])    
+        
+        
+    
+    if soup.find_all("dd", class_ = "card-producer") is None or len(soup.find_all("dd", class_ = "card-producer")) <= 0:
+        productora= ""
+    else:
+        productora = " ".join([t.text for t in soup.find("dd", class_ = "card-producer").find_all("span", class_ = "nb")])    
+
+   
+    genero = " ".join(soup.find("dd", class_ = "card-genres").text.split())      
+        
+
+    # grupo = " ".join(soup.find("dd", attrs = {"style" : "position: relative;"}).text.split())
+    
+    if soup.find("dd", attrs = {"style" : "position: relative;"}) is None:
+        grupo = ""
+    else:
+        grupo = " ".join(soup.find("dd", attrs = {"style" : "position: relative;"}).text.split())
+        
+        
+    if soup.find("dd", attrs={"itemprop": "description"}):
+        sinopsis = soup.find("dd", attrs={"itemprop": "description"}).text
+    else:
+        sinopsis = ""
+        
+        
+    titulos.append(titulo)
+    años.append(año)
+    duraciones.append(duracion)
+    paises.append(pais)
+    direcciones.append(direccion)
+    guiones.append(guion)
+    musicas.append(musica)
+    
+    
+    fotografias.append(fotografia)
+    repartos.append(reparto)
+    productoras.append(productora)
+    generos.append(genero)
+    grupos.append(grupo)
+    sinopsises.append(sinopsis)
+    
+    sleep(3)
+    
+
+df["titulo"] = [] if titulos is None else titulos  
+df["año"] = [] if años is None else años
+df["duraciones"] = [] if duraciones is None else duraciones
+df["paises"] = [] if  paises is None else  paises
+df["direcciones"] = [] if direcciones is None else  direcciones
+df["guiones"] = [] if guiones is None else  guiones
+df["musicas"] = [] if musicas is None else  musicas
+df["fotografias"] = [] if fotografias is None else  fotografias
+df["repartos"] = [] if repartos is None else repartos
+df["productoras"]= [] if productoras is None else  productoras
+df["generos"] = [] if generos is None else  generos
+df["grupos"] = [] if grupos is None else  grupos
+df["sinopsises"] = [] if sinopsises is None else  sinopsises
+
+
+try:
+    sql = """INSERT INTO `pelis`.`pelis2` (`titulo`,`anio`,`duraciones`,`paises`,`direcciones`,`guiones`,
+`musicas`,`fotografias`,`repartos`,
+`productoras`,`generos`,`grupos`,`sinopsises`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+    print(sql)
+    for ind in df.index:
+        cursor.execute(sql, (df['titulo'][ind], df['año'][ind], df['duraciones'][ind], df['paises'][ind], 
+                             df['direcciones'][ind], df['guiones'][ind], df['musicas'][ind], df['fotografias'][ind], 
+                             df['repartos'][ind], df['productoras'][ind], df['generos'][ind], df['grupos'][ind], df['sinopsises'][ind] ))
+        print(df['titulo'][ind])
+        print(df['año'][ind])
+        print(df['duraciones'][ind])
+        print(df['paises'][ind])
+        print(df['direcciones'][ind])
+        print(df['guiones'][ind])
+        print(df['musicas'][ind])
+        print('Ahora van las fotos')
+        print(df['fotografias'][ind])
+        print('Ya acabaron las fotos')
+        print(df['repartos'][ind])
+        print(df['productoras'][ind])
+        print(df['generos'][ind])
+        print(df['grupos'][ind])
+        print(df['sinopsises'][ind])
+    connection.commit() 
+except pymysql.Error as e:
+    print("Error BBDD %d: %s" %(e.args[0], e.args[1]))
+
+
+print (escluidos)
+
+
+
+      </pre>
+  
+      <button onclick="copiarCodigo()" class="absolute top-2 right-2 bg-yellow-400 text-black font-bold px-3 py-1 rounded hover:bg-yellow-500 transition">
+        Copiar
+      </button>
+    </div>
+  </section>
+  ✅ 2. Añade este script justo antes de </body>:
+  html
+  Copiar
+  Editar
+  <script>
+    function copiarCodigo() {
+      const codigo = document.getElementById("codigo-iclone").innerText;
+      navigator.clipboard.writeText(codigo)
+        .then(() => {
+          alert("¡Comando copiado al portapapeles!");
+        })
+        .catch(err => {
+          console.error("Error al copiar", err);
+          alert("Error al copiar el texto");
+        });
+    }
+  </script>
+
+<div class="max-w-7xl mx-auto px-6 mt-8">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Lista 1 -->
+    <div class="bg-gray-800 rounded-xl p-4 shadow">
+      <h4 class="text-yellow-400 text-xl font-bold mb-3">Castellano</h4>
+      <pre class="whitespace-pre-wrap leading-6">
+
+
+
+
+
+
+
+) (2 veces)
+Animales Fantasticos Los Secretos De Dumbledore ( (2022) (2 veces)
+Animales Fant Sticos Y DNde Encontrarlos (2 veces)
+Coco (2 veces)
+Doctor ExtraO (2 veces)
+El Recuerdo De Marnie (2 veces)
+Freaky Tales ( (2024) (2 veces)
+Gru 4 Mi Villano Favorito ( (2024) (2 veces)
+Hercules (2 veces)
+Historias De Nuestro Cine ( (2019) (2 veces)
+Jumanji Bienvenidos A La Jungla (2 veces)
+La Hierba Errante (2 veces)
+T De Teatre  Com Pot Ser Que TEstimi Tant (2 veces)
+The Best Hercules Movie Ever (2 veces)
+Una PelCula De Minecraft ( (2025) (2 veces)
+Vaiana (2 veces)
+Wallace Y Gromit La Venganza Se Sirve Con Plumas ( (2025) (2 veces)
+
+
+
+      </pre>
+    </div>
+
+    <!-- Lista 2 -->
+    <div class="bg-gray-800 rounded-xl p-4 shadow">
+      <h4 class="text-yellow-400 text-xl font-bold mb-3">Ingles</h4>
+      <pre class="whitespace-pre-wrap leading-6">
+
+El Caso Zero
+06 Harry Potter Y El Misterio Del Principe (2009)
+10 Vidas ( (2024)
+1111Todos Al Suelo ( (1981)
+15  T De Teatre
+1Aasuzume No Tojimari
+1Dakaspain
+20Th Century Boys  Capitulo 3  RedenciN (2008)
+20Th Century Boys Cap 2 La Ltima Esperanza
+20Th Century Boys CapTulo 1 El Principio Del Fin
+25 Clase Historia EspaA 08 04 25
+26 Clase Historia EspaA 22 04 25
+27 Clase Historia EspaA 29 04 25
+28 Clase Historia EspaA 06 05 25
+29 Clase Historia EspaA 13 05 25
+3 Ninjas En El Parque De Atracciones
+5  Harry Potter 5 Y La Orden Del Fenix ( (2007)
+5 Centimetros Por Segundo
+A Bittersweet Life
+A Line Of Fire (En La Linea De Fuego) ( (2025)
+A Silent Voice
+Abominable
+Agatha Christie  Matar Es Facil Claude Whatham (1982)
+Agente 69 Jensen Contra Sagitario (1978)
+Agente CinturN Negro
+Agente Infiltrado ( (2025)
+Agua Tibia Bajo Un Puente Rojo
+Ag Rralo Como Puedas ( (2025)
+Alicia En La EspaA De Las Maravillas ( (1978)
+Alicia Y El Espejo M Gico ( (1998)
+Almost Cops
+American Underdog
+Amigos Imaginarios ( (2024)
+Amor Bajo El Espino Blanco
+Amor De Gata
+Amor En Conserva (David Miller (1949)
+Amphetamine
+Amphetamine (2010)
+Ancien Y El Mundo Magico
+Angeles Gordos
+Angeles Guardianes ( (1995)
+Animal Crackers ( (1930)
+Animales Fantasticos Los Crimenes De Grindelwald
+Animales Fantasticos Los Secretos De Dumbledore ( (2022)
+Animales Fantasticos Los Secretos De Dumbledore ( (2022)
+Animales Fant Sticos Y DNde Encontrarlos
+Animales Fant Sticos Y DNde Encontrarlos
+Animales Fant Sticos Y DNde Encontrarlos 2  Los Crimenes De Grindelwald
+AnimeEsp Com Violet Evergarden Movie CastLatJap ( (2020)
+Anna Karenina
+Ant Man Quantumania
+Antonio Ozores
+Apartment 7A ( (2024)
+Aquaman Y El Reino Perdido ( (2023)
+Aquellos DAs Felices ( (2006)
+Aquiles Y La Tortuga
+Archenemy
+Argentina (1985)
+Argylle ( (2024)
+Argylle La Super Spia (2024)
+Arnold Schwarzenegger Arnold Stang  Hercules In New York (1969)
+Arrietty Y El Mundo De Los Diminutos
+Artemis Fowl
+As Empez Hollywood
+Asesinato A Bordo ( (1964)
+Asesinato En Beverly Hills (Sunset (1988)
+Asesinato Online ( (1930)
+Asesinatos En La Radio ( (1994)
+Ashita No Joe Movie 2 TomorrowS Joe 2
+Ashita Sekai Ga Owaru Toshitemo
+Asterix Y Obelix Y El Reino Medio ( (2023)
+Asteroid City
+Aventura  T De Teatre ( (2012)
+Bananas
+Bangkok Love Story
+Banquete De Bodas
+Barrenderos Espaciales
+Batman Del Futuro El Regreso Del Joker ( (2000)
+Batman The Doom That Came To Gotham
+Becket ( (1964)
+Belle
+Belle (Mamoru Hosoda (2021)
+Better Days
+Better Man ( (2024)
+Big Fish  Begonia
+Bill Y Ted Salvan El Universo
+BitelchS BitelchS ( (2024)
+Black Clover La Espada Del Rey Mago
+Blame (2017)
+Blancanieves (Snow White) ( (2025)
+Blue Giant ( (2023)
+Blue Lock La Pelicula Episodio Nagi ( (2024)
+Blues Brothers (2000)
+Bobs Burguers La Pelicula
+BodegN Con Fantasmas ( (2024)
+Boy Erased (Identidad Borrada
+Broadway Danny Rose
+Bros  M S Que Amigos
+Bruja Mas Que Bruja
+Buda 2 Camino A La Iluminacion ( (2014)
+Buda El Gran Viaje Tezuka Osamu
+Buenos DAs
+Bullet Train
+Bullet Train ( (2022)
+Bungaku Shoujo Book Girl
+Burbuja
+Buscando A La Magica Doremi
+Canta
+Canta 2 (Sing 2) ( (2021)
+Canta Con Una Chispa De ArmonA
+Cantinflas
+Capitulo Del Cielo Overtura
+Capit N AmRica Brave New World
+Carta Blanca
+Celebrity (Di Woody Allen (1998)
+Cells At Work
+Cenizas Del ParaSo
+Cero En Conducta
+Cervantinas
+Charlie Chan En La Isla Del Tesoro ( (1939)
+Chicken Run Amanecer De Los Nuggets
+Chicos De Hielo En El TrPico
+Chikyuugai Shounen Shoujo
+Cianuro Espumoso
+Ciao Alberto ( (2021)
+Cider No You Ni Kotoba Ga Wakiagaru
+Cine ClasicoLa Odisea De Ulises (Eeuu (1997)
+Clerks Iii
+Cloud
+Coco
+Coco
+Codigo Emperador
+Colorful (Karafuru (2010)
+Como Gusteis ( (2006)
+Con Amor Simon
+Confessions
+Copacabana (Alfred E Green (1947)
+Cordillera
+Corre Melos
+Criss Cross
+Criss Cross (Robert Siodmak (1949)
+CrNica De Un Asesino En Serie
+Crows Zero 1
+Crows Zero 2
+Crows Zero 3
+Cruella
+Cuentos Al Caer La Noche
+Cuentos De La Luna Palida De Agosto Akira Kurosawa
+Cuentos De Terramar
+Cuentos De Tokio
+Cuestion De Justicia
+Cuidado Con Las SeOras
+Dakaretai Otoko Movie Spain Hen V1 Ts Mp4
+Danmachi
+DAs De Radio
+De Ratones Y Hombres
+De Tal Padre Tal Hijo
+Deadpool Y Lobezno ( (2024)
+Decision To Leave
+Deep Sea Viaje A Las Profundidades ( (2023)
+Del RevS
+Del RevS 2 ( (2024)
+Desde Mi Cielo
+Desmontando A Harry
+Despelote ( (2025)
+DespuS De La Tormenta
+Detective Con Rubia (Frank Tashlin (1965)
+Detective Conan Black Iron Submarine ( (2023)
+Detective Conan Movie 04
+Detective Dee 2 El Joven Detective Dee Y El Poder Del DragN Marino (2013)
+Disco Ibiza LocomA ( (2024)
+Disney 077  Un Gato Del Fbi ( (1965)
+DiveEs
+Divorcio A La Italiana ( (1961)
+DNde Est Mi Cuerpo
+Doctor Akagi
+Doctor ExtraO
+Doctor ExtraO
+Doctor Strange
+Doctor Strange En El Multiverso De La Locura
+Dos Veces Yo
+Dr Strange
+Dragon Ball Super Super Hero
+Dragon Tiger Gate( (2006)
+Duelo Silencioso
+Earwig Y La Bruja ( (2020)
+El Abanico De Lady Windermere (1949)
+El Albergue Rojo (GRard Krawczyk (2007)
+El Amor Esta En El Agua
+El Arco
+El Arpa Birmana
+El Artista Del Cristal (The Glassworker) ( (2024)
+El Barco Fantasma (Mark Robson (1943)
+El Caballero De Las Sombras
+El Callejon De Las Almas Perdidas
+El Caso 880 (Edmund Goulding (1950)
+El Caso De Hana Y Alice ( (2015)
+El Castillo A TravS Del Espejo ( (2022)
+El Castillo Ambulante
+El Castillo En El Cielo
+El Club Del Crimen De Los Jueves ( (2025)
+El Cocinero De Los Ultimos Deseos
+El Colegio De Los Animales Magicos
+El Colegio De Los Animales M Gicos 2 El Origen
+El Conde De Montecristo (2024)
+El Conflicto De Los Hermanos Marx ( (1930)
+El Contragolpe (Anche Gli Angeli Tirano Di Destro) (1974)
+El CRculo
+El Critico De Teatro
+El Cuento De La Princesa Kaguya
+El Cuervo (The Crow) ( (2024)
+El Desafio Frost Contra Nixon
+El Despertar De Los Dragones
+El Diablo Dijo No ( (1943)
+El Dios Del Trueno M S Poderoso Que Zeus MitologA Griega
+El DragN De Los Deseos
+El Efecto Mariposa ( (2004)
+El Efecto Mariposa 2 ( (2006)
+El Eroticon
+El Esqueleto De La SeOra Morales (1960)
+El Gran LO ( (1991)
+El Grito En El Cielo
+El Guardi N De Acero
+El Himno Del Corazon
+El Hombre De Toronto ( (2022)
+El Intendente Sansho ( (1954)
+El JardN De Las Palabras ( (2013)
+El Joven Detective Dee Y El Misterio De La Llama Fantasma ( (2010)
+El Jovencito Frankenstein
+El Mal No Existe ( (2023)
+El Mar Que Nos Mira
+El Maullido Del Gato
+El MillN De Madigan ( (1968)
+El Ministro De Propaganda ( (2024)
+El Mundo De Kanako
+El NiO 44
+El NiO Y La Bestia
+El OtoO De La Familia Kohayagawa
+El Otro ParS ( (2025)
+El Pais De Los Suenos ( (2022)
+El PequeO Nemo ( (1989)
+El Perro Rabioso
+El Principito
+El PuO De Zafiro Azul
+El Radioaficionado
+El Rbol De La Sangre
+El Recuerdo De Marnie
+El Recuerdo De Marnie
+El Reino
+El Reino De Los SueOs Y La Locura
+El Sabor Del Sake
+El SeOr De Los Anillos La Guerra De Los Rohirrim (2024)
+El Sexo Ataca
+El Sol Naciente
+El Sospechoso Némero 12
+El Tercer Asesinato
+El Tiempo Contigo
+El Tren De Las 4 50 ( (1961)
+El Ultimo Beso Del Kaiser
+El Ultimo Viaje Del Juez Feng
+El Vendedor De Ilusiones El Caso GeneraciN Zoe
+El Viaje De Chihiro
+El Viaje De Chihiro ( (2001)
+El Viento Se Levanta
+El Vuelo De Los Dragones ( (1982)
+Elemental Doctor Freud
+Elio ( (2025)
+Elvis And Nixon
+En La Linea De Fuego ( (1993)
+En La Mente De Un Gato
+En Lo Mas Crudo Del Crudo Invierno ((In The Bleak Midwinter)(Dir Kenneth Branagh (1995)
+En Nombre De La Tierra ( (2023)
+Encanto ( (2021)
+Encontr Al Diablo
+End Of Summer ( (2017)
+Errementari El Herrero Y El Diablo
+Escandalo En El Plato
+Escenario 0 1X04 Juicio A Una Zorra Filmin Aac2 0 H 264Bryan 122
+EsfMate Fred ( (1991)
+Estado Electrico
+Estados Unidos El PeliculN
+Estas Muerta CariO ( (1987)
+Esto S Se Hace ( (1987)
+Estoy Bien Jack ( (1959)
+Estudio 1  Las Troyanas ( (1966)
+Ex Yihadistas Completo Ý En Portada
+Expediente Netanyahu
+Experimento En La Prision De Stanford ( (2015)
+Falling
+Fantasias De Un Escritor
+Fant Stico Sr Fox
+Fight Or Flight (Sicarios En El Aire) ( (2025)
+Fire Island ( (2022)
+Fireworks
+Flavors Of Youth International Version
+Flee ( (2021)
+Flee Online ( (2021)
+Flow Un Mundo Que Salvar (2024)
+Fly Me To The Moon ( (2024)
+Forajidos (Robert Siodmak (1946)
+Freaky Tales ( (2024)
+Freaky Tales ( (2024)
+Free Guy ( (2021)
+Frozen 2
+Fuegos Artificiales ( (2023)
+Fuerza Bruta Sin Salida ( (2023)
+Fuga De PrisiN
+Fullmetal Alchemist La Alquimia Final ( (2022)
+FunciN De Noche
+Furia De Titanes ( (2010)
+Futuro Imperfecto  Nino Quevedo
+Fuun Joshi (Fujie Yamazaki (1928)
+Gantz O
+Ghost In The Shell Sac
+Ghost In The Shell Stand Alone Complex
+Gigantes Hacia La Victoria
+Gladiator (Version Extendida) Blurayrip 5 1 EspaOl (2000)
+Gladiator Ii ( (2024)
+Golden Job
+Golden Kamuy
+Golfus De Roma
+Goodbye Mother  Thua Me Con Di
+Goshu El Violoncelista
+Granujas De Medio Pelo
+Great Freedom
+Gru 4 Mi Villano Favorito ( (2024)
+Gru 4 Mi Villano Favorito ( (2024)
+Guardianes De La Galaxia Vol 3
+Ha Llegado Un Inspector An Inspector Calls (Aisling Walsh (2015)
+Habia Un Padre
+Hacia El Bosque De Las LuciRnagas
+Handscape
+Harold Y El Lapiz Magico ( (2024)
+Harry Potter
+Harry Potter 07 Y Las Reliquias De La Muerte Parte 1 ( (2010)
+Harry Potter 2 Y La Camara Secreta
+Harry Potter 4
+Harry Potter 4 Y El Caliz De Fuego ( (2005)
+Harry Potter Y El Prisionero De Azkaban 03
+Harry Potter Y La C Mara Secreta ( (2002)
+Harry Potter Y La Orden Del FNix ( (2007)
+Harry Potter Y La Piedra Filosofal
+Harry Potter Y La Piedra Filosofal ( (2001)
+Harry Potter Y Las Reliquias De La Muerte  Parte 2 ( (2011)
+Haru En El Reino De Los Gatos
+Hasta Siempre Hijo Mio (2019)
+Haunted Mansion
+Helena De Troya ( (2003)
+Hercules
+Hercules
+Hercules  Full Movie In Animation Movies Full Movies Fairy Tales
+Hercules ( (2014)
+Hercules Cd1
+Hercules PelCula Animada Completa En EspaOl Dibujos Animados PelCulas Para NiOs
+Hercules Reborn ( (2014)
+Hermanos Marx  Los Cuatro Cocos ( (1929)
+Hierro 3
+Hiroshima 2 ( (1986)
+Historia Del Ultimo Crisantemo
+Historia Humanidad
+Historias De Nuestro Cine ( (2019)
+Historias De Nuestro Cine ( (2019)
+Hogar A La Deriva
+HRcules En El Centro De La Tierra ( (1961)
+HRcules V Ext ( (2014)
+Hulk Vs
+Human Lost
+Iblard Jikan
+Illang La Brigada Del Lobo
+Indian Horse
+Indiana Jones Y El Dial Del Destino
+Infiltrado En El Kkklan
+InuOh
+InuOh ( (2021)
+Ira De Titanes
+Jaime De Armi N ( (1967)
+Jaleo En El Hotel Excelsior ( (1982)
+Jane Austen Arruin Mi Vida ( (2024)
+Josee El Tigre Y Los PecesCanibales
+Jumanji Bienvenidos A La Jungla
+Jumanji Bienvenidos A La Jungla
+Jumanji El Proximo Nivel
+Jumanji Siguiente Nivel
+Jungle Cruise
+Kanna Y Los Dioses De Octubre
+Knock On Any Door ( (1949)
+Kono Sekai No Katasumi
+Kraven The Hunter ( (2023)
+La Belleza De La Vida ( (2021)
+La Biblia En Pasta
+La Biblioteca De Los Libros Rechazados
+La Caida De La Casa Usher
+La Calle De La VergEnza
+La Carta Final
+La Casa Encantada En El Cabo
+La Casa Gucci
+La Chica SatLite Y El Chico Vaca
+La Colina De Las Amapolas
+La Comedia Sexual De Una Noche De Verano ( (1982)
+La Cumbre De Los Dioses
+La De Troya En El Palmar
+La Doncella
+La Emperatriz Yang KweiFei
+La Escopeta Nacional (Berlanga (1978)
+La Escopeta Nacional Ii
+La Escopeta Nacional Iii
+La Fortuna SonrE A Lady Nikuko
+La Gaviota ( (2018)
+La Gran Aventura De PeeWee ( (1986)
+La Herencia Del TO
+La Hierba Errante
+La Hierba Errante
+La Historia De Jayne Mansfield (1980)
+La Importancia De Llamarse Ernesto
+La Importancia De Llamarse Ernesto ( (2002)
+La Isla
+La Isla De Giovanni
+La Leyenda De Hei
+La Leyenda De La Princesa
+La Lista De No Besar De Naomi Y Ely
+La Llamaban La Madrina (1973)
+La Llave De Cristal
+La Mirada De Ulises ( (1995)
+La Mirada De Ulises (Theo Angelopoulos (1995)
+La Mirada De Ulises 1024X576 ( (1995)
+La Muerte De Belle ( (2024)
+La Mujer Del AO ( (1942)
+La Mujer Del Espia
+La Odisea (1997)
+La Odisea De Ulises Andrei Konchalovsky (1997)
+La Princesa Arete
+La Princesa Mononoke
+La Princesa Y El Piloto
+La Rosa De Versalles ( (2025)
+La Secta (A Sacrifice) ( (2024)
+La SeOra Mcginty Ha Muerto ( (1964)
+La Serpiente Blanca
+La Soga
+La Sraparker Y El Circulo Vicioso
+La Tercera Esposa
+La Tercera Ola Fascismo En La Escuela
+La Tierra Es Plana
+La Tumba De Las LuciRnagas
+La Ultima Locura De Mel Brooks
+La Ultima Noche De Boris Grushenko ( (1975)
+La Vampira De Barcelona
+La Verdad (2015)
+La Vida Acuatica
+La Villana
+La Virgen Roja ( (2024)
+Las Autonosuyas
+Las Cuatro Fant Sticas ( (2024)
+Las Dos Y Media Y Veneno ( (1959)
+Las Hermanas De Gion
+Las Troyanas ( (1971)
+Las Troyanas EurPides 360P
+Lee SuJin  Princesa
+Lightyear
+Lilo Mi Amigo El Cocodrilo ( (2022)
+Lilo Y Stitch ( (2025)
+Lily La Tigresa
+Lion
+Llamad A Cualquier Puerta
+Llanto De Primavera
+Lo Que Le Falta A Esta Estrella
+Lobos Universitarios
+Looney Tunes (Looney Toons) The Ducktators ( (1942)
+Lorax En Busca De La Trufula Perdida
+Los 4 Fant Sticos Primeros Pasos ( (2025)
+Los 4 Fant Sticos Primeros Pasos (2025)
+Los Amantes Crucificados
+Los Amigos De Peter
+Los Autonomicos
+Los Bajos Fondos
+Los Caballeros Del Zodiaco ( (2023)
+Los Caballeros Del Zodiaco Capitulo Del Cielo Overture
+Los Canallas Duermen En Paz
+Los Canallas Duermen En Paz (Akira Kurosawa (1960)
+Los Chicos De La Banda ( (1970)
+Los Chicos De La Banda ( (2020)
+Los Commitments
+Los Descendientes CorazN Rebelde ( (2024)
+Los Desenredos Del Amor
+Los Hermanos Marx El Mundo InsLito
+Los Hermanos Marx En El Oeste ( (1940)
+Los Heroes Del Tiempo
+Los Juicios De Oscar Wilde
+Los Mitchell Contra Las M Quinas
+Los MSicos De Gion
+Los NiOs Del Mar
+Los NiOs Lobo
+Los Ojos De Tammy Faye
+Los Renglones Torcidos De Dios
+Los Tenenbaums Una Familia De Genios
+Los Tigres Del Tren
+Los Tipos Malos 2 ( (2025)
+Lu Over The Wall
+Luca
+Luna Park
+Lupin Iii The First
+Lupin Y El Corazon Purpura De Cleopatra
+Madame Rosa
+Madame Web
+Made In Abyss
+Mal Dia Para Pescar
+Manhattan ( (1979)
+Manuel Y Clemente (1986)
+Maquia Una Historia De Amor Inmortal
+MarA (MarA Callas) ( (2024)
+Maravillosa Familia De Tokio
+Marlowe ( (2022)
+Marlowe Detective Muy Privado
+Mary Y La Flor De La Bruja
+Master Of The Drunken Fist Beggar So
+Matrimonio De Sabuesos  Cianuro Espumoso ( (1983)
+Matrix Resurrections
+Maxima Ansiedad ( (1977)
+Me Llamo Loh Kiwan ( (2024)
+Menudo Yerno
+Mercenario
+Mi Hermosa LavanderA Stephen Frears (1985)
+Mi Querido Monstruo
+Mi Vecino Totoro
+Mientras Nueva York Duerme (Fritz Lang (1956)
+Mil Ojos Tiene La Noche
+Millennium Actress
+Mira Como Corren ( (2022)
+Mirai Mi Hermana PequeA
+Mis Vecinos Los Yamada
+Mision Posible
+Miss Hokusai
+Misterio En Venecia
+Mizoguchi
+Modest Heroes
+Mononoke El Fantasma Bajo La Lluvia ( (2024)
+Mononoke Ii Las Cenizas De La Ira ( (2025)
+Monsieur Chocolat
+Monstruo ( (2023)
+Motherless Brooklyn
+Mp3 )
+Mr Link El Origen Perdido ( (2019)
+Mutafukaz
+My Hero Academia Dos Heroes
+My Hero Academia El Despertar De Los Heroes ( (2020)
+Nagasaki Recuerdos De Mi Hijo
+Nameless Gangster
+Nausicaa En El Valle Del Viento
+Neoptàlemo  El Hijo Cruel De Aquiles Que Destruy Troya Ý La Historia Completa
+Nicky La Aprendiz De Bruja
+Night Is Short Walk On Girl
+Ninokuni
+NMero Desconocido Falsa Identidad En El Instituto
+No Es El Mesias Es Un Sinverguenza
+No Game No Life Zero
+Nos Hemos Extinguido
+Nostos El Retorno (Franco Piavoli (1990)
+Ocurri Cerca Su Casa
+Okja
+Once Jovenes
+Onda Expansiva Shock Wave
+One Piece Film Red
+OperaciN Canad (Michael Moore (1995)
+Operacion Chuleta De Ternera (JeanMarie Poir (1990)
+Orejas Largas
+Orgullo En Juego
+Orlando ( (1992)
+Oveja Sin Pastor
+Palabras En Las Paredes Del BaO
+Palabras Que Burbujean Como Un Refresco ( (2021)
+Paprika El Reino De Los SueOs
+Papy En La Resistencia Papy Fait De La RSistance (JeanMarie Poir (1983)
+Paradise Hills
+Parenostre ( (2025)
+ParçSitos
+PeeWees Big Holiday
+Penguin Highway El Misterio De Los PingInos
+Phantom ( (2023)
+Phoenix Wright Ace Attorney
+Pistoleros De Agua Dulce
+Pitufos ( (2025)
+Plumas De Caballo ( (1932)
+Polic N ( (2025)
+Pompoko
+Ponyo En El Acantilado (2008)
+Porco Rosso
+Primavera TardA
+Primavera Verano OtoO Invierno Y Primavera
+Principito
+Promare Puromea
+PsychoPass  Sinners Of The System Case 1
+PsychoPass Movie
+PsychoPass Providence ( (2023)
+PuAles Por La Espalda El Misterio De Glass Onion
+Puedo Escuchar El Mar
+Qu Tal Pussycat (1965)
+Que Me Pasa Doctor ( (1972)
+Que Vienen Los Socialistas
+Quien Asesino A Los Principes DeLa Torre
+Quien Es Quien ( (2024)
+Quiero Comerme Tu Pancreas
+Rabos El Musical ( (2024)
+Ralph Rompe Internet
+Ramon Y Ramon ( (2025)
+Rapsodia En Agosto
+Rebobine Por Favor
+Reclutas Con Trampa
+Recuerdos
+Recuerdos Del Ayer
+Remando Al Viento
+Rock Bottom ( (2024)
+Rojo Blanco Y Sangre Azul
+Romance Asesino ( (2023)
+RthAthena( (1954)
+Salom El Precio De La PasiN (SalomeS Last Dance) (Ken Russelll (1988)
+Salvaje Despertar
+Sembrando Ilusiones
+Septiembre
+Shadows Of Yesterday
+Si La Cosa Funciona ( (2009)
+Sin Salida
+Sing A Bit Of Harmony
+Sleeper (Woody Allen (1973)
+SNeca ( (2023)
+Sombras Y Niebla ( (1992)
+Sonic 3 La Pelicula ( (2024)
+Sopa De Ganso (Leo Mccarey (1933)
+Soul
+Soul ( (2020)
+Soy O No Soy (Alan Johnson (1983)
+Soy Un Cyborg
+Spider Man Un Nuevo Universo Hd
+SpiderMan Un Nuevo Universo
+Spy X Family Codigo Blanco ( (2023)
+Stand By Me Doraemon 2
+Steve Y La Liga De Los Monstruos
+Stico Comedia Infantil Guerrero36
+Strip Jack Naked (Ron Peck (1991)
+Su Propia Victima ( (1964)
+SueO LCido ( (2017)
+SueOs De Un Seductor
+Summer Time Machine Blues
+Summer Wars
+Superman ( (2025)
+Superman Hijo Rojo
+Superman Shazam
+Susurros Del CorazN
+Suzume (2023)
+Suzume No Tojimari (2022)
+Sweet Smell Of Sucess (Chantaje En Broadway (1957)
+Sword Art Online Movie Ordinal Scale
+Sword Of The Stranger
+Sympathy For Lady Vengeance
+Sympathy For Mr Vengeance
+T De Teatre  Aix No S Vida
+T De Teatre  Aixo No Es Vida ( (2003)
+T De Teatre  Com Pot Ser Que TEstimi Tant
+T De Teatre  Com Pot Ser Que TEstimi Tant
+T De Teatre (2012)
+Tarzan Und Die Amazonen  Tarzan And The Amazons  Tarzan Y Las Amazonas ( (1945)
+Tarz N En Nueva York
+Tasogare
+Teatre  E V A  T De Teatre
+TeatroMedea De Euripides (Teatro De Siempre 512 (1966)
+Tekkon Kinkreet
+TEstimo Si He Begut
+TEstimo Si He Begut (Dagoll DagomLa BrutalT De Teatre)(Dvbrip (2022)
+The Apprentice La Historia De Trump ( (2024)
+The Berlin File
+The Best Hercules Movie Ever
+The Best Hercules Movie Ever
+The Dancing Girl Of Izu Koi No Hana Saku Izu No Odoriko
+The Farewell
+The Fat Man( (1951)
+The Flash
+The King And The Clown (2005)
+The Marvels ( (2023)
+The Meaning Of Live
+The New King Of Comedy
+The Night Is Short Walk On Girl
+The Ritz
+The Secret Reunion
+The Story Of Mankind ( (1957)
+The Teahouse Of The August Moon  La Casa Delte Alla Luna DAgosto ( (1956)
+The Wonderland
+The Wonderland (Keiichi Hara (2019)
+The Yellow Sea ( (2010)
+Thor Love And Thunder
+Thunderbolts
+Tiana Y El Sapo
+Tibet Inu MonogatariThe Tibetan Dog
+Tienda De Locos
+Tiger  Bunny  The Rising
+Time
+Todo A La Vez En Todas Partes
+Todos Lo Hacen
+Todos Los Hombres Del Presidente
+Tojo La Navaja Japonesa Del Miedo
+Tokio Blues
+Tokyo Godfathers
+Tokyo Marble Chocolate Ova 1
+Tokyo Marble Chocolate Ova 2
+Tokyo Revengers
+Tolkien
+Tom Of Finland
+Toma El Dinero Y Corre
+Tormenta De Verano Summer Storm Sommersturm (2004)
+Transformers 5
+Tres Jesucristos
+Trolls 3 Todos Juntos ( (2023)
+Tu Color ( (2024)
+Uchiage Hanabi Shita Kara Miru Ka Yoko Kara Miru Ka
+Ulises ( (1954)
+Ulises (Mario Camerini (1954)
+Ulises Y La Isla De La Niebla  5 1 (2010)
+Ulises Y La Isla De La Niebla (Odysseus) ( (2008)
+Ulises Y La Isla De La Niebla Xvid
+Ultima Noche En El Soho ( (2021)
+Un Asunto De Familia
+Un DA (HaRoo) (2017)
+Un DA En Las Carreras
+Un Equilibrio Delicado (Tony Richardson (1973)
+Un Espia Y Medio
+Un Funeral De Locos ( (2025)
+Un Golpe Sobrenatural
+Un Monstruo Viene A Verme
+Un RatN En La Luna (The Mouse On The Moon) (1963)
+Un Segundo
+Un Tipo De Altura (The Tall Guy (1989)
+Una Abogada Brillante ( (2025)
+Una Banda De Cuidado (2000)
+Una Carta Para Momo
+Una Chica Del Siglo Xx
+Una Familia De Tokio
+Una Mafia De Locos
+Una Monja Y Un Don Juan
+Una Noche En Casablanca
+Una Noche En La Pera (Sam Wood (1935)
+Una Obra Maestra
+Una PelCula De Minecraft ( (2025)
+Una PelCula De Minecraft ( (2025)
+Una PequeA ConfusiN ( (2024)
+Una Receta Familiar
+Una Tarde En El Circo ( (1939)
+Una Voz Silenciosa
+Uno Dos Tres
+Upsss 2 Y Ahora Donde Esta Noe
+Upsss Donde Esta Noe
+Utamaro Y Sus Cinco Mujeres (Kenji Mizoguchi (1946)
+Vaiana
+Vaiana
+Vaiana ( (2016)
+Vaiana 2
+Vaiana 2(Moana 2) (2024)
+Valhalla ( (1986)
+Vengadores  Infinity War
+Vengadores Endgame
+Venganza Implacable ( (2024)
+Venom El Ltimo Baile ( (2024)
+Venom El Ultimo Baile ( (2024)
+Verano De Corrupcion (Apt Pupil) (1998)
+Verano De Una Familia De Tokio
+Viaje A Agartha
+Viaje A Nara
+Vida En Sombras ( (1948)
+Violet Evergarden Gaiden
+Violet Evergarden Recuerdos
+Vive Como Quieras
+Vivir
+Wakaokami Wa Shougakusei Movie
+Wallace Y Gromit La Venganza Se Sirve Con Plumas ( (2025)
+Wallace Y Gromit La Venganza Se Sirve Con Plumas ( (2025)
+WangUi Namja  El Rey Y El Payaso  King And The Clown
+Wicked ( (2024)
+Wonderful Days
+Wonka ( (2023)
+Woochi Cazador De Demonios
+Words And Music (1948)
+Xxx Los Amantes Crucificados ( (1954)
+Y Muere Porque Te Toca
+Yojimbo (El Mercenario)( (1961)
+Your Name
+Z Dungeons  Dragons Honor Entre Ladrones
+Zelig
+
+      </pre>
+    </div>
+  </div>
+</div>
+
+
+
+

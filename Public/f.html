@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Subtareas de IA</title>
+  <script src="/assets/tailwind.js"></script>
+  <link href="/assets/fonts.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0f172a;
+      color: white;
+    }
+
+    .img-card {
+      width: 160px;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 0.5rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .img-card:hover {
+      transform: scale(1.1) rotate(2deg);
+      box-shadow: 0 0 25px #facc15;
+      z-index: 10;
+    }
+
+    .subtitulo {
+      font-weight: bold;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+
+    .page-btn {
+      @apply bg-black bg-opacity-60 text-yellow-400 px-4 py-2 rounded-lg font-bold text-lg hover:scale-105 transition;
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <!-- 🔝 Navbar -->
+  <nav class="w-full bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 shadow-md flex justify-center space-x-6 text-sm md:text-base font-semibold uppercase tracking-wider">
+    <a href="a.html" class="hover:text-yellow-400">IA</a>
+    <a href="b.html" class="hover:text-yellow-400">Mitología</a>
+    <a href="c.html" class="hover:text-yellow-400">Misterios</a>
+    <a href="d.html" class="hover:text-yellow-400">Tareas</a>
+    <a href="e.html" class="hover:text-yellow-400">Reportajes</a>
+    <a href="f.html" class="hover:text-yellow-400">Gastos</a>
+    <a href="g.html" class="hover:text-yellow-400">Mi Monstruo</a>
+    <a href="h.html" class="hover:text-yellow-400">Bell</a>
+    <a href="i.html" class="hover:text-yellow-400">Atento</a>
+    <a href="j.html" class="hover:text-yellow-400">Posesiones</a>
+  </nav>
+
+  <section class="p-10">
+    <h1 class="text-center text-4xl font-bold mb-10 text-yellow-400"> Economia</h1>
+
+    <!-- Contenedor de tarjetas con paginación -->
+    <div id="cardsContainer" class="flex flex-wrap justify-center gap-8 mb-10"></div>
+
+    <!-- Botones de paginación -->
+    <div class="flex justify-center gap-6">
+      <button onclick="prevPage()" id="prevBtn" class="page-btn hidden">&laquo; Anterior</button>
+      <button onclick="nextPage()" id="nextBtn" class="page-btn">&raquo; Siguiente</button>
+    </div>
+  </section>
+
+  <!-- 🔚 Footer -->
+  <footer class="text-center py-6 text-gray-400 text-xs">
+    &copy; 2025 Subtareas IA – Centro de Información Avanzada.
+  </footer>
+
+  <script>
+    const subtareas = [
+   { nombre: "Gastos",    ruta: "gastos.html", img: "ruta/gastos.png" },
+   { nombre: "mangas_de_pago",    ruta: "mangas_de_pago.html", img: "ruta/mangas_de_pago.png" },
+  { nombre: "compras",    ruta: "compras.html", img: "ruta/compras.png" },
+  { nombre: "suscripciones",    ruta: "suscripciones.html", img: "ruta/suscripciones.png" },
+  { nombre: "pagos_fraccionados",    ruta: "pagos.html", img: "ruta/pagos_fraccionados.png" },
+ 
+  ];
+
+    const cardsPerPage = 9;
+    let currentPage = 1;
+
+    function renderCards() {
+      const container = document.getElementById('cardsContainer');
+      container.innerHTML = "";
+
+      const start = (currentPage - 1) * cardsPerPage;
+      const end = start + cardsPerPage;
+      const pageItems = subtareas.slice(start, end);
+
+      pageItems.forEach(item => {
+        const div = document.createElement('div');
+        div.className = "text-center";
+        div.innerHTML = `
+          <a href="${item.ruta}">
+            <img src="${item.img}" class="img-card mx-auto" alt="${item.nombre}">
+          </a>
+        `;
+        container.appendChild(div);
+      });
+
+      // Botones
+      document.getElementById('prevBtn').classList.toggle('hidden', currentPage === 1);
+      document.getElementById('nextBtn').classList.toggle('hidden', end >= subtareas.length);
+    }
+
+    function nextPage() {
+      const totalPages = Math.ceil(subtareas.length / cardsPerPage);
+      if (currentPage < totalPages) {
+        currentPage++;
+        renderCards();
+      }
+    }
+
+    function prevPage() {
+      if (currentPage > 1) {
+        currentPage--;
+        renderCards();
+      }
+    }
+
+    // Inicializa
+    window.addEventListener("load", renderCards);
+  </script>
+</body>
+</html>

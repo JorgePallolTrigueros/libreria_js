@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sabemos por nieves coin Costrimna</title>
+  <script src="/assets/tailwind.js"></script>
+  <link href="/assets/fonts.css" rel="stylesheet">
+  <style>
+    body { font-family: 'Orbitron', sans-serif; background-color: #0f172a; color: white; }
+    #contenedor-tarjetas img { background-color: white; }
+    .line-clamp-5 {
+      display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden;
+    }
+  </style>
+</head>
+<body class="min-h-screen p-6">
+
+  <!-- Navbar -->
+  <nav class="bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 text-center text-sm md:text-base font-semibold uppercase tracking-wider">
+    <a href="/../e.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+  </nav>
+
+  <!-- Encabezado -->
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div class="relative flex items-center justify-between">
+      <div class="absolute -left-4 md:-left-10 z-20">
+        <video autoplay muted loop
+               class="w-40 h-40 md:w-52 md:h-52 object-cover rounded-full border-4 border-yellow-400 shadow-2xl">
+          <source src="/ruta/Sabemos.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="w-full bg-purple-800 h-28 md:h-32 rounded-xl flex items-center pl-48 pr-6 z-10 shadow-lg">
+        <h2 class="text-2xl md:text-4xl text-yellow-400 font-bold ml-auto">¿Por qué creemos en sabemos?</h2>
+      </div>
+    </div>
+  </section>
+<a href="sabemos imagen.html"></a> | <a href="sabemos.html"></a> 
+  <!-- Header -->
+  <header class="max-w-6xl mx-auto mb-6">
+    <div class="sticky-actions bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 rounded-xl p-4 shadow">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
+        <div>
+          <h1 class="text-2xl md:text-3xl font-bold text-yellow-400">Subir imágenes pendientes</h1>
+          <p class="text-sm text-white/80">Lista en 1 columna: Nombre + archivo. Solo registros sin imagen.</p>
+          <p id="stats" class="text-xs text-white/60 mt-1">Cargando…</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-2">
+          <button id="btnAssign" class="bg-yellow-500 hover:bg-yellow-400 text-black font-semibold px-4 py-2 rounded">Repartir por orden</button>
+          <button id="btnReload" class="bg-gray-600 hover:bg-gray-500 text-white font-semibold px-4 py-2 rounded">Refrescar</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Panel con la lista de pendientes -->
+  <section class="max-w-6xl mx-auto mb-6">
+    <details id="panel-faltantes" class="bg-indigo-900/40 rounded-xl p-4 border border-indigo-700">
+      <summary class="cursor-pointer font-semibold text-yellow-300">
+        Ver registros pendientes de imagen (<span id="faltan-count">0</span>)
+      </summary>
+      <div class="mt-3 flex gap-2 flex-wrap">
+        <button id="btnCopy" class="bg-sky-500 hover:bg-sky-400 text-black font-semibold px-3 py-2 rounded">Copiar lista</button>
+        <button id="btnCSV" class="bg-emerald-500 hover:bg-emerald-400 text-black font-semibold px-3 py-2 rounded">Descargar CSV</button>
+      </div>
+      <div id="faltantes-lista" class="mt-3 grid gap-1"></div>
+    </details>
+  </section>
+
+  <!-- Grid -->
+  <main class="max-w-6xl mx-auto">
+    <div id="grid" class="grid grid-cols-1 md:grid-cols-1 gap-4"></div>
+    <p id="empty" class="hidden text-center text-green-300 mt-8">✔️ No quedan registros pendientes. ¡Todo con imagen!</p>
+  </main>
+
+  <!-- Templates -->
+  <template id="rowTpl">
+    <div class="card rounded-xl p-4 shadow flex items-center justify-between gap-3">
+      <div class="flex-1 min-w-0">
+        <h3 class="font-semibold text-yellow-300 truncate"></h3>
+        <p class="text-xs text-white/60">ID: <span class="id"></span></p>
+      </div>
+      <div class="flex items-center gap-2">
+        <input type="file" accept="image/*" class="file:mr-2 file:px-3 file:py-1.5 file:rounded file:bg-blue-500 file:text-white file:border-0 text-xs" />
+      </div>
+    </div>
+  </template>
+
+  <script>
+    const state = { all: [], pending: [] };
+    const grid = document.getElementById('grid');
+    const emptyMsg = document.getElementById('empty');
+    const stats = document.getElementById('stats');
+    const rowTpl = document.getElementById('rowTpl');
+
+    // Lista pendientes (panel)
+    const faltanCountEl = document.getElementById('faltan-count');
+    const faltantesLista = document.getElementById('faltantes-lista');
+    const btnCopy = document.getElementById('btnCopy');
+    const btnCSV = document.getElementById('btnCSV');
+
+    async function fetchData() {
+      const res = await fetch('/api/sabemos');
+      if (!res.ok) throw new Error('No se pudo obtener /api/sabemos');
+      const data = await res.json();
+      state.all = Array.isArray(data) ? data : (data.data || []);
+      state.pending = state.all.filter(a =>
+        !a || !a.imagen || String(a.imagen).trim() === '' || String(a.imagen).includes('default')
+      );
+      render();
+    }
+
+    function render() {
+      grid.innerHTML = '';
+      const total = state.all.length;
+      const faltan = state.pending.length;
+      stats.textContent = `Registros totales: ${total} · Pendientes sin imagen: ${faltan}`;
+      faltanCountEl.textContent = faltan;
+
+      pintarListaPendientes();
+
+      if (!faltan) { emptyMsg.classList.remove('hidden'); return; }
+      emptyMsg.classList.add('hidden');
+
+      for (const item of state.pending) {
+        const node = rowTpl.content.firstElementChild.cloneNode(true);
+        node.querySelector('h3').textContent = item.nombre || '(Sin nombre)';
+        node.querySelector('.id').textContent = item.id ?? item.id_articulo ?? '—';
+        const input = node.querySelector('input[type=file]');
+        grid.appendChild(node);
+        input.addEventListener('change', () => uploadOne(item, input.files?.[0]));
+      }
+    }
+
+    // Pinta panel de pendientes + Copiar/CSV
+    function pintarListaPendientes(){
+      const rows = state.pending.map(it => ({
+        id: it.id ?? it.id_articulo ?? '',
+        nombre: it.nombre ?? '',
+        departamento: (it.departamento ?? '') + ''
+      }));
+      faltantesLista.innerHTML = '';
+      if(!rows.length){
+        faltantesLista.innerHTML = '<p class="text-green-300">✔️ No hay pendientes.</p>';
+        return;
+      }
+      const ul = document.createElement('ul');
+      for(const r of rows){
+        const li = document.createElement('li');
+        li.className = 'text-sm text-white/90';
+        li.textContent = `ID ${r.id} — ${r.nombre}` + (r.departamento ? ` (Dep: ${r.departamento})` : '');
+        ul.appendChild(li);
+      }
+      faltantesLista.appendChild(ul);
+
+      btnCopy.onclick = async ()=>{
+        const text = rows.map(r => `${r.id}\t${r.nombre}${r.departamento?`\t${r.departamento}`:''}`).join('\n');
+        await navigator.clipboard.writeText(text);
+        btnCopy.textContent = '¡Copiado!'; setTimeout(()=> btnCopy.textContent = 'Copiar lista', 1200);
+      };
+      btnCSV.onclick = ()=>{
+        const csv = toCSV(rows);
+        descargarTexto(csv, 'sabemos_pendientes.csv', 'text/csv');
+      };
+    }
+
+    async function uploadOne(item, file) {
+      if (!file) { alert('Selecciona una imagen para "' + (item.nombre || 'sin nombre') + '"'); return; }
+      try {
+        const fd = new FormData();
+        if (item.nombre) fd.append('nombre', item.nombre);
+        if (item.descripcion) fd.append('descripcion', item.descripcion);
+        if (item.departamento != null) fd.append('departamento', item.departamento);
+        fd.append('imagen', file);
+        const id = item.id ?? item.id_articulo;
+        const resp = await fetch(`/api/sabemos/${id}`, { method: 'PUT', body: fd });
+        const json = await resp.json();
+        if (!resp.ok || json.success === false) throw new Error(json.message || 'Error en la subida');
+        state.pending = state.pending.filter(x => x !== item);
+        render();
+      } catch (err) {
+        console.error(err);
+        alert('Error subiendo imagen: ' + err.message);
+      }
+    }
+
+    // Repartir por orden: abre selector múltiple y lo reparte en los inputs visibles
+    document.getElementById('btnAssign').addEventListener('click', () => {
+      const inp = document.createElement('input');
+      inp.type = 'file'; inp.accept = 'image/*'; inp.multiple = true; inp.click();
+      inp.onchange = () => {
+        const files = Array.from(inp.files || []);
+        if(!files.length) return;
+        const rowInputs = Array.from(grid.querySelectorAll('input[type=file]'));
+        files.forEach((f, i) => { if (rowInputs[i]) rowInputs[i].files = createFileList([f]); });
+      };
+    });
+
+    document.getElementById('btnReload').addEventListener('click', fetchData);
+
+    function createFileList(files) {
+      const dt = new DataTransfer();
+      files.forEach(f => dt.items.add(f));
+      return dt.files;
+    }
+
+    // util CSV + descargar
+    function toCSV(rows){
+      const header = ['id','nombre','departamento'];
+      const esc = s => `"${String(s??'').replaceAll('"','""')}"`;
+      const lines = [header.join(',')].concat(rows.map(r => [r.id, esc(r.nombre), esc(r.departamento)].join(',')));
+      return lines.join('\n');
+    }
+    function descargarTexto(texto, nombre, tipo){
+      const blob = new Blob([texto], {type: tipo || 'text/plain'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = nombre;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=> URL.revokeObjectURL(url), 300);
+    }
+
+    // Init
+    fetchData().catch(err => {
+      console.error(err);
+      stats.textContent = 'Error cargando datos';
+    });
+  </script>
+</body>
+</html>

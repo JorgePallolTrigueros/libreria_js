@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lista de Animes</title>
+  <script src="/assets/tailwind.js"></script>
+  <link href="/assets/fonts.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0f172a;
+      color: white;
+    }
+    .fade-page { opacity: 0; transition: opacity 0.5s ease; }
+    body.loaded .fade-page { opacity: 1; }
+
+    /* Animación modal */
+    @keyframes zoomIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .modal-animado {
+      animation: zoomIn 0.3s ease-out;
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+
+
+
+
+
+  <nav class="bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 text-center text-sm md:text-base font-semibold uppercase tracking-wider">
+    <a href="/../e.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+  </nav>
+
+  <!-- Encabezado -->
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div class="relative flex items-center justify-between">
+      <div class="absolute -left-4 md:-left-10 z-20">
+  <video autoplay muted loop
+         class="w-40 h-40 md:w-52 md:h-52 object-cover rounded-full border-4 border-yellow-400 shadow-2xl">
+    <source src="/ruta/pose-comic.mp4" type="video/mp4">
+  </video>
+      </div>
+      <div class="w-full bg-purple-800 h-28 md:h-32 rounded-xl flex items-center pl-48 pr-6 z-10 shadow-lg">
+        <h2 class="text-2xl md:text-4xl text-yellow-400 font-bold ml-auto">Obras</h2>
+      </div>
+    </div>
+
+<a href="Comic_index.html">Registros </a> | <a href="codigo_comic.html"> Webscraping</a>
+
+
+<section id="comandos">
+    <h3 class="text-yellow-400 text-2xl md:text-3xl font-bold border-b border-yellow-400 pb-2 mb-6">📋 Comandos Webscraping</h3>
+  
+    <div class="bg-gray-800 p-4 rounded-xl relative shadow-lg">
+      <pre id="codigo-iclone" class="whitespace-pre-wrap text-green-300 text-sm md:text-base font-mono">
+##GACER LA LISTA DE COMICS
+
+
+
+import numpy as np
+import pandas as pd
+import requests
+from bs4 import BeautifulSoup
+from time import sleep
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from time import sleep
+import pymysql
+import time 
+
+try:
+    connection = pymysql.connect(host='localhost',user='root',password='Kojinanjo1@',db='pelis')
+    print("Conectado correctamente")
+except pymysql.Error as e:
+    print("No puede conectar con MySQL %d: %s" %(e.args[0], e.args[1]))
+
+cursor = connection.cursor()
+
+print("CONTINUEEEEEEEEEEEEEEEE")
+
+df = pd.DataFrame()
+
+
+Nombres = list()
+Imagen = list()
+Autors = list()
+descripciones = list()
+cronologias = list()
+generos = list()
+
+
+#response = requests.get("https://tebeosfera.com/", verify=False)
+#soup = BeautifulSoup(response.text, "html.parser")
+
+#driver = webdriver.Chrome(executable_path=r"C:\chromedriver.exe")
+s = Service('C:/chromedriver.exe')
+driver = webdriver.Chrome(service=s)
+url = "https://tebeosfera.com/"
+driver.get(url)
+# Input Text cada uno de los elementos de la lista
+
+nombrelista = list()
+imagenlista = list()
+descripcionlista = list()
+autorlista = list()
+
+# Practicamos sobre una lista de Comics
+
+#comicsPrueba = list()
+#comicsPrueba.append(Comiccol3)
+#comicsPrueba.append('ALIX SENATOR')
+#comicsPrueba.append('Alpha flight')
+
+comicsPrueba=['Arion, Lord of Atlantis - 18 - Blood Brothers', 'Comics', 'Crónicas Bárbaras', 'El bosque de las virgenes ', 
+              'El Gran Bush  ', 'Héroes del Humor 1 retapado  ', 'Héroes del Humor 3 retapado  Incompleto', 
+              'jiraishin diablo 3   2', 'MEDICI - 3 - Julio', 'Revista Petete ', 'Selecciones Vértice 04 grapa ', 'VOLÁTIL',
+              'WOUNDED nº 1', '5 tierras', 'A La Recherche Du Temps Perdu', 'A la sombra del convoy', 'Alix Senator', 
+              'Ambulancia 13', 'ANGEL WINGS', 'aristocratas', 'Bandera negra', 'BARBANZONS', 'Bill y Bolita', 'Blacksad', 
+              'Blanco y Negro ¡guay!', 'bob robert', 'Brechas', 'BRIGGS LAND', 'CAIRO', 'CARVALHO', 'CASACAS AZULES', 
+              'Cavall Fort', 'Centaurus', 'Chicha Tato y Clodoveo', 'Conquistador', 'Cuadernos Ucranianos', 'DAMOCLES'];
+
+
+#comicsPrueba=['El cartero de las mujeres'];
+
+
+comic_no_encontrados= list()
+df = pd.DataFrame()
+
+for comic in comicsPrueba:
+    
+    driver.get(url)
+    time.sleep(5)
+    element=driver.find_element(By.ID,"busqueda")
+    element.send_keys(comic)
+    element.send_keys(Keys.ENTER)  
+    time.sleep(5)
+    
+    try:
+        parentElement = driver.find_element(By.CLASS_NAME, "linea_resultados")
+        enlace = parentElement.find_elements(By.TAG_NAME, "a")
+        
+        # Si el comic No existe Mas adelante su linea en el Csv sera puesta todos sus campos como nulls
+
+        ############################  IMAGEN #####################################################
+
+        #Cogemos el enlace que es el elemento 1 del array  y cogesmos su foto
+
+        foto = enlace[0].get_attribute('href')
+
+        if "promociones/" in foto or "autores/" in foto:
+            print("Comic es de tipo promociones o autores... se ignora")
+        else:
+            try:
+                ##########################  DETALLE ##################################################
+                #En el enlace 2 entramos en el detalle de el Comic para coger el resto de las listas
+                print("Navegamos a la URL: ")
+                print(enlace[1].get_attribute('href'))
+                driver.get(enlace[1].get_attribute('href'))
+                time.sleep(5)    
+                print("El comic no es de tipo promociones ni autores, cogemos datos!")
+                print("DEBUG: despues detalle")
+                #####################################################################
+                # cogemos la sinopsis (Descripcion)
+                sinopsisHtml = None
+                try:
+                    print("DEBUG: sinopsis A")
+                    sinopsis = driver.find_element(By.CLASS_NAME, "T3WISIWISI")
+                    print("DEBUG: sinopsis B")
+                    sinopsisHtml = sinopsis.get_attribute('innerHTML')
+                    print("DEBUG: sinopsis C")
+                except:
+                    print("DEBUG: No hay sinopsis")
+                    sinopsisHtml = None
+                    print("DEBUG: sinopsis D")
+
+                ####################################################################
+                # cogemos el autor
+
+                print("DEBUG: cogemos el autor")
+                enlacesNav = driver.find_element(By.CLASS_NAME, "nav-tabs")
+                print("DEBUG: cogemos el autor tabs")
+                enlacesTab = enlacesNav.find_elements(By.TAG_NAME, "a")
+                print("DEBUG: enlaces")
+                try:
+                    enlacesTab[2].click()
+                except:
+                    enlacesTab[1].click()
+                print("DEBUG: antes sleep")
+                time.sleep(15)
+
+                autoresComic = list()
+                try:
+                    autoresContenedor = driver.find_element(By.ID,"tab3")
+                    autores = autoresContenedor.find_elements(By.TAG_NAME, "strong")
+                    for autorStrong in autores:
+                        autorNombre = autorStrong.find_elements(By.TAG_NAME, "a")
+                        autorStrongEl = autorNombre[0].get_attribute('innerHTML')
+                        autoresComic.append(autorStrongEl)
+                except:
+                    print("No hay autores en tab3")
+                    try:
+                        autoresContenedor = driver.find_element(By.ID,"tab2")
+                        autores = autoresContenedor.find_elements(By.TAG_NAME, "strong")
+                        for autorStrong in autores:
+                            autorNombre = autorStrong.find_elements(By.TAG_NAME, "a")
+                            autorStrongEl = autorNombre[0].get_attribute('innerHTML')
+                            autoresComic.append(autorStrongEl)
+                    except:
+                        print("No hay autores en tab2")
+                print("se va a hacer append a autorlista")
+                print(autoresComic)
+                
+                nombrelista.append(comic)
+                imagenlista.append(foto)
+                descripcionlista.append(sinopsisHtml)
+                autorlista.append(','.join(autoresComic));
+                
+            except:
+                print("No hay informacion suficiente del comic...")
+                print("DEBUG: COMIC SIN INFORMACION SUFICIENTE!!!!!!!!")
+                comic_no_encontrados.append(comic)
+        
+    except:
+        print("DEBUG: COMIC NO ENCONTRADO!!!!!!!!")
+        comic_no_encontrados.append(comic)
+
+            
+####################################################################       
+    
+print("Datos Recogidos antes de meter en BBDD")
+print(nombrelista)
+print(imagenlista)
+print(descripcionlista) # Coge el del elemento 1
+print(autorlista) # Coge la lista de autores
+
+print(len(nombrelista))
+print(len(imagenlista))
+print(len(descripcionlista))
+print(len(autorlista))
+
+df["nombre"] = nombrelista
+df["imagen"] = imagenlista
+df["descripcion"] = descripcionlista
+df["autor"] = autorlista
+
+    
+sql = """INSERT INTO `pelis`.`comic` (`nombre`,`imagen`,`descripcion`,`autor`) VALUES (%s, %s, %s, %s)"""
+
+for ind in df.index:
+    cursor.execute(sql, (df['nombre'][ind], df['imagen'][ind], df['descripcion'][ind], df['autor'][ind] ))
+    connection.commit() 
+
+df.head(2)
+####################################################################  
+# ver la lista de los no encontrados
+
+print(comic_no_encontrados)
+      </pre>
+  
+
+
+
+  
+      <button onclick="copiarCodigo()" class="absolute top-2 right-2 bg-yellow-400 text-black font-bold px-3 py-1 rounded hover:bg-yellow-500 transition">
+        Copiar
+      </button>
+    </div>
+  </section>
+  ✅ 2. Añade este script justo antes de </body>:
+  html
+  Copiar
+  Editar
+  <script>
+    function copiarCodigo() {
+      const codigo = document.getElementById("codigo-iclone").innerText;
+      navigator.clipboard.writeText(codigo)
+        .then(() => {
+          alert("¡Comando copiado al portapapeles!");
+        })
+        .catch(err => {
+          console.error("Error al copiar", err);
+          alert("Error al copiar el texto");
+        });
+    }
+  </script>
+
+<div class="max-w-7xl mx-auto px-6 mt-8">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Lista 1 -->
+    <div class="bg-gray-800 rounded-xl p-4 shadow">
+      <h4 class="text-yellow-400 text-xl font-bold mb-3">Castellano</h4>
+      <pre class="whitespace-pre-wrap leading-6">
+
+
+
+3 julias
+Adrastea
+agatha
+Agente Secreto
+alix
+alpha
+Alpha flight
+Apostata
+aristocratas
+Armo
+Ars Magna
+Art Ops
+Arthus Trivium
+Asadora
+Aspic
+asterix
+batman
+Belloy
+Bill y Bolita
+Blacksad
+Blake y Mortimer
+Blanco y Negro ­guay!
+Books of Magic
+borgia
+Britannia
+Bruguelandia
+Buz Sawyer
+CAIRO
+Caligula
+Captain Planet
+cassio
+Cavall Fort
+cazadores de sue¤os
+Centaurus
+Champignac
+chaplin
+Charles Addams
+Cherry de Eisaku Kubonouchi
+Chicha Tato y Clodoveo
+Civil War
+Comic en ingles
+Comisario Ricciardi
+corto maltes
+Cosacos de Hitler
+Crisp y Son
+Cruzada
+Cuadernos Japoneses
+Cuadernos Ucranianos
+dago
+ddt
+Decalogo
+Detectives
+Doble Mascara
+Doc Samson
+Doctor Strange
+Doom Patrol
+Dylan Dog
+edad de bronce
+El Arte del Crimen
+El bosque de las virgenes
+el cura
+El detective de Hollywood
+El Gavil n
+el heroe
+EL MALTS
+El marido de mi hermano
+El Misterio Del Tiempo
+EL PAPA TERRIBLE
+El Peque¤o Pa¡s
+EL QUINTO EVANGELIO
+El Tercer Hijo de Roma
+El Tercer Testamento
+El tren de los hu‚rfanos
+El triangulo secreto
+ellos y ellas
+En la palma del diablo
+Enciclopedia
+Ep Jacobs
+Eran 10
+Escorpion
+fade
+Fatal Fury
+Fuera Borda
+Futurama
+Galaxia Ilustrada
+Garibolo
+gente menuda
+Gigantes
+GLORIA VICTIS
+God
+GOLDEN DOGS
+goomer
+Gran Aventurero
+Grandes Autores JLA
+grandes pintores
+Green Arrow
+Guai!
+Gumball
+Harley Quinn
+Hay Algo Matando Ni¤os
+He-Man
+Hellblazer
+hercules
+Hijos de la loba
+historia oculta
+hulki
+H‚rcules
+Ian Churchill's Marineman
+ideafix
+Immortal Thor
+incal
+Incredible Hulk
+inquisidor
+Iron Man
+Jaime Martin
+Jason Brice
+JAuJA
+jazz Maynar
+jhen
+Jiraishin
+Jo Zette y Jocko
+jodido bastardos
+Joe del Ma¤ana
+joyas de la mitologia
+Juan Centella
+justice
+Kaos Mitologico
+Karolus Magnus
+kOLOSSO
+la balada de las landas
+La Casa de los Susurros
+La Catedral de los Abismos
+La cr¢nica de los inmortales
+La danza del tiempo
+La Estrella del Desierto
+La Expedicion
+La familia Tuno
+La Materia Oscura 2
+La Puerta al Cielo
+La tumba de Alejandro
+Lanfeust de las estrellas
+LAS 40 ELEFANTAS
+Las 5 tierras
+Las 7 Vidas Del Gavilan
+Las aguilas de Roma
+Las Aventuras de Julius Chancer
+Las aventuras de Miquel Mena
+LAS AVENTURAS DE OSCAR Y JULIAN
+Las Aventuras De Superman
+Las Ciudades Oscuras,
+Las Grandes Batallas Navales
+Las Olivas Negras
+Las reinas de sangre
+lena
+Les 7 vies de l'epervier
+Libro de Magia
+Locke & Key
+Logicomix
+Lord Gravestone
+Lore Olympus
+Los cr¡menes de Fj„llbacka
+Los demonios de Alexia
+LOS DRUIDAS
+Los escudos de Marte
+Los Maestros Inquisidores
+Los Muertimer
+LOS SIMPSONS
+Los viejos hornos
+Los.Borgia
+Los.Muertimer
+Lo_Mejor_de_tu_Vida
+lucky lucke
+Lucky Luke
+M.O.R.I.A.R.T.Y
+mad
+Magos
+Maldito seas
+MARINA
+Marsupilami
+Martin
+Marvel's Voices
+Matt‚o
+max
+Max Audaz
+Max Audaz Edicion Especial
+Max Fridman
+Medea
+medici
+Mirlowe y Violeta
+MISTER NO
+mitologia
+Mitologia Africana
+mitologia nordica
+Monster
+monster high
+Morning Glories
+Mortadelo
+murena
+Neil Gaiman
+New Gods
+Nicolas Le Floch
+Nieve en Verano
+ninn
+nobody
+noche roma
+Noches Eternas
+Noir.Burlesque
+Oliver & Peter
+Orson
+Paper Mitologia
+Papyrus
+paraiso perdido
+Pepe Carvalho
+Pepe Gotera y Otilio
+Peque¤o pais
+Percevan
+pioneros
+Prime
+Prometeo
+Proroga
+Pulgarcito
+Questor
+QUIQUE Y FLUPI
+rachel raising
+Rapaces
+Rastros de Sangre
+reinas de sangre
+rhoda
+Roco Vargas
+roma
+Rompetechos
+Sabiduria de los mitos
+sadman
+Saga
+Sam & Twitch
+sambre
+san bartolome
+sandman
+SANGRE DE BARRIO
+seiya
+Selecciones Vertice de Aventuras
+Shayne
+shazam
+Sherlock Holmes Society
+siete
+simpson
+Something is Killing the Children
+spirou
+Spirou y Fantasio
+Spirou-Ardilla
+Squadron
+Strange
+street fighter
+sueltos
+Super Carpanta
+Super Cataplasma
+super humor
+super purgacito
+super sacarino
+Super Tio Vivo
+Superlopez
+superman
+TBO
+Tebori
+telemaco
+Tenebrosa
+thanatonautes
+The Alienist
+The Batman and Scooby-Doo Mysteries
+The Dresden Files
+The Magic Order
+The Nice House on the Lake
+The Sandman+ Especiales
+thor
+Thorgal
+Thunderbolts
+Tif y Tondu
+timtin
+Tio Vivo
+tiresias
+Tope-Guai
+Trent
+Troya
+Uderzo
+Umineko When They Cry
+UNA NOCHE EN ROMA
+urban
+VAE VICTIS
+Valois
+vampiro
+vasco
+vascos
+vengadores
+Victus
+Vinci
+volver a paris
+Wrath of the Titans Argos
+WWF Battlemania
+X-Force
+Youngblood
+Yoyyo
+Zerocalcare
+zipi
+zipi zape
+Zodiaco
+Zorglub
+10th
+20th
+Agente
+Avengers
+Back
+Bd.fr.-.hercule
+Blake
+Capablanca
+Carlota
+Disney
+Doctor
+El
+Excalibur
+Gareth
+Gay
+He-man
+Hroes
+Jack
+Jiro
+Jo
+La
+Las
+Les
+Los
+Los.guerreros.de.dios
+Magos
+Masters
+Mighty
+Mortadelo
+Scarlet
+Serie
+Shazam!
+Sherlock
+Spirou
+Super
+Superman
+The
+Ultimo
+Una
+Victus
+Wilusiya
+
+=== TÍTULOS ÚNICOS ===
+02 Cartoon AID - Voetbalboek
+068 Charles Chaplin
+10 2020 Conan The Cimmerian - Rogues in the House (Glnat) (Paolo Martinello)
+100 Aos de Bruguera de el gato negro a Ediciones B
+100% Panini Comics [2011-05] [Panini] Murena 03 - Rinascita dalle ceneri
+10th Muse v10 Crossovers 2 (2019) (Arcana Studio) (LeDuch)
+10thMuse v1 - Atlas (historia de complemento) por Mastergel y Redvirux
+14-18 vol5. Julio y noviembre 1918 - Corbeyran & Le Roux
+1980.07.08-E142-6-336 - De chaplin a valentino(1)
+2019-2020 Superman contra el Klan
+36. Uderzo visto por sus amigos (Extra)
+47.Cuerdas.(Primera.Parte).-.Timothe.Le.Boucher.[jbabylon5]
+7 vies de l'Epervier (les) - T14 - Le fils d'Ariane-TONER (127844)
+[Art] The Arthur Rackham Treasury
+[Artbook]The DC Comics Encyclopedia - Updated and Expanded
+Acordes.y.Desacuerdos.-.Regis.Hautiere.&.Antonio.Lapone.[jbabylon5]
+Adelante! - Integral (Norma)
+Adieu Birkenau - Ginette Kolinka (Jean-David Morvan,Victor Matet) (2023)
+Adrastea - Mathieu Bablet
+Africanus (Ediciones B) [por capdiajo e Iker]
+Agatha Christie - Asesinato en el Orient Express por monoski
+Agatha Harkness - The Saga of the Salem Witch
+Agents of S.L.A.M. (2022)
+Aigles de Rome, Les - T07 - Livre VII (Marini) 3184
+Alex Clement ha muerto
+Alicia en el Pas de las Maravillas - Lewis Carroll & Benjamin Lacombe (Edelvives 2016)
+Allan MacBride La odisea de Bahmes - Brouard &Dumas
+Alpha Flight by John Byrne Omnibus (2023)
+Amor, Sexo y Tierra Prometida
+Amphigorey.(1).-.Edward.Gorey.[jbabylon5]
+Anais.Nin.en.un.mar.de.mentiras.-.Leonie.Bischoff.[jbabylon5]
+ArchBook - Burkert Walter - El origen salvaje. Ritos de sacrificio y mito entre los griegos (spanish El Acantilado, 1990)
+Archie Meets Jay & Silent Bob (2025)
+Arion, Lord of Atlantis - 18 - Blood Brothers
+Aristteles (Apostolidis y Papadatos)
+Atado y bien atado. La transicin golpe a golpe 1969-1981 (Rubn Uceda) (2018) (Akal) [Teofobicus]
+Ava - Forty-Eight Hours In The Life Of Ava Gardner (Europe Comics 2024) (LeDuch)
+Avengers - War Across Time (2023)
+Avengers 018 (2024)
+Avengers Academy - Marvel's Voices - Infinity Comic 033-034 (2025)
+Avengers Epic Collection v19 - Acts Of Vengeance (2023) (JTR-GetComics)
+Avengers-Defenders - Tarot (2020) (Shanhara)
+Aventura 882 Hercules sin Cadenas [por HRobles & MrGAG]
+Aventura 888 (27-01-1979) (Hercules Unbound 04, Brave and the Bold 020-2) (Hercules sin cadenas) [Ricopa&Carasucia]
+Aventuras de un Oficinista Japones.howtoarsenio.blogspot.com
+Bastien Vivs y Sanlaville - Hollywood Jam (Spanish, CRG)
+Batman - Hong Kong
+BDFR Oumpah-Pah - T 1 a 5
+Beatrix Potter. Cuentos Completos - Beascoa 2004 (Jolgasa)
+Beowulf - Gareth Hinds
+Bertola y Steinbeck - De Ratones y Hombres (CRG)
+Betty en Dodge 05-Vermist In Madrid
+Blacksad - Todo Cae - Parte 1 de 2
+Blacksad 007 - They All Fall Down 02 (of 02) (2023)
+Blanco alrededor - Lupano & Fert [jbabylon5]
+Bob Morane - Renacimiento 1 Las tierras extraas (Norma)
+Brunschwig [L] # Urban # v01 # ALB 003 (2014) (Ph, =1920[Q12]) (BD FR, NoNAME[OS])
+Buenos das tristeza (F. Rbna - F. Sagan) x Teofobicus 2.021 (2)
+Cafe Budapest (Alfonso Zapico)
+CALATRAVA
+Calcetines.howtoarsenio.blogspot.com
+Capablanca A.cara.o.cruz.-.Joan.Mundet.[jbabylon5]
+Capitan America onmigold tomo 5 (169-192 usa)
+Captain America G8M
+Casos Violentos (Gaiman - McKean) ECC Cmics [The RockJR]
+Catalina - Carlos Garaycochea - x.toroturro
+Catorce de julio -Bastien Vives & Martin Quenehen [xavib]
+Champignac - t01 - Enigma (BǸka-Etien) (Toner) 5441
+Champignac.2 El.paciente.A.-.Etien.&.Beka.[jbabylon5]
+Cimoc Extra Color 245 Rapaces Volvere
+Civil War II - Gods of War (2016) (F) (1)
+Cleopatra (Integral)
+Clever & Smart - 075 - Es wchst und wchst - wie verhext!
+Cmara obscura - Cyril Bonin
+Col BN - huele a muerte o que - Leo Malet_Tardi_cilurnigo & franki
+Coleccin ole mortadelo y filemon (202 comics) TOMO 8 (Cosmopolita)
+Comic Gay Bear Chubby Manga Jiraiya
+Comics - Clasicos y Modernos (Prisa)(1988) [REPARADO][Completo]
+Comics.FR.-.Marvel Comics - Le Meilleur des Super-Hros - 120 - Kitty Pride (Hachette) (AdamWarlock-Erikem83)
+Como Viaja el Agua (Astiberri)
+Como.trate.de.ser.una.buena.persona.-.Ulli.Lust.[jbabylon5]
+Compendio.de.la.verdadera.historia.universal.-.Shintaro.Kago.[jbabylon5]
+Connais-tu - En couleurs - 08 - Charlie Chaplin - [1920]
+Contrapaso - Los hijos de los otros (Norma) 2021 (Sbro)
+Contrapaso. Los hijos de los otros - Teresa Valero
+Crimen y castigo. El manga
+Crnicas Brbaras (Mitton) X Teofobicus
+Crtin qui a gagn la guerre froide (Le) (Le Naour-Le Bihan) (2025) (Bamboo dition - Grand Angle)
+Cruzada - Integral 1 - Ciclo de Jerus Halem (Ponent Mon)
+Cuando brillan las estrellas (V. Jamieson - O. Mohamed) x Teofobicus 2.022
+Cuphead - The Art of Cuphead
+Dante's Inferno - A Graphic Novel Adaptation (2024)
+Daytripper 01 al 10
+DC_COMICS,_La_Enciclopedia
+De Perros y de Huesos (Colo) x Teofobicus
+Decio
+Degas La.danza.de.la.soledad.-.Rubio.&.Efa.[jbabylon5]
+Democracia_Papadatos_&_Kawa_&_Di
+Despues de la LLuvia - Juillard (CEC155)
+Destripando la Historia-Los Hroes mas picos(Pascu y Rodri)[Fakolas]
+Dick Tracy 012 (2025) (Mad Cave Studios) (LeDuch)
+DIOS EN PERSONA de MARC-ANTOINE MATHIEU (SinsEntido)
+Disney Villains - Hades v01 (2024)
+Dispararon al pianista
+DOBLE 7 (Yann - Juillard) x Teofobicus
+Don Po - Pulgarcito, 6 poca (1952-1981) 2 [Jos Pearroya]
+Double Masque - 06 - L'hermine (Dufaux-Jamar)
+DU34m3T3 N14
+Dufaux [J] # Murena # v01 # ALB 011 (2020) (Dg, =1920) (BD FR, NoNAME[WR])
+Dufaux y Jamar - Ladrones de Imperios [integral] (CRG)
+Eat Your Heart Out v01 (2024)
+Ebook - Bande Dessine - Morchoisne & Mulatier & Ricord & Rampal - Ces animaux qui nous gouvernent - Tome 2 (Caricature) (Full color - French)
+Edicion limitada (Aude Picault)
+El bosque de las vrgenes - Integral (Yermo) [por capdiajo y Tildoras]
+El Buscn en las Indias (Ayroles - Guarnido) x Teofobicus 2.020
+El cartero de las mujeres(QuellaGuyot-Morice)
+El club de los suicidas
+El combate del siglo - Loulou Dedola & Luca Ferrara [Calajan & xavib]
+El comedor compulsivo (L'outremangeur) - Traduccin por Jajun (CRG)
+EL DESTINO DEL ARTISTA de EDDIE CAMPBELL (Astiberri, 2010)
+El diccionario ilustrado de la democracia espaola (1975 - 2015) [Astiberri]
+El Escorpin - 14 - La Tumba de un Dios - (Critone - Desberg) [ViaJaNDo-curt] - SPA
+El final de todos los agostos - Alfonso Casas [jbabylon5]
+El Gran Bush
+El Gran Bvfn (1912 - 1913) (humor comic tbo) kar54
+El Gran Libro de Mortadelo y Filemon, 50 aniversario (2007)[zaragway]
+El Guardin Invisible [Dolores Redondo] ~ Sala
+El Horla - Guillaume Sorel [jbabylon5]
+El infierno del dibujante - Kiko da Silva Xavib
+El Inquisidor (G. Manfredi - A. Lucchi) x Teofobicus
+El Misterio del Mundo Cuntico [xavib]
+El Monstruo Sin Nombre - Punkarra
+El mundillo literario - Posy Simmonds [xavib]
+El Ogro Len - Tomo 01.- El Len Brbaro (Harriet Ediciones)
+El Pabelln del Ala Oeste.- Sun Jiayu y Guo Guo (Ponent Mon)
+El Pequeo Luchador 078 - La defensa de Ely (Juno-Isanveba-Romaninof)
+El Puente (MEH) [por puxasturies]
+El puerto prohibido - Stefano Turconi- Teresa Radice [Xavib]
+El vals del gulag - Pellejero & Lapire
+El Viaje de Chihiro_Edicion Integral
+El viento en los sauces - T01 - El bosque salvaje (Michel Plessix) x Teofobicus 2.024
+El.fantasma.de.la.opera.-.Christophe.Gaultier.[bostamr.&.jbabylon5]
+El.paciente.-.Timothe.Le.Boucher.[jbabylon5]
+El.universo.fantastico.del.comic.-.Luis.Gasca.&.Roman.Gubern.[jbabylon5]
+Ella y su Gato - Plot twist No Fansub
+Elles - Grandes Aventurires Et Femmes Fatales De La Bande Dessine (Quillien) (Toner) 3252
+Enciclopedia del cmic - Tomo 3
+Eros - Psique - 01 por McNates[Gisicom]
+Espaa, una grande y libre por Carlos Gimenez & IVA [GLENAT][comic spanish]scan by Franki
+Estamos todas bien(Ana Penyas)[Fakolas]
+Fatty. El primer rey de Hollywood (Nadar - Frey)
+Fence Challengers - Long Shot 001 (2024)
+Flash Gordon S208 - El agente secreto X-9
+Folklords (Planeta)
+Frank Millers Ronin Rising Manga Edition (2024) (Graphic Novel) (Kana) (LeDuch)
+Franois Schuiten - La Doce (CRG)
+Freaks.Squeele.Funeral-1.Fortunate.Sons-por.ner0-CRG-SPANISH.comic
+Furia De Titanes 1-4
+G.I. Gay - (2024.09)
+Gargoyles v01 - Here in Manhattan (2024)
+Gaston el Gafe - Gafes y Cachivaches
+Gaston-Le Soir 01-jpg300
+Gay Bear Comic (Manga Oso) - Cinco Hombres En Una Habitacin - 5 - Five Men In A Room - Espaol-Spanish - Jiraiya Completo - Sin Censura
+Gay Bear Muscle (Comic Manga) Jiraiya A Room In Which Five Guys Live - Five Men In A Room (English - Japanese)
+Gergovie - La Victoire (Luccisano-Rodriguez-Ansar) (JLM-TheWitch) 2560
+Ghosts 001 (2012) (2 covers)
+Giant-Size X-Men - Thunderbird 001 (2022)
+Gipi - El local (por Elasoz para CRG)
+Gotham by Midnight 1-12
+Gotham City Villains Anniversary Giant
+GRAN ENCICLOPEDIA DEL COMIC
+Grito Nocturno (Borja Gonzlez)[Fakolas]
+Guiral, Antoni - 100 Aos de Bruguera, de El gato negro a Ediciones B
+Gutirrez (1927 - 1934) (revista humor comic tbo) kar54
+Habis Odo lo que ha Hecho Eddie Gein (Panini)
+Harry Dickson 01 - Mysterion
+Hercules - Heart of Chaos 003 (1997)
+Hernandez, Jaime - La educacin de Hopey Glass
+Historia disparatada de la monarqua (Bruguera) [por capdiajo y SpanishSpawn] (2)
+Homero - Fernando Rubio
+Hypericon (Fior) (Toner) 4019
+Ideafix i els irreductibles -#01 A baix els romans[Fakolas]
+Illustrating Spain in the US (2022)
+Immortal Thor 004 (2024)
+Incredible Hercules - Smash Of The Titans (2020) (Shanhara)
+India Dreams 1 Los Caminos de la Niebla
+India Dreams 2 Cuando vuelve el monzon
+India Dreams 3 Bajo la Sombra de las Buganvillas
+India Dreams 4 No hay nada en Darjeeling [por Yan]
+Injustice vs Masters of the Universe
+Inmortales - Dioses y Hroes
+Invincible Universe - Battle Beast 005 (2025)
+Irmina.-.Barbara.Yelin.[jbabylon5]
+It's Jeff - Jeff-Verse (2025)
+Jack Wolfgang 03
+Jaime Martn - Lo Que El Viento Trae
+James Bond - 007, Book 02 - For King and Country (2024)
+Jidanya v01-02e
+Jiraishin diablo 3 (kodansha 2011-12-08) 2.0
+Jiraiya - Habitacin para Cinco (CRG)
+Jiraiya - Querido Profesor (CRG)
+Jiraiya - Tro de Ases (CRG)
+Jiraiya the Ninja Boy
+Joker -El Mundo
+Jos Luis Munuera + Juan Daz Canales - Fraternity T1 (2011) ES
+Joyas de la Mitologa 259 La Muchacha que se Enamor del ms Poderoso y Terrible de los Dioses
+Joyas Literarias Juveniles Serie Azul 091 - Los extraordinarios relatos del to Arthur - El fantasma de Carlota x Isiyura
+JULIA y la Voz de la Ballena (lvaro Ortiz) x Teofobicus 2.012
+Keko - [2017] El Perdn y la Furia (Altarriba - Keko) x Teofobicus
+Kokoro [por Be1garath y Redvirux]
+Kuro-san El samurai negro - Gloris & Zarcone [xavib]
+La comedia literaria - De Roldn a Boris Vian (C. Meurisse) x Teofobicus 2.022
+La Dalia Negra
+La desaparicin de Josef Mengele - Guez-Mailliet
+La Espinca de Yukiko_comicalt
+La Guerra de AUDREY
+La indivisin (Zidrou-Springer)
+La isla del remordimiento-MikeToday
+La Odisea
+La Odisea.Las aventuras de Ulises(Bottet-Harel)[Fakolas]
+La Panda - Roberto Segura - Super Pulgarcito 001-039
+La Pimpinela Escarlata (Rudy Florese) - Libros Graficos Ediprint 07
+La republica de la lucha - Nicolas de Crecy [xavib]
+LA SOMBRA ROJA (J. P. Pcau - J. Gonzlez) x Teofobicus 2.022
+La tumba de Alejandro 03 - El sarcofago de alabastro
+La vampira de Barcelona ~ Miguel ngel Parra, Ivn Ledesma y Jandro Gonzlez
+LA VENTANA (Sean Chuang) x Teofobicus 2.022
+La Vida Soada del Capitn Salgari
+La vuelta al campo - Jean-Yves Ferri & Manu Lacernet [xavib]
+La.Colera.-.Javier.Olivares.&.Santiago.Garcia
+La.obsolescencia.programada.de.nuestros.sentimientos.-.Zidrou.&.Aimee.de.Jongh.[jbabylon5]
+La.revolucion.rusa.-.Duval.&.Pecau.&.Calvez.[jbabylon5]
+La.tierra,.el.cielo,.los.cuervos.-.Radice.&.Turconi.[jbabylon5]
+La.traicion.de.lo.real.-.Celine.Wagner.[jbabylon5]
+La_sangre_de_las_cerezas.1.Bourgeon.CRG
+Lanfeust Odyssey - 08 - Tseu-Hi la Gardienne
+LARSON-El hombre con ms suerte del mundo [Javi de Castro] (Tinblack)
+Las 7 vidas del gaviln [Edicion Integral] (2560) [Mayoneso]
+Las Chicas del Pillar
+Laura.Dean.me.ha.vuelto.a.dejar.-.Mariko.Tamaki.&.Rosemary.Valero-OConnell.[jbabylon5]
+Laurent Bidot, Arnaud Delalande & Joseph Weismann - Na De Razzia (2023)
+Layla - El Cuento del Pantano Escarlata
+Le avventure della Storia 001 - Arno 1 - La picche rossa (Glnat Italia 1986-01) [AndreMM - Ultraman]
+Le bois des vierges, Tomo 03 Epousailles, FRN., (J. Dufaux - B. Tillier), by 5Cobres
+Le travail m'a tu
+Les Cahiers De La Bande Dessine 09 - Fred CULTE GENIUS PRIM
+Les etoiles de l'Histoire - T01 - Charlie Chaplin
+Literatura en Cmic (Okapi) N 35 x Teofobicus 2.020
+Lo que el viento se llevo - vol 1- alary
+Lobo - Gladiadores antiamericanos - Tomo 3 ECC Comics [The RockJR]
+Locke & Key 15th Anniversary - Only Bad Edition (2023)
+Logicomix Gn - Doxiadis; Papadimitriou
+Loki Viaje al Misterio Omnibus (Panini)2021
+Los 30 Denarios [Integral]
+Los crmenes de Fjllbacka n 2 - Los gritos del pasado (C. Lckberg - L. Bischoff - O. Bocquet) x Teofobicus 2.021
+Los dioses mienten - Kaori Ozaki [martinchuc & Trite]
+LOS ENCICLOPEDISTAS (J. A. Prez Ledo - A. Orbe) x Teofobicus 2.019
+Los guardianes del Louvre (Ponent Mon)
+Los Heresiarcas -2 Los caminos invisibles (Carlos Portela - Das Pastoras)
+Los Hermanos Rubinstein
+Los Nuevos Dioses 02
+Los.dementes.-.Cullen.Burn.&.Jack.T Cole.[jbabylon5]
+Los.Mentores.-.Zidrou.&.Porcel.[jbabylon5.&.Calajan]
+Los.Muertimer.3.-.Lea.Maze.[jbabylon5]
+Love Everlasting v03 (2025)
+Lucifer 06 La divina comedia [por Thanos]
+Lucky Luke 83 - Untamed
+Lucrecia Borgia - La Flecha Negra (Sergio Toppi, Dino Battaglia, Mino Milani)
+Ma Premire Vie Prive des Hommes -Una Familia de Pioneros Americanos (Edita Hachette.Giovanni Caselli.1982) Francs
+Magritte. Esto no es una biografia - Zabus & Campi [bostamr & jbabylon5]
+Maldita Tesis [Grijalbo]
+Manuele Fior - Cinco mil Kilmetros por Segundo (CRG)
+Marvel Gold - Vengadores - Campo de Batalla El Olimpo - 281 a 290 (1987)
+Marvel mundos y escenarios
+Marvel Super Stories v02 - Amazing Adventures (2024)
+Marvel Swimsuit Special - Friends, Foes, & Rivals 001 (2025)
+Marvel United - A Pride Special 001 (2025)
+Marvel vs. Capcom Fighting Collection Arcade Classics [SdTM]
+Marvel's Avengers - Road to A-Day (2020)
+Marvel's Voices Infinity Comic - Kid Juggernaut 001 (2024)
+Matar.a.un.Ruiseor.-.Harper.Lee.[jbabylon5]
+Matt Dorff - Book of Revelation (2012, Zondervan) - libgen.li
+Max - Los aos 20 (Planeta)
+Maxentius 01-03 (2019)
+MEDICI - 3 - Julio (Peru - Lorusso - Jacquemoire) x Teofobicus
+Medusa (2024)
+Medusa.y.Perseo
+MG Thor (Si Asgard pereciera)
+Mi novio, un virus y la madre que me pari (Sebas Martn) x Teofobicus 2.022
+Mi Traidor - Pierre Alary [xavib & jbabylon5]
+Mi Vida como Fantasma (Boada) x Teofobicus
+Mike Morgue (Chapter 01) - Necromorphosis 001 (2025)
+Miles Morales - Spider-Man 032 (2025)
+Miss Marple - Un Cadavre dans la bibliothque (Ziegler-Dauger) (2017-11) (Paquet)
+Mitologia Japonesa La Creacion De Japon Coleccion Origenes by guevillos [comicrel.usuarios.org]
+Modigliani.Tiranoyo.CRG
+Monigotes (1892) (revista humor tbo comic) kar54
+Monster High - House Haunters 003 (2025)
+Moriarty. Imperio mecanico - Duval & Pecau & Subic [xavib]
+Mujeres Celebres 159 La Emperatriz Carlota X DonComic
+Mukankakuna Comparativa_33 Agente Secreto X-9
+Multiversus - Collision Detected (2025)
+Munch. Una biografa (Sapristi) [por capdiajo y jbabylon5]
+Mythos (2009)
+Namor #1
+NELLIE BLY, En la guarida de la locura
+New Fantastic Four - Hell in a Handbasket 001 (2023)
+New History of the DC Universe 001
+NEW YORK CANNIBALS (Bouco - Charyn) x Teofobicus 2.023
+Nicolas de Crcy - Diario de un Fantasma (CRG)
+No te Vayas sin mi
+Nos vemos all arriba (P. Lemaitre - C. de Metter) x Teofobicus
+Nos, Anastasia R. (Yermo) [por capdiajo y Redvirux]
+NUBES NEGRAS (A. R. Rosas) x Teofobicus 2.021 (2)
+Nuevos Dioses 03
+Nuit noir sur Brest (d'aprs nuit franquiste sur Brest de Patrick Gourlay) [D.Cuvillier - B.Galic & Kris]
+Ofrenda a la Tormenta(MEJORADO)[Fakolas]
+Olivier Varese - Tomo Integral.howtoarsenio.blogspot.com
+Olympic Games in Ancient Greece (Europe Comics 2023)
+ORGULLO Y SATISFACCIN - 001 - La Democracia Espaola - Septiembre 2014
+Origins - The Art of John Jude Palencar (mejorado)
+Orwell.-.Christin.&.Verdier.[jbabylon5]
+Over the Ropes v02 - Broken Kayfabe (2022)
+Palepoli (de Usamaru Furuya)
+Panorama de la Bande Dessinee Erotique Clandestine (Joubert)
+Para Toda la Vida (Goupil - C. Stassi) x Teofobicus
+Pendones del Humor 049 Dios mio 08 La Biblia contada a los pasotas [por Seth]
+Pendragon - T01 (N&B) - L'pe perdue (Le Gris-Martinello-Dellac) (Toner) 3795
+Phil Corrigan 106 Un nuevo agente secreto X-9 [JAOA-ARC]
+Phil Corrigan_Agente Secreto X-9 (1984)
+Piel de hombre - Hubert & Zanzim [xavib]
+Piel de Mil Bestias (Nuevo Nueve)
+Pierres Rouges, Les - T02 - Retrouver Esther (Makyo) 1680
+Pintor! (Esteban Hernndez) X Teofobicus
+Pioneros Del Nuevo Mundo Cap 8 - Pequeo Hombre (Maryse Y Jf Charles) X Teofobicus
+Polican -#03 Historia de dos mininos(Dav Pilkey)
+Polican -#05 El Seor de las pulgas (Dav Pilkey)
+Por un puado de dracmas
+Posy Simmonds - Gemma Bovery (Spanish, CRG)
+PRESAS FCILES (M. Prado) x Teofobicus
+Priodique Pf - Zembla - No 065
+Qu Horror de Apartamento! [Raven Co.]
+Que empiece el espectculo! (Juventud) [por capdiajo y Redvirux]
+Querida.diablilla La.historia.de.Violette.Noziere.-.Simon.&.Benyamina.[jbabylon5]
+Rainbow Brite and the Star Stealer 01 (1)
+Rapaces.(Integral).-.Dufaux.&.Marini.[jbabylon5]
+Reencuentro con Comanche - Romain Renard
+Regreso a Volver al Futuro #1
+Revista Petete [Parte 3de3][Completo][por lukesky SNAR y otros]
+Revista pulgarcito
+Robert Crumb - Genesis - Espaol
+Roma AB VRBE Condita - 03 - Gergovie (Eriamel-Mogre-Woehrel-Marivin) (TheWitch)
+Roxxon Presenta Thor #01
+Sade - Dufaux y Griffo (Traduccin)(por RamiroI y nachof)
+Saint Seiya - Time Odyssey T01 (Dollen-Alqui) (2022) (PapriKa+)
+Sam & Twitch - Case Files 006 (2024) (2 covers)
+Scandalo! corregido x Teofobicus (Casotto Giovanna)[Spanish] (1300)
+Selecciones Vrtice 04 grapa (JLGG-Maxi)
+Serie Extra 02 Agente Secreto X-9 [por Romaninof]
+Shane (de di Giorgio y Teng) [Completo]
+Shaun-Tan - All donde van nuestros padres.howtoarsenio.blogspot.com
+SHAZAM! Fury of the Gods Special - Shazamily Matters 001 (2023)
+Siempre.tendremos.20.aos.-.Jaime.Martin.[jbabylon5]
+Siete.caballeros.(Integral).-.Raspail.&.Terpant.[jbabylon5]
+Skins Party (Le Boucher)(1920)
+Socrate Le Demi-Chien - T01 - Hracls
+Soy su silencio - Jordi Lafebre [jbabylon5]
+Spider-Man Unlimited - Infinity Comic 012 (2023) (1)
+Spy Seal v01 - The Corten-Steel Phoenix (2018)
+Star Wars. Enciclopedia jnior de personajes
+Static - Up All Night (2023)
+Su Majestad el Gato (Norma) (Eurocomicss)
+Subzero
+Super Guay! 10 [por Ricopa]
+SUPER HUMOR MORTADELO N25 LA PRENSA CARDIOVASCULAR Y OTROS (Cosmopolita)
+Superlopez N 46 - La casa amarilla
+Superman vs. Meshi 016 (2024)
+Superman.- Hijo Rojo (Planeta)
+Tante.Wussi.-.Katrin.Bacher.&.Tyto.Alba.[jbabylon5]
+Temporada de melocotones (A. Flores - A. Abell?n) x Teofobicus 2.021
+The Amory Wars - No World for Tomorrow 007 (2025)
+The Avengers in the Veracity Trap (2025)
+The Batman Adventures - Mad Love (1994)
+THE CARTOONIST (P. Hernndez - D. Cardiel) x Teofobicus 2.021
+The Comic Book Story of Professional Wrestling
+The Complete Alice in Wonderland (2012)
+The Iliad - Gareth Hinds
+The Infinity Watch
+The Magic Order Library Edition v01 (2025)
+The Marvel Universe According To Hembeck 001 (2016)
+The New Gods 01
+The Sandman Special 001 (1991)
+The Sandman The Deluxe Edition Book Five
+The United States of Captain America 003 (2021)
+Thor - Relatos de Asgard
+Three Little Wishes (2022)
+Tiempo.que.Dura.esta.Claridad.-.Elisa.Galvez.&.Federico.del.Barrio.[jbabylon5]
+Tnbreuse - T01 - Livre premier (Mallie-Hubert) 1920
+TOCADISCOS (Zidrou - R. Beuchot) x Teofobicus 2.016
+Todo esto te dar (I. L. Escudero - M. Garreta - D. Redondo) x Teofobicus 2.022
+Totem Calibre 38 05 - Agente Secreto X-9 Howtoarsenio Blogspot
+Traqueurs.Les.T03.TheWitch
+Tribord, Toute ! - Histoire De La Droite En BD [Le Naour-Marko] (2022)
+Trillo & Saccomanno - Historia De La Historieta Argentina
+Troubled Souls A Crisis
+Truman Capote en Kansas (Norma) (Coleccin Comic Noir - 24)
+Tungsteno.-.Marcello.Quintanilha.[jbabylon5].
+Un buen hombre. [CapitnJ]
+Un Pape Dans L'histoire - 07 - Pie Vii - Rsister Napolon
+Un.lobo.es.un.lobo.-.Folco.&.Makyo.&.Nardo.[jbabylon5]
+Un.tal.Cervantes.-.Christian.Lax.[jbabylon5]
+Una chica Dior ~ Annie Goetzinger
+Una.mujer.un.voto.-.Alicia.Palmer.&.Montse.Mazorriaga.[jbabylon5]
+Valiant Beyond - All-New Harbinger 001 (2025)
+Valois 04. Quien con fuego juega - Thierry Gloris & Jaime Calderon
+Vampiro La Mascarada - Las Fauces del Invierno (Cosmica)(2021-23) [Completo]
+Vencidos.pero.vivos.-.Le.Roy.&.Locatelli.[jbabylon5]
+Vertigo El Misterio Religioso por DooMsteR
+Victus (Integral)
+Vincent - Un saint au temps des mousquetaires [Dufaux - Jamar]
+Volage, Chronique des Enfers (2022-03) (Daniel Maghen)
+VOLTIL (Luis Durn) x Teofobicus 2.022
+VRTIGO - Vives para la Mara o mueres por la Mara (Sergeef - Bufi) x Teofobicus 2.018
+Welcome to the Maynard (2025)
+Wesley Dodds - The Sandman 003 (2024)
+Whistleblowers - Four Who Fought to Expose the Holocaust to America (2024)
+Whitman.-.Tyto.Alba.[jbabylon5]
+Wild Bull & Chipper 001 (2021)
+Will Eisner - Les Cls de la Bande Dessine - Intgrale (Delcourt) (IBooker-Prof X)
+Witchblade 007 (2025)
+Wolfpack - The Complete Collection 001 (2018)
+Wonder Man - The Early Years Omnibus 001 (2023)
+WOUNDED n 1 (Marie & Malnati) x Teofobicus
+Wrath of the Titans - Omnibus v01 (2014) (TidalWave Productions) (LeDuch)
+WWE The New Day - Power of Positivity (2022)
+X-Force Epic Collection v03 - Assault On Graymalkin (2023) (JTR-GetComics)
+Yokai, monstruos y fantasmas en Japn - A. Prez Riob & Chiyo Chida - Satori 2012
+ZIDROU PRESENTA Vol. 1 - La Anciana que Nunca Jug al Tenis y otros Relatos que Sientan muy Bien (Zidrou & Co) x Teofobicus
+ZORGLUB 01-La hija de Z [Jos Luis Munera] (Tinblack)
+
+
+
+
+      </pre>
+    </div>
+  </div>
+</div>
+
+
+
+

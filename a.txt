@@ -1,0 +1,396 @@
+
+  comic: { Quiero hacer una imagen de un chico como  },
+  mansion: { una Masion Victoriana lujosa en la que sobrevuela una aurora boreal  },
+  fotografo: { Un chico hermoso pero muy grande, descomunal   },
+  ankior: { Necesito hacer una imagen de este personaje},
+  antibulling: { dos chicos masculinos chocando las manos  },
+  louis: { Un top model que se tapa la boca },
+  paul: { Un joven esta mirando desde el punto mas alto de las vegas y mira la ciudad desde arriba },
+  odie: { Un hmbre medieval muy hermoso },
+  chocolate: { Un barco muy grande cruza un gran mar de chocolate },
+  noble: { un hombre de pelo largo esta boxeando en un gicnasio  },
+  formula: { Un Monton de probetas y tubos de ensallos con liquidos de todos los colores },
+  lexmortis: { un angek y un demonio se pelean por una balanza},
+  general: { La espalda tiene una letra escarlata "K"  },
+  lirios: { dos chicos luchan en medio de un dojo en plena epoca edo },
+  crios: { Un crio con traje haciendo una disertacion en un parlamento lleno de politicos crios  },
+  tomy: {
+    video: "video27.mp4",
+    personajes: "personajes/personajes-tomy.js",
+    rutaImagenes: "tomy",
+    menu: ``,
+    titulo: "Tomy y la muerte",
+    array_del_select: ["Divinos","Ares","Creem"]
+  },
+  zetsuai: {
+    video: "video28.mp4",
+    personajes: "personajes/personajes-zetsuai.js",
+    rutaImagenes: "zetsuai",
+    menu: ``,
+    titulo: "Grita mi nombre",
+    array_del_select: ["Divinos","Ares","Creem"]
+  },
+  tapices: {
+    video: "video29.mp4",
+    personajes: "personajes/personajes-tapices.js",
+    rutaImagenes: "tapices",
+    menu: ``,
+    titulo: "La mansion de los Tapices",
+    array_del_select: ["Divinos","Ares","Creem"]
+  },
+
+
+
+Enfrentamiento: {
+  personajes: "personajes/personajes-Enfrentamiento.js",
+  rutaImagenes: "Enfrentamiento",
+  menu: ``,
+  titulo: "Enfrentamiento",
+  video: "video101.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+Ildebrando: {
+  personajes: "personajes/personajes-Ildebrando.js",
+  rutaImagenes: "Ildebrando",
+  menu: ``,
+  titulo: "El diario de Ildebrando de Boing",
+  video: "video102.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+ComicAeropuerto: {
+  personajes: "personajes/personajes-ComicAeropuerto.js",
+  rutaImagenes: "ComicAeropuerto",
+  menu: ``,
+  titulo: "Maldito Viaje",
+  video: "video103.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+HoraSeñalada: {
+  personajes: "personajes/personajes-HoraSeñalada.js",
+  rutaImagenes: "HoraSeñalada",
+  menu: ``,
+  titulo: "La Hora Señalada",
+  video: "video104.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+Ordenado: {
+  personajes: "personajes/personajes-Ordenado.js",
+  rutaImagenes: "Ordenado",
+  menu: ``,
+  titulo: "Ordenado",
+  video: "video105.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+Barbarian: {
+  personajes: "personajes/personajes-Barbarian.js",
+  rutaImagenes: "Barbarian",
+  menu: ``,
+  titulo: "Barbarian",
+  video: "video106.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+Dave: {
+  personajes: "personajes/personajes-Dave.js",
+  rutaImagenes: "Dave",
+  menu: ``,
+  titulo: "Dave",
+  video: "video107.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+Diario: {
+  personajes: "personajes/personajes-Diario.js",
+  rutaImagenes: "Diario",
+  menu: ``,
+  titulo: "El año de Perseo",
+  video: "video108.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+LasPlayas: {
+  personajes: "personajes/personajes-LasPlayas.js",
+  rutaImagenes: "LasPlayas",
+  menu: ``,
+  titulo: "Las Playas",
+  video: "video109.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+Moustruos: {
+  personajes: "personajes/personajes-Moustruos.js",
+  rutaImagenes: "Moustruos",
+  menu: ``,
+  titulo: "El encuentro de Hawaii",
+  video: "video110.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+Plano: {
+  personajes: "personajes/personajes-Plano.js",
+  rutaImagenes: "Plano",
+  menu: ``,
+  titulo: "El Plano",
+  video: "video111.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+Asalto: {
+  personajes: "personajes/personajes-Asalto.js",
+  rutaImagenes: "Asalto",
+  menu: ``,
+  titulo: "El Asalto de las Oficinas de HBawaii",
+  video: "video112.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+Malditoviaje2: {
+  personajes: "personajes/personajes-Malditoviaje2.js",
+  rutaImagenes: "Malditoviaje2",
+  menu: ``,
+  titulo: "Maldito viaje 2",
+  video: "video113.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+Ascenso: {
+  personajes: "personajes/personajes-Ascenso.js",
+  rutaImagenes: "Ascenso",
+  menu: ``,
+  titulo: "El Ascensor",
+  video: "video114.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+Jhevis: {
+  personajes: "personajes/personajes-Jhevis.js",
+  rutaImagenes: "Jhevis",
+  menu: ``,
+  titulo: "Los Jhevis",
+  video: "video115.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+Judo: {
+  personajes: "personajes/personajes-Judo.js",
+  rutaImagenes: "Judo",
+  menu: ``,
+  titulo: "Judo",
+  video: "video116.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+Peluqueria: {
+  personajes: "personajes/personajes-Peluqueria.js",
+  rutaImagenes: "Peluqueria",
+  menu: ``,
+  titulo: "El Peluquero extraño",
+  video: "video117.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+Atico: {
+  personajes: "personajes/personajes-Atico.js",
+  rutaImagenes: "Atico",
+  menu: ``,
+  titulo: "Atico",
+  video: "video118.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+ServiciodeHabitacion: {
+  personajes: "personajes/personajes-ServiciodeHabitacion.js",
+  rutaImagenes: "ServiciodeHabitacion",
+  menu: ``,
+  titulo: "El Servicio de Habitacion",
+  video: "video119.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+ClubdeHalterofilia: {
+  personajes: "personajes/personajes-ClubdeHalterofilia.js",
+  rutaImagenes: "ClubdeHalterofilia",
+  menu: ``,
+  titulo: "El Club de Halterofilia",
+  video: "video120.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+Terror: {
+  personajes: "personajes/personajes-Terror.js",
+  rutaImagenes: "Terror",
+  menu: ``,
+  titulo: "El fanatico",
+  video: "video121.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+FatKidPiscina: {
+  personajes: "personajes/personajes-FatKidPiscina.js",
+  rutaImagenes: "FatKidPiscina",
+  menu: ``,
+  titulo: "El verano del 64",
+  video: "video122.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+Tallerabandonado: {
+  personajes: "personajes/personajes-Tallerabandonado.js",
+  rutaImagenes: "Tallerabandonado",
+  menu: ``,
+  titulo: "El Taller abandonado",
+  video: "video123.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+JackyChanvsAlto: {
+  personajes: "personajes/personajes-JackyChanvsAlto.js",
+  rutaImagenes: "JackyChanvsAlto",
+  menu: ``,
+  titulo: "Jacky Chan vs Alto",
+  video: "video124.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+Jackyenelhotel: {
+  personajes: "personajes/personajes-Jackyenelhotel.js",
+  rutaImagenes: "Jackyenelhotel",
+  menu: ``,
+  titulo: "Impacto inminente",
+  video: "video125.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+Sumo007: {
+  personajes: "personajes/personajes-Sumo007.js",
+  rutaImagenes: "Sumo007",
+  menu: ``,
+  titulo: "Shadowns on Golden Garden",
+  video: "video126.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+Metro: {
+  personajes: "personajes/personajes-Metro.js",
+  rutaImagenes: "Metro",
+  menu: ``,
+  titulo: "La linea Spencer",
+  video: "video127.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+Instituto: {
+  personajes: "personajes/personajes-Instituto.js",
+  rutaImagenes: "Instituto",
+  menu: ``,
+  titulo: "Instituto",
+  video: "video128.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+"2007": {
+  personajes: "personajes/personajes-2007.js",
+  rutaImagenes: "2007",
+  menu: ``,
+  titulo: "El agente 007 con el 91 delante",
+  video: "video129.mp4",
+    array_del_select: ["Divinos","Ares","Creem"]
+},
+
+  Acuario: {
+    video: "video30.mp4",
+    personajes: "personajes/personajes-Acuario.js",
+    rutaImagenes: "Acuario",
+    menu: ``,
+    titulo: "Pelea en el Acuario",
+    array_del_select: ["Divinos","Ares","Creem"]
+  },
+  Restaurante: {
+    video: "video31.mp4",
+    personajes: "personajes/personajes-Restaurante.js",
+    rutaImagenes: "Restaurante",
+    menu: ``,
+    titulo: "Pelea en el Restaurante",
+    array_del_select: ["Divinos","Ares","Creem"]
+  },
+  Convecciondeculturismoaleman: {
+    video: "video32.mp4",
+    personajes: "personajes/personajes-Convecciondeculturismoaleman.js",
+    rutaImagenes: "Convecciondeculturismoaleman",
+    menu: ``,
+    titulo: "Conveccion de culturismo aleman",
+    array_del_select: ["Divinos","Ares","Creem"]
+  },
+  Granjeros2: {
+    video: "video33.mp4",
+    personajes: "personajes/personajes-Granjeros2.js",
+    rutaImagenes: "Granjeros2",
+    menu: ``,
+    titulo: "Granjeros 2",
+    array_del_select: ["Divinos","Ares","Creem"]
+  },
+  Divo: {
+    video: "video34.mp4",
+    personajes: "personajes/personajes-Divo.js",
+    rutaImagenes: "Divo",
+    menu: ``,
+    titulo: "El Divo",
+    array_del_select: ["Divinos","Ares","Creem"]
+  },
+  Samoano: {
+    video: "video35.mp4",
+    personajes: "personajes/personajes-Samoano.js",
+    rutaImagenes: "Samoano",
+    menu: ``,
+    titulo: "Combate de Samoanos",
+    array_del_select: ["Divinos","Ares","Creem"]
+  },
+  Granjeros1: {
+    video: "video36.mp4",
+    personajes: "personajes/personajes-Granjeros1.js",
+    rutaImagenes: "Granjeros1",
+    menu: ``,
+    titulo: "Granjeros 1",
+    array_del_select: ["Divinos","Ares","Creem"]
+  },
+  Hotelito: {
+    video: "video37.mp4",
+    personajes: "personajes/personajes-Hotelito.js",
+    rutaImagenes: "Hotelito",
+    menu: ``,
+    titulo: "El Hotel de las afueraz",
+    array_del_select: ["Divinos","Ares","Creem"]
+  },
+  Sala42: {
+    video: "video38.mp4",
+    personajes: "personajes/personajes-Sala42.js",
+    rutaImagenes: "Sala42",
+    menu: ``,
+    titulo: "Sala 42",
+    array_del_select: ["Divinos","Ares","Creem"]
+  },
+  Olimpo1: {
+    video: "video39.mp4",
+    personajes: "personajes/personajes-Olimpo1.js",
+    rutaImagenes: "Olimpo1",
+    menu: ``,
+    titulo: "Dioses Posmodernos",
+    array_del_select: ["Divinos","Ares","Creem"]
+  },
+  Olimpo: {
+    video: "video40.mp4",
+    personajes: "personajes/personajes-Olimpo.js",
+    rutaImagenes: "Olimpo",
+    menu: ``,
+    titulo: "Mitologia Nordica",
+    array_del_select: ["Divinos","Ares","Creem"]
+  },
+  MitolologiaNordica: {
+    video: "video41.mp4",
+    personajes: "personajes/personajes-MitolologiaNordica.js",
+    rutaImagenes: "MitolologiaNordica",
+    menu: ``,
+    titulo: "Mitologia Griega tradicional",
+    array_del_select: ["Divinos","Ares","Creem"]
+  },
+  Mitologiajaponesa: {
+    video: "video42.mp4",
+    personajes: "personajes/personajes-Mitologiajaponesa.js",
+    rutaImagenes: "Mitologiajaponesa",
+    menu: ``,
+    titulo: "Mitologia japonesa",
+    array_del_select: ["Divinos","Ares","Creem"]
+  },
+  Sudamerica: {
+    video: "video43.mp4",
+    personajes: "personajes/personajes-Sudamerica.js",
+    rutaImagenes: "Sudamerica",
+    menu: ``,
+    titulo: "Mitologia Sudamericana",
+    array_del_select: ["Divinos","Ares","Creem"]
+  },
+  Herculesmito: {
+    video: "video44.mp4",
+    personajes: "personajes/personajes-Herculesmito.js",
+    rutaImagenes: "Herculesmito",
+    menu: ``,
+    titulo: "El Hercules, mito y crencias . (La verdad imposible saber)",
+    array_del_select: ["Divinos","Ares","Creem"]
+  } };

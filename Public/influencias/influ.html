@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Listado de Influencias</title>
+  <script src="/assets/tailwind.js"></script>
+  <link href="/assets/fonts.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0f172a;
+      color: white;
+    }
+    .card {
+      background-color: #1e293b;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+<body class="p-6">
+
+<nav class="bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 text-center text-sm md:text-base font-semibold uppercase tracking-wider">
+  <a href="../../index.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+</nav>
+
+<section class="max-w-5xl mx-auto px-6 mb-10">
+  <div class="flex justify-between items-center mt-6 mb-4">
+    <h1 class="text-3xl text-yellow-400 font-bold">Influencias</h1>
+    <button onclick="abrirModalInsertar()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">➕ Añadir Influencia</button>
+  </div>
+
+  <div class="mb-6">
+    <label for="filtro" class="mr-2">Filtrar por categoría:</label>
+    <select id="filtro" onchange="renderInfluencias()" class="bg-gray-800 text-white px-3 py-2 rounded"></select>
+  </div>
+
+  <div id="contenedor" class="grid gap-6 md:grid-cols-3"></div>
+</section>
+
+<!-- Modal Insertar -->
+<div id="modal-insertar" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+  <div class="bg-gray-900 p-6 rounded-lg w-full max-w-md shadow-2xl">
+    <h3 class="text-yellow-400 text-lg font-bold mb-4">➕ Añadir Influencia</h3>
+    <input type="hidden" id="editar-id">
+    <input type="text" id="insertar-name" placeholder="Nombre" class="w-full mb-2 px-4 py-2 rounded bg-gray-800 text-white">
+    <input type="text" id="insertar-category" placeholder="Categoría" class="w-full mb-4 px-4 py-2 rounded bg-gray-800 text-white">
+    <div class="flex justify-end space-x-4">
+      <button onclick="cerrarModalInsertar()" class="px-4 py-2 bg-gray-700 rounded hover:bg-gray-600 text-white">Cancelar</button>
+      <button onclick="guardarInfluencia()" class="px-4 py-2 bg-green-500 rounded hover:bg-green-600 text-white">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let influencias = [];
+
+  fetch("/api/influencias")
+    .then(res => res.json())
+    .then(data => {
+      influencias = data;
+      cargarCategorias();
+      renderInfluencias();
+    });
+
+  function cargarCategorias() {
+    const filtro = document.getElementById("filtro");
+    const categorias = [...new Set(influencias.map(i => i.category))].sort();
+    filtro.innerHTML = '<option value="">Todas</option>' + categorias.map(cat => `<option value="${cat}">${cat}</option>`).join("");
+  }
+
+  function renderInfluencias() {
+    const contenedor = document.getElementById("contenedor");
+    contenedor.innerHTML = "";
+    const filtro = document.getElementById("filtro").value;
+    const filtradas = filtro ? influencias.filter(i => i.category === filtro) : influencias;
+    filtradas.forEach(item => {
+      const div = document.createElement("div");
+      div.className = "card";
+      div.innerHTML = `
+        <h3 class="text-yellow-400 font-bold">${item.name}</h3>
+        <p class="text-sm text-gray-400 mb-2">${item.category}</p>
+        <div class="flex justify-center gap-2 mt-2">
+          <button onclick="editarInfluencia(${item.id})" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs">Editar</button>
+          <button onclick="borrarInfluencia(${item.id})" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs">Eliminar</button>
+        </div>`;
+      contenedor.appendChild(div);
+    });
+  }
+
+function abrirModalInsertar() {
+  document.getElementById("editar-id").value = "";  // ← muy importante
+  document.getElementById("modal-insertar").classList.remove("hidden");
+}
+
+  function cerrarModalInsertar() {
+    document.getElementById("modal-insertar").classList.add("hidden");
+    limpiarFormulario();
+  }
+
+  function limpiarFormulario() {
+    document.getElementById("editar-id").value = "";
+    document.getElementById("insertar-name").value = "";
+    document.getElementById("insertar-category").value = "";
+  }
+
+function guardarInfluencia() {
+  const id = document.getElementById("editar-id").value.trim();  // Trim para limpiar espacios
+  const name = document.getElementById("insertar-name").value;
+  const category = document.getElementById("insertar-category").value;
+  const body = JSON.stringify({ name, category });
+
+  console.log("ID capturado:", id);  // ✅ DEBUG
+
+  if (id) {
+    fetch(`/api/influencias/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body
+    }).then(() => location.reload());
+  } else {
+    fetch("/api/influencias", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body
+    }).then(() => location.reload());
+  }
+}
+
+  function borrarInfluencia(id) {
+    if (!confirm("¿Seguro que deseas eliminar esta influencia?")) return;
+    fetch(`/api/influencias/${id}`, { method: "DELETE" })
+      .then(() => location.reload());
+  }
+
+function editarInfluencia(id) {
+  const inf = influencias.find(i => i.id === id);
+  if (!inf) return;
+  document.getElementById("editar-id").value = inf.id;  // ✅ ← ESTA LÍNEA es clave
+  document.getElementById("insertar-name").value = inf.name;
+  document.getElementById("insertar-category").value = inf.category;
+  document.getElementById("modal-insertar").classList.remove("hidden");
+}
+</script>
+
+</body>
+</html>

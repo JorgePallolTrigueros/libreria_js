@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lista de Animes</title>
+  <script src="/assets/tailwind.js"></script>
+  <link href="/assets/fonts.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0f172a;
+      color: white;
+    }
+    .fade-page { opacity: 0; transition: opacity 0.5s ease; }
+    body.loaded .fade-page { opacity: 1; }
+
+    /* Animación modal */
+    @keyframes zoomIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .modal-animado {
+      animation: zoomIn 0.3s ease-out;
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+
+
+
+
+  <nav class="bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 text-center text-sm md:text-base font-semibold uppercase tracking-wider">
+    <a href="/../e.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+  </nav>
+
+  <!-- Encabezado -->
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div class="relative flex items-center justify-between">
+      <div class="absolute -left-4 md:-left-10 z-20">
+  <video autoplay muted loop
+         class="w-40 h-40 md:w-52 md:h-52 object-cover rounded-full border-4 border-yellow-400 shadow-2xl">
+    <source src="/ruta/pose-anime.mp4" type="video/mp4">
+  </video>
+      </div>
+      <div class="w-full bg-purple-800 h-28 md:h-32 rounded-xl flex items-center pl-48 pr-6 z-10 shadow-lg">
+        <h2 class="text-2xl md:text-4xl text-yellow-400 font-bold ml-auto">Obras</h2>
+      </div>
+    </div>
+
+<a href="Anime_index.html">Registros </a> | <a href="codigo_Anime.html"> Webscraping</a>
+
+
+<section id="comandos">
+    <h3 class="text-yellow-400 text-2xl md:text-3xl font-bold border-b border-yellow-400 pb-2 mb-6">📋 Comandos Webscraping</h3>
+  
+    <div class="bg-gray-800 p-4 rounded-xl relative shadow-lg">
+      <pre id="codigo-iclone" class="whitespace-pre-wrap text-green-300 text-sm md:text-base font-mono">
+  // Ejemplo básico de Python Script en iClone (con iClone Python API)
+  import RLPy
+  
+  # Crear una cámara y colocarla
+  camera = RLPy.RICamera.Create()
+  transform = RLPy.RTransform()
+  transform.T().SetXYZ(500, 300, 1000)
+  camera.SetTransform(transform)
+  
+  // Reproducir la animación
+  RLPy.RGlobal.Play()
+      </pre>
+  
+      <button onclick="copiarCodigo()" class="absolute top-2 right-2 bg-yellow-400 text-black font-bold px-3 py-1 rounded hover:bg-yellow-500 transition">
+        Copiar
+      </button>
+    </div>
+  </section>
+  ✅ 2. Añade este script justo antes de </body>:
+  html
+  Copiar
+  Editar
+  <script>
+    function copiarCodigo() {
+      const codigo = document.getElementById("codigo-iclone").innerText;
+      navigator.clipboard.writeText(codigo)
+        .then(() => {
+          alert("¡Comando copiado al portapapeles!");
+        })
+        .catch(err => {
+          console.error("Error al copiar", err);
+          alert("Error al copiar el texto");
+        });
+    }
+  </script>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Subir Galería</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #0f172a;
+    color: white;
+    text-align: center;
+  }
+  input[type="number"], input[type="file"] {
+    margin: 10px 0;
+  }
+  button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: yellow;
+    color: black;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+  <h1>Subir Imágenes a la Galería</h1>
+  <p id="idArticulo"></p>
+  
+  <label for="cantidad">¿Cuántas imágenes deseas subir? (1-10)</label><br>
+  <input type="number" id="cantidad" min="1" max="10" /><br>
+  <button onclick="generarInputs()">Generar Campos</button>
+
+  <div id="inputsContainer"></div>
+
+  <button onclick="subirImagenes()">Subir Imágenes</button>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const idArticulo = params.get("id");
+    document.getElementById("idArticulo").textContent = "ID del artículo: " + idArticulo;
+
+    function generarInputs() {
+      const cantidad = parseInt(document.getElementById("cantidad").value);
+      const container = document.getElementById("inputsContainer");
+      container.innerHTML = "";
+
+      if (isNaN(cantidad) || cantidad < 1 || cantidad > 10) {
+        alert("Por favor ingresa un número válido entre 1 y 10");
+        return;
+      }
+
+      for (let i = 0; i < cantidad; i++) {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*";
+        input.id = `imagen-${i}`;
+        container.appendChild(input);
+        container.appendChild(document.createElement("br"));
+      }
+    }
+
+    async function subirImagenes() {
+      const cantidad = parseInt(document.getElementById("cantidad").value);
+      if (isNaN(cantidad) || cantidad < 1 || cantidad > 10) {
+        alert("Primero indica cuántas imágenes vas a subir");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("id_articulo", idArticulo);
+
+      for (let i = 0; i < cantidad; i++) {
+        const fileInput = document.getElementById(`imagen-${i}`);
+        if (!fileInput.files[0]) {
+          alert(`Selecciona la imagen para el campo ${i + 1}`);
+          return;
+        }
+        formData.append("imagenes", fileInput.files[0]);
+      }
+
+      try {
+        const res = await fetch("/api/galeria", {
+          method: "POST",
+          body: formData
+        });
+        const data = await res.json();
+        if (data.success) {
+          alert("✅ Imágenes subidas con éxito");
+          window.location.reload();
+        } else {
+          alert("❌ Error al subir imágenes");
+        }
+      } catch (err) {
+        console.error("Error al subir imágenes:", err);
+        alert("❌ Error al subir imágenes");
+      }
+    }
+  </script>
+</body>
+</html>

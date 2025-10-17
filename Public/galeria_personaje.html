@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Galería del Personaje</title>
+  <script src="/enrrutamiento.js"></script>
+  <style>
+    body {
+      background-color: #0f172a;
+      color: white;
+      font-family: 'Orbitron', sans-serif;
+      padding: 20px;
+    }
+    label, input, select, button {
+      display: block;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Galería del Personaje</h1>
+
+  <div>
+    <label for="cantidad">¿Cuántas imágenes quieres poner de este personaje?</label>
+    <input type="number" id="cantidad" min="1" max="10" />
+    <button onclick="generarCampos()">Generar campos</button>
+  </div>
+
+  <form id="galeriaForm">
+    <input type="hidden" id="valorActual">
+    <input type="hidden" id="idPersonaje">
+    <div id="camposContainer"></div>
+    <button type="submit">Guardar Imágenes</button>
+  </form>
+<script>
+  const estilos = [
+    "tipo Daz", "tipo abstracto", "tipo muscle", "tipo ghibli", 
+    "muscle", "kids / Chuby", "otros estilos artísticos"
+  ];
+
+  const params = new URLSearchParams(window.location.search);
+  const valor = params.get("valor");
+  const id = parseInt(params.get("id"));
+  document.getElementById("valorActual").value = valor;
+  document.getElementById("idPersonaje").value = id;
+
+function generarCampos() {
+  const cantidad = parseInt(document.getElementById("cantidad").value);
+  const container = document.getElementById("camposContainer");
+  container.innerHTML = "";
+
+  for (let i = 0; i < cantidad; i++) {
+    const labelFile = document.createElement("label");
+    labelFile.textContent = `Imagen ${i + 1}:`;
+
+    const inputFile = document.createElement("input");
+    inputFile.type = "file";
+    inputFile.name = `imagenes`; // ✅ CORREGIDO
+    inputFile.required = true;
+
+    const labelEstilo = document.createElement("label");
+    labelEstilo.textContent = `Estilo para imagen ${i + 1}:`;
+
+    const select = document.createElement("select");
+    select.name = `estilo${i}`;
+    estilos.forEach(e => {
+      const option = document.createElement("option");
+      option.value = e;
+      option.textContent = e;
+      select.appendChild(option);
+    });
+
+    container.appendChild(labelFile);
+    container.appendChild(inputFile);
+    container.appendChild(labelEstilo);
+    container.appendChild(select);
+  }
+}
+
+  const form = document.getElementById("galeriaForm");
+
+  form.addEventListener("submit", async function (e) {
+  e.preventDefault();
+
+  const formData = new FormData();
+  const valor = document.getElementById("valorActual").value;
+  const id_Personaje = parseInt(document.getElementById("idPersonaje").value);
+  const estilos = [];
+
+  formData.append("id_Personaje", id_Personaje);
+
+  const fileInputs = document.querySelectorAll(`input[name="imagenes"]`);
+
+  for (let i = 0; i < fileInputs.length; i++) {
+    const archivo = fileInputs[i].files[0];
+    const estilo = document.querySelector(`[name="estilo${i}"]`).value;
+
+    formData.append("imagenes", archivo);
+    estilos.push(estilo);
+  }
+
+  formData.append("estilos", JSON.stringify(estilos));
+
+  const res = await fetch(`/api/galeria/${valor}`, {
+    method: "POST",
+    body: formData
+  });
+
+  const resultado = await res.json();
+  console.log(resultado);
+  alert("Imágenes subidas correctamente.");
+});
+</script>

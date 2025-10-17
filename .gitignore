@@ -1,0 +1,33 @@
+# ==========================================
+# IGNORAR IMÁGENES DENTRO DE /public
+# ==========================================
+public/**/*.png
+public/**/*.jpg
+public/**/*.jpeg
+public/**/*.gif
+public/**/*.webp
+public/**/*.svg
+public/**/*.bmp
+public/**/*.tiff
+
+# ==========================================
+# IGNORAR ARCHIVOS TEMPORALES / SISTEMA
+# ==========================================
+.DS_Store
+Thumbs.db
+*.log
+
+# ==========================================
+# IGNORAR DEPENDENCIAS Y COMPILACIONES
+# ==========================================
+node_modules/
+dist/
+build/
+.cache/
+out/
+
+# ==========================================
+# IGNORAR CONFIGURACIONES LOCALES
+# ==========================================
+.env
+.env.local

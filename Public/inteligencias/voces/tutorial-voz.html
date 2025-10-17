@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Galería IA con Filtros</title>
+  <script src="/assets/tailwind.js"></script>
+  <link href="/assets/fonts.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0f172a;
+      color: white;
+    }
+    .mini-button {
+      width: 1.5em;
+      height: 1.5em;
+      border-radius: 3px;
+      border: 1px solid #000;
+      cursor: pointer;
+      transition: transform 0.2s ease-in-out;
+    }
+    .mini-button:hover {
+      transform: scale(1.2);
+    }
+
+    .mini-buttons-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 8px;
+  padding-top: 10px;
+  margin-top: 10px;
+}
+</style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 p-4 text-center text-sm md:text-base font-semibold uppercase tracking-wider">
+    <a href="../../a.html" class="mx-3 hover:text-yellow-400">Inicio</a>
+  </nav>
+
+  <!-- Encabezado con imagen y franja -->
+  <section class="max-w-7xl mx-auto px-6 mb-10">
+    <div class="relative flex items-center justify-between">
+      <!-- Imagen circular -->
+      <div class="absolute -left-4 md:-left-10 z-20">
+  <video autoplay muted loop
+         class="w-40 h-40 md:w-52 md:h-52 object-cover rounded-full border-4 border-yellow-400 shadow-2xl">
+    <source src="/ruta/ia_voces.mp4" type="video/mp4">
+  </video>
+      </div>
+
+      <!-- Franja con título -->
+      <div class="w-full bg-purple-800 h-28 md:h-32 rounded-xl flex items-center pl-48 pr-6 z-10 shadow-lg">
+        <h2 class="text-2xl md:text-4xl text-yellow-400 font-bold ml-auto">IA Voces</h2>
+      </div>
+    </div>
+
+    <!-- Nueva barra de navegación específica de IA -->
+    <nav class="flex justify-end mt-4 space-x-6 text-white text-sm md:text-base">
+        <a href="origenes-voz.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Orígenes IA Voz</a>
+        <a href="como-funciona-voz.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Cómo funciona</a>
+        <a href="control-voz.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Control creativo</a>
+        <a href="voz-sin-censura.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">IA sin censura</a>
+        <a href="tutorial-voz.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Tutorial Voz IA</a>
+        <a href="top10-voz.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Top 10 IA Voz</a>
+        <a href="galeria-voz.html" class="hover:text-yellow-400 transition" style="font-size: 10px;">Galería</a>
+      </nav>
+  </section>
+
+
+  <!-- Contenido -->
+<main class="max-w-4xl mx-auto px-6 leading-relaxed text-justify">
+  <h3 class="text-yellow-400 text-xl font-bold mb-4">Tutorial: Cómo generar voces con Inteligencia Artificial</h3>
+
+  <p class="mb-4">
+    Ya sea que quieras una narración con voz realista, un doblaje completo, o una canción cantada por una IA, aquí tienes dos caminos para lograrlo: uno accesible (online) y otro profesional (offline).
+  </p>
+
+  <!-- Selector -->
+  <div class="mb-6 text-center">
+    <button onclick="mostrarVoz('online')" class="px-4 py-2 bg-indigo-700 hover:bg-indigo-500 rounded text-white text-sm mx-2">Método Online</button>
+    <button onclick="mostrarVoz('local')" class="px-4 py-2 bg-purple-700 hover:bg-purple-500 rounded text-white text-sm mx-2">Método Offline / Local</button>
+  </div>
+
+  <!-- Tutorial Online -->
+  <div id="voz-online" class="voz-section">
+    <h4 class="text-yellow-300 text-lg font-bold mb-2">🟢 Método 1: Plataformas Online (como ElevenLabs o PlayHT)</h4>
+    <ol class="list-decimal list-inside mb-4">
+      <li>Ve a <a href="https://elevenlabs.io" target="_blank" class="text-yellow-400 underline">ElevenLabs.io</a> o <a href="https://play.ht" target="_blank" class="text-yellow-400 underline">PlayHT.com</a>.</li>
+      <li>Crea una cuenta gratuita.</li>
+      <li>Escribe el texto que deseas convertir en voz.</li>
+      <li>Selecciona una voz disponible (idioma, género, tono).</li>
+      <li>Configura velocidad, emoción o acento si la plataforma lo permite.</li>
+      <li>Haz clic en "Generate" y escucha el resultado.</li>
+      <li>Descarga el audio si estás satisfecho (algunas requieren cuenta paga).</li>
+    </ol>
+    <p class="text-sm text-gray-400 italic mb-4">💡 Ideal para locuciones rápidas, audiolibros, vídeos explicativos o doblaje básico.</p>
+  </div>
+
+  <!-- Tutorial Local -->
+  <div id="voz-local" class="voz-section hidden">
+    <h4 class="text-yellow-300 text-lg font-bold mb-2">🟣 Método 2: Herramientas Locales (como XTTS o DiffSinger)</h4>
+    <ol class="list-decimal list-inside mb-4">
+      <li>Instala <strong>Python</strong> y <strong>Git</strong> en tu computadora.</li>
+      <li>Descarga el repositorio de <a href="https://github.com/coqui-ai/TTS" target="_blank" class="text-yellow-400 underline">XTTS (Coqui-TTS)</a> o <a href="https://github.com/openvpi/DiffSinger" target="_blank" class="text-yellow-400 underline">DiffSinger</a>.</li>
+      <li>Prepara un entorno virtual (virtualenv o conda) y descarga los modelos preentrenados.</li>
+      <li>Escribe el texto que deseas generar o una partitura MIDI (en el caso de canto).</li>
+      <li>Ejecuta el script de generación por línea de comandos o desde una interfaz web si está disponible.</li>
+      <li>Ajusta emoción, tempo, idioma o estilo si el modelo lo permite.</li>
+      <li>Guarda el resultado como archivo .wav o .mp3.</li>
+    </ol>
+    <p class="text-sm text-gray-400 italic mb-4">🔧 Requiere conocimientos técnicos, pero da total libertad creativa y cero censura.</p>
+  </div>
+
+  <div class="mt-8 text-sm text-center text-gray-400 italic">
+    No necesitas tener una gran voz para narrar, cantar o emocionar. Solo necesitas elegir bien tu IA.
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="text-center text-xs text-gray-400 mt-10 mb-4">
+  &copy; 2025 Proyecto IA de Voz - Todos los derechos reservados.
+</footer>
+
+<!-- Script -->
+<script>
+  function mostrarVoz(tipo) {
+    document.getElementById("voz-online").classList.add("hidden");
+    document.getElementById("voz-local").classList.add("hidden");
+    document.getElementById("voz-" + tipo).classList.remove("hidden");
+  }
+</script>
+
+<style>
+  .hidden { display: none; }
+</style>
