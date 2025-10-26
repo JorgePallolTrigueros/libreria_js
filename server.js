@@ -11,10 +11,10 @@ app.use(express.json({ limit: "80mb" }));
 app.use(express.static("public"));
 app.use('/reportaje/bulling/ma', express.static(path.join(__dirname, 'public', 'ma')));
 // Crear carpeta personajes si no existe
-const personajesDir = path.join(__dirname, "public", "personajes");
-if (!fs.existsSync(personajesDir)) {
-  fs.mkdirSync(personajesDir, { recursive: true });
-}
+//const personajesDir = path.join(__dirname, "public", "personajes");
+//if (!fs.existsSync(personajesDir)) {
+//  fs.mkdirSync(personajesDir, { recursive: true });
+//}
 
 
 function extraerArray(nombre, contenidoArchivo) {
